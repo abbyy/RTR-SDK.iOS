@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43BC85B91DA31E2800FC04B0 /* RTRAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC85B81DA31E2800FC04B0 /* RTRAppDelegate.swift */; };
+		43BC85BB1DA31E2800FC04B0 /* RTRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC85BA1DA31E2800FC04B0 /* RTRViewController.swift */; };
+		43BC85BE1DA31E2800FC04B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BC85BC1DA31E2800FC04B0 /* Main.storyboard */; };
+		43BC85C01DA31E2800FC04B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43BC85BF1DA31E2800FC04B0 /* Assets.xcassets */; };
+		43BC85CC1DA3226D00FC04B0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BC85CB1DA3226D00FC04B0 /* libc++.tbd */; };
+		43BC85D01DA326F200FC04B0 /* RTRSelectedAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC85CF1DA326F200FC04B0 /* RTRSelectedAreaView.swift */; };
+		43BC85DD1DA4330200FC04B0 /* RTRHexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BC85DC1DA4330200FC04B0 /* RTRHexColor.swift */; };
+		43BC86211DA442D700FC04B0 /* Brazil.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85E11DA43E6B00FC04B0 /* Brazil.edc */; };
+		43BC86261DA442D700FC04B0 /* English.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85E61DA43E6B00FC04B0 /* English.edc */; };
+		43BC862A1DA442D700FC04B0 /* French.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85EA1DA43E6B00FC04B0 /* French.edc */; };
+		43BC862B1DA442D700FC04B0 /* German.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85EB1DA43E6B00FC04B0 /* German.edc */; };
+		43BC862F1DA442D700FC04B0 /* Italian.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85EF1DA43E6B00FC04B0 /* Italian.edc */; };
+		43BC86321DA442D700FC04B0 /* Polish.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85F21DA43E6B00FC04B0 /* Polish.edc */; };
+		43BC86351DA442D700FC04B0 /* Spanish.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85F51DA43E6B00FC04B0 /* Spanish.edc */; };
+		43BC863B1DA4436A00FC04B0 /* European.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 43BC86131DA43E9600FC04B0 /* European.rom */; };
+		43BC863C1DA4436A00FC04B0 /* FindText.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 43BC86141DA43E9600FC04B0 /* FindText.rom */; };
+		CF2C54321DD1C132006B70FB /* license in Resources */ = {isa = PBXBuildFile; fileRef = CF2C54311DD1C132006B70FB /* license */; };
+		CF2C54331DD1C18C006B70FB /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		43BC86201DA4429500FC04B0 /* Copy Dictionaries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Dictionaries;
+			dstSubfolderSpec = 7;
+			files = (
+				43BC86211DA442D700FC04B0 /* Brazil.edc in Copy Dictionaries */,
+				43BC86261DA442D700FC04B0 /* English.edc in Copy Dictionaries */,
+				43BC862A1DA442D700FC04B0 /* French.edc in Copy Dictionaries */,
+				43BC862B1DA442D700FC04B0 /* German.edc in Copy Dictionaries */,
+				43BC862F1DA442D700FC04B0 /* Italian.edc in Copy Dictionaries */,
+				43BC86321DA442D700FC04B0 /* Polish.edc in Copy Dictionaries */,
+				43BC86351DA442D700FC04B0 /* Spanish.edc in Copy Dictionaries */,
+			);
+			name = "Copy Dictionaries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43BC86391DA4434D00FC04B0 /* Copy Patterns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Patterns;
+			dstSubfolderSpec = 7;
+			files = (
+				43BC863B1DA4436A00FC04B0 /* European.rom in Copy Patterns */,
+				43BC863C1DA4436A00FC04B0 /* FindText.rom in Copy Patterns */,
+			);
+			name = "Copy Patterns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		43BC85B51DA31E2800FC04B0 /* TextCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43BC85B81DA31E2800FC04B0 /* RTRAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTRAppDelegate.swift; sourceTree = "<group>"; };
+		43BC85BA1DA31E2800FC04B0 /* RTRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTRViewController.swift; sourceTree = "<group>"; };
+		43BC85BD1DA31E2800FC04B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		43BC85BF1DA31E2800FC04B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		43BC85C41DA31E2800FC04B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43BC85CB1DA3226D00FC04B0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AbbyyRtrSDK.framework; path = TextCapture/AbbyyRtrSDK.framework; sourceTree = "<group>"; };
+		43BC85CF1DA326F200FC04B0 /* RTRSelectedAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRSelectedAreaView.swift; sourceTree = "<group>"; };
+		43BC85D91DA3509E00FC04B0 /* RtrSamples-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RtrSamples-Bridging-Header.h"; sourceTree = "<group>"; };
+		43BC85DC1DA4330200FC04B0 /* RTRHexColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRHexColor.swift; sourceTree = "<group>"; };
+		43BC85E11DA43E6B00FC04B0 /* Brazil.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brazil.edc; sourceTree = "<group>"; };
+		43BC85E61DA43E6B00FC04B0 /* English.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = English.edc; sourceTree = "<group>"; };
+		43BC85EA1DA43E6B00FC04B0 /* French.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = French.edc; sourceTree = "<group>"; };
+		43BC85EB1DA43E6B00FC04B0 /* German.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = German.edc; sourceTree = "<group>"; };
+		43BC85EF1DA43E6B00FC04B0 /* Italian.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Italian.edc; sourceTree = "<group>"; };
+		43BC85F21DA43E6B00FC04B0 /* Polish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Polish.edc; sourceTree = "<group>"; };
+		43BC85F51DA43E6B00FC04B0 /* Spanish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Spanish.edc; sourceTree = "<group>"; };
+		43BC86131DA43E9600FC04B0 /* European.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = European.rom; sourceTree = "<group>"; };
+		43BC86141DA43E9600FC04B0 /* FindText.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = FindText.rom; sourceTree = "<group>"; };
+		CF2C54311DD1C132006B70FB /* license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license; path = assets/license; sourceTree = "<group>"; };
+		CF5693381DCB53D3006059E2 /* TextCapture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextCapture.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43BC85B21DA31E2800FC04B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43BC85CC1DA3226D00FC04B0 /* libc++.tbd in Frameworks */,
+				CF2C54331DD1C18C006B70FB /* AbbyyRtrSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43BC85AC1DA31E2800FC04B0 = {
+			isa = PBXGroup;
+			children = (
+				CF2C54311DD1C132006B70FB /* license */,
+				43BC86111DA43E8A00FC04B0 /* Patterns */,
+				43BC85E01DA43E5600FC04B0 /* Dictionaries */,
+				43BC85B71DA31E2800FC04B0 /* TextCapture */,
+				43BC85B61DA31E2800FC04B0 /* Products */,
+				43BC85CA1DA3226D00FC04B0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		43BC85B61DA31E2800FC04B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43BC85B51DA31E2800FC04B0 /* TextCapture.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43BC85B71DA31E2800FC04B0 /* TextCapture */ = {
+			isa = PBXGroup;
+			children = (
+				CF5693381DCB53D3006059E2 /* TextCapture.entitlements */,
+				43BC85D91DA3509E00FC04B0 /* RtrSamples-Bridging-Header.h */,
+				43BC85B81DA31E2800FC04B0 /* RTRAppDelegate.swift */,
+				43BC85CF1DA326F200FC04B0 /* RTRSelectedAreaView.swift */,
+				43BC85BA1DA31E2800FC04B0 /* RTRViewController.swift */,
+				43BC85DC1DA4330200FC04B0 /* RTRHexColor.swift */,
+				43BC85BC1DA31E2800FC04B0 /* Main.storyboard */,
+				43BC85BF1DA31E2800FC04B0 /* Assets.xcassets */,
+				43BC85C41DA31E2800FC04B0 /* Info.plist */,
+			);
+			path = TextCapture;
+			sourceTree = "<group>";
+		};
+		43BC85CA1DA3226D00FC04B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */,
+				43BC85CB1DA3226D00FC04B0 /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		43BC85E01DA43E5600FC04B0 /* Dictionaries */ = {
+			isa = PBXGroup;
+			children = (
+				43BC85E11DA43E6B00FC04B0 /* Brazil.edc */,
+				43BC85E61DA43E6B00FC04B0 /* English.edc */,
+				43BC85EA1DA43E6B00FC04B0 /* French.edc */,
+				43BC85EB1DA43E6B00FC04B0 /* German.edc */,
+				43BC85EF1DA43E6B00FC04B0 /* Italian.edc */,
+				43BC85F21DA43E6B00FC04B0 /* Polish.edc */,
+				43BC85F51DA43E6B00FC04B0 /* Spanish.edc */,
+			);
+			name = Dictionaries;
+			path = assets/dictionaries;
+			sourceTree = "<group>";
+		};
+		43BC86111DA43E8A00FC04B0 /* Patterns */ = {
+			isa = PBXGroup;
+			children = (
+				43BC86131DA43E9600FC04B0 /* European.rom */,
+				43BC86141DA43E9600FC04B0 /* FindText.rom */,
+			);
+			name = Patterns;
+			path = assets/patterns;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		43BC85B41DA31E2800FC04B0 /* TextCapture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43BC85C71DA31E2800FC04B0 /* Build configuration list for PBXNativeTarget "TextCapture" */;
+			buildPhases = (
+				43BC85B11DA31E2800FC04B0 /* Sources */,
+				43BC85B21DA31E2800FC04B0 /* Frameworks */,
+				43BC85B31DA31E2800FC04B0 /* Resources */,
+				43BC86201DA4429500FC04B0 /* Copy Dictionaries */,
+				43BC86391DA4434D00FC04B0 /* Copy Patterns */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TextCapture;
+			productName = TextCapture;
+			productReference = 43BC85B51DA31E2800FC04B0 /* TextCapture.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43BC85AD1DA31E2800FC04B0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Findo Inc.";
+				TargetAttributes = {
+					43BC85B41DA31E2800FC04B0 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "Samples" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 43BC85AC1DA31E2800FC04B0;
+			productRefGroup = 43BC85B61DA31E2800FC04B0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43BC85B41DA31E2800FC04B0 /* TextCapture */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43BC85B31DA31E2800FC04B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF2C54321DD1C132006B70FB /* license in Resources */,
+				43BC85C01DA31E2800FC04B0 /* Assets.xcassets in Resources */,
+				43BC85BE1DA31E2800FC04B0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43BC85B11DA31E2800FC04B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43BC85DD1DA4330200FC04B0 /* RTRHexColor.swift in Sources */,
+				43BC85BB1DA31E2800FC04B0 /* RTRViewController.swift in Sources */,
+				43BC85D01DA326F200FC04B0 /* RTRSelectedAreaView.swift in Sources */,
+				43BC85B91DA31E2800FC04B0 /* RTRAppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		43BC85BC1DA31E2800FC04B0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				43BC85BD1DA31E2800FC04B0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		43BC85C51DA31E2800FC04B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		43BC85C61DA31E2800FC04B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		43BC85C81DA31E2800FC04B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/TextCapture",
+				);
+				INFOPLIST_FILE = TextCapture/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.abbyy.rtr.sample.textcapture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		43BC85C91DA31E2800FC04B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/TextCapture",
+				);
+				INFOPLIST_FILE = TextCapture/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.abbyy.rtr.sample.textcapture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "Samples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43BC85C51DA31E2800FC04B0 /* Debug */,
+				43BC85C61DA31E2800FC04B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43BC85C71DA31E2800FC04B0 /* Build configuration list for PBXNativeTarget "TextCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43BC85C81DA31E2800FC04B0 /* Debug */,
+				43BC85C91DA31E2800FC04B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43BC85AD1DA31E2800FC04B0 /* Project object */;
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="RTRViewController" customModule="TextCapture" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mlj-NI-prS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TiN-EW-qhw">
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJA-Il-gwI" userLabel="Preview View">
+                                        <subviews>
+                                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQk-dm-kX9">
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGL-fB-Vik" customClass="RTRSelectedAreaView" customModule="TextCapture">
+                                                <frame key="frameInset"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="ZQk-dm-kX9" firstAttribute="height" secondItem="TJA-Il-gwI" secondAttribute="height" id="7a6-yg-3ag"/>
+                                            <constraint firstItem="ZQk-dm-kX9" firstAttribute="centerX" secondItem="TJA-Il-gwI" secondAttribute="centerX" id="Ik2-sR-VFy"/>
+                                            <constraint firstItem="ZQk-dm-kX9" firstAttribute="width" secondItem="TJA-Il-gwI" secondAttribute="width" id="OyT-G1-MgD"/>
+                                            <constraint firstItem="ZQk-dm-kX9" firstAttribute="centerY" secondItem="TJA-Il-gwI" secondAttribute="centerY" id="mty-BI-sKz"/>
+                                        </constraints>
+                                    </view>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="8LU-60-eyE">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="zYy-7c-tg9"/>
+                                        </constraints>
+                                        <items>
+                                            <barButtonItem enabled="NO" title="1280x720" id="8hX-X6-Aku"/>
+                                            <barButtonItem systemItem="flexibleSpace" id="Gg7-QY-mLK"/>
+                                            <barButtonItem enabled="NO" title="1x" id="hNV-eI-VWw"/>
+                                            <barButtonItem systemItem="flexibleSpace" id="ajj-34-sdn"/>
+                                            <barButtonItem enabled="NO" title="TextCapture" id="Szc-FB-MtT"/>
+                                            <barButtonItem systemItem="flexibleSpace" id="VaZ-6L-rd7"/>
+                                            <barButtonItem title="En Ru De" id="NSc-zv-gC7">
+                                                <connections>
+                                                    <action selector="onReconitionLanguages:" destination="BYZ-38-t0r" id="Ne4-Qf-Sow"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                    <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lwe-7O-EgP">
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="BOj-jP-XRs"/>
+                                            <constraint firstAttribute="height" constant="44" id="ahf-fA-ssj"/>
+                                        </constraints>
+                                        <state key="normal" title="Capture"/>
+                                        <state key="disabled" title="No camera access">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="capturePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bka-DM-piv"/>
+                                        </connections>
+                                    </button>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hCr-DU-Js3">
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="vGJ-Re-Fdl"/>
+                                        </constraints>
+                                        <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="A0r-Tr-0XD"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="uPs-Nv-m3Q"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="lwe-7O-EgP" secondAttribute="bottom" constant="15" id="3Ly-D5-Vgk"/>
+                                    <constraint firstAttribute="trailing" secondItem="TJA-Il-gwI" secondAttribute="trailing" id="7WB-Zj-Ycu"/>
+                                    <constraint firstItem="8LU-60-eyE" firstAttribute="leading" secondItem="TiN-EW-qhw" secondAttribute="leading" id="Bu2-6J-4Xt"/>
+                                    <constraint firstItem="8LU-60-eyE" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="F5Q-qa-1Z9"/>
+                                    <constraint firstItem="lwe-7O-EgP" firstAttribute="centerX" secondItem="TiN-EW-qhw" secondAttribute="centerX" id="Ox6-N9-X2o"/>
+                                    <constraint firstAttribute="bottom" secondItem="hCr-DU-Js3" secondAttribute="bottom" id="Re4-Zm-YU7"/>
+                                    <constraint firstItem="TJA-Il-gwI" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="SkS-QC-aEI"/>
+                                    <constraint firstAttribute="trailing" secondItem="8LU-60-eyE" secondAttribute="trailing" id="Tbi-t4-RQh"/>
+                                    <constraint firstItem="hCr-DU-Js3" firstAttribute="top" secondItem="8LU-60-eyE" secondAttribute="bottom" id="ae3-bz-22e"/>
+                                    <constraint firstAttribute="trailing" secondItem="hCr-DU-Js3" secondAttribute="trailing" id="fQw-d3-Con"/>
+                                    <constraint firstItem="TJA-Il-gwI" firstAttribute="leading" secondItem="TiN-EW-qhw" secondAttribute="leading" id="jKv-CH-bJ8"/>
+                                    <constraint firstItem="TJA-Il-gwI" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="kKB-Ou-9Y5"/>
+                                    <constraint firstAttribute="bottom" secondItem="TJA-Il-gwI" secondAttribute="bottom" id="r2B-P6-eCQ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="kKB-Ou-9Y5"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="TiN-EW-qhw" secondAttribute="bottom" id="1ue-7j-4C1"/>
+                            <constraint firstItem="TiN-EW-qhw" firstAttribute="top" secondItem="mlj-NI-prS" secondAttribute="top" id="S7k-RL-ZIG"/>
+                            <constraint firstItem="TiN-EW-qhw" firstAttribute="leading" secondItem="mlj-NI-prS" secondAttribute="leading" id="pN0-ps-eeC"/>
+                            <constraint firstAttribute="trailing" secondItem="TiN-EW-qhw" secondAttribute="trailing" id="xPO-Of-aPw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ebk-cR-0x4"/>
+                    <connections>
+                        <outlet property="captureButton" destination="lwe-7O-EgP" id="CDF-je-Dxh"/>
+                        <outlet property="languagesTableView" destination="hCr-DU-Js3" id="CFP-nh-0qm"/>
+                        <outlet property="overlayView" destination="fGL-fB-Vik" id="Yfc-SD-JzF"/>
+                        <outlet property="previewView" destination="TJA-Il-gwI" id="6rj-C0-gFk"/>
+                        <outlet property="recognizeLanguageButton" destination="NSc-zv-gC7" id="6cQ-Ff-Psx"/>
+                        <outlet property="whiteBackgroundView" destination="ZQk-dm-kX9" id="DAq-sg-Klp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
