@@ -257,7 +257,6 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             if mergeStatus == RTRResultStabilityStatus.stable {
                 self.captureButton.isSelected = false
                 self.whiteBackgroundView.isHidden = false
-                self.session?.stopRunning()
             }
             
             self.drawMocr(areas, mergeStatus) 
@@ -515,8 +514,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if self.captureButton.isSelected {
             self.clearScreenFromRegions()
             self.whiteBackgroundView.isHidden = true
-        } else {
-            self.session?.stopRunning()
+            self.session?.startRunning()
         }
     }
 }
