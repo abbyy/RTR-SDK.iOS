@@ -30,7 +30,8 @@ In the download package you will find:
 ## Building the samples
 The samples need only a little configuring:
 
-1. Copy the **assets** folder into the **Samples** (**Samples.Swift**) folder.
+1. Please change the bundle ID before modifying or otherwise using the sample.
+2. Copy the **assets** folder into the **Samples** (**Samples.Swift**) folder.
 2. Rename **AbbyyRtrSdk.license** file to simply **license** and move it from the **License** folder to the **assets** folder.
 3. Unzip the framework file and copy **AbbyyRtrSDK.framework** into the **TextCapture** folder.
 4. [optional] To save space, you may also want to remove from **assets/dictionaries** the dictionaries for recognition languages your application does not use.
