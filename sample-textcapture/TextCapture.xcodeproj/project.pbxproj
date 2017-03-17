@@ -3,20 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		751422A01E66F86D00289DA6 /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */; };
+		75D544491E6704BF00526ED4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544481E6704BF00526ED4 /* libc++.tbd */; };
+		75D5444B1E6704CB00526ED4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444A1E6704CB00526ED4 /* AVFoundation.framework */; };
+		75D544531E67051C00526ED4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544521E67051C00526ED4 /* Security.framework */; };
+		75D5445B1E6705AC00526ED4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5445A1E6705AC00526ED4 /* QuartzCore.framework */; };
+		75D5445C1E6705ED00526ED4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544561E67056300526ED4 /* UIKit.framework */; };
+		75D5445D1E67060300526ED4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544501E67050200526ED4 /* CoreVideo.framework */; };
+		75D5445E1E67061200526ED4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444E1E6704F700526ED4 /* CoreMedia.framework */; };
+		75D5445F1E67062200526ED4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444C1E6704D800526ED4 /* CoreGraphics.framework */; };
 		75EC7CAF1D87064D00A06B74 /* RTRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7C9C1D87064D00A06B74 /* RTRViewController.m */; };
 		75EC7CB01D87064D00A06B74 /* RTRSelectedAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7C9E1D87064D00A06B74 /* RTRSelectedAreaView.m */; };
 		75EC7CB41D87064D00A06B74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CA41D87064D00A06B74 /* main.m */; };
 		75EC7CB71D87064D00A06B74 /* RTRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */; };
 		75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */; };
 		75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CBA1D87069200A06B74 /* Icons.xcassets */; };
-		75EC7CC51D87403B00A06B74 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EC7CC41D87403B00A06B74 /* libc++.tbd */; };
-		CF3F513E1DD0D8E300145C0D /* license in Resources */ = {isa = PBXBuildFile; fileRef = CF3F513D1DD0D8E300145C0D /* license */; };
-		CFE651B61DD0A4F4000E4B5F /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75EC7CBD1D87078700A06B74 /* AbbyyRtrSDK.framework */; };
-		CFE651B71DD0A4F4000E4B5F /* AbbyyRtrSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 75EC7CBD1D87078700A06B74 /* AbbyyRtrSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF3F513E1DD0D8E300145C0D /* AbbyyRtrSdk.license in Resources */ = {isa = PBXBuildFile; fileRef = CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */; };
 		CFE651D21DD0B256000E4B5F /* Brazil.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFBF1D875C2A00B2A70A /* Brazil.edc */; };
 		CFE651D31DD0B256000E4B5F /* English.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFC41D875C2A00B2A70A /* English.edc */; };
 		CFE651D41DD0B256000E4B5F /* French.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFC81D875C2A00B2A70A /* French.edc */; };
@@ -31,8 +37,8 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		75B3AFF41D875C5200B2A70A /* Copy Dictionaries */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = "";
+			buildActionMask = 12;
+			dstPath = Dictionaries;
 			dstSubfolderSpec = 7;
 			files = (
 				CFE651D21DD0B256000E4B5F /* Brazil.edc in Copy Dictionaries */,
@@ -44,34 +50,24 @@
 				CFE651D81DD0B256000E4B5F /* Spanish.edc in Copy Dictionaries */,
 			);
 			name = "Copy Dictionaries";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		75B3B0081D875D8D00B2A70A /* Copy Patterns */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = "";
+			buildActionMask = 12;
+			dstPath = Patterns;
 			dstSubfolderSpec = 7;
 			files = (
 				CFE651DB1DD0B290000E4B5F /* European.rom in Copy Patterns */,
 				CFE651DC1DD0B290000E4B5F /* FindText.rom in Copy Patterns */,
 			);
 			name = "Copy Patterns";
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CFE651B81DD0A4F4000E4B5F /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CFE651B71DD0A4F4000E4B5F /* AbbyyRtrSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
 		75B3AFBF1D875C2A00B2A70A /* Brazil.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brazil.edc; sourceTree = "<group>"; };
 		75B3AFC41D875C2A00B2A70A /* English.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = English.edc; sourceTree = "<group>"; };
 		75B3AFC81D875C2A00B2A70A /* French.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = French.edc; sourceTree = "<group>"; };
@@ -81,6 +77,15 @@
 		75B3AFD11D875C2A00B2A70A /* Spanish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Spanish.edc; sourceTree = "<group>"; };
 		75B3AFD41D875C2A00B2A70A /* European.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = European.rom; sourceTree = "<group>"; };
 		75B3AFD51D875C2A00B2A70A /* FindText.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = FindText.rom; sourceTree = "<group>"; };
+		75CA779D1E6D7EA300750492 /* Readme.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Readme.html; path = ../Readme.html; sourceTree = "<group>"; };
+		75D544481E6704BF00526ED4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		75D5444A1E6704CB00526ED4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		75D5444C1E6704D800526ED4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		75D5444E1E6704F700526ED4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		75D544501E67050200526ED4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		75D544521E67051C00526ED4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		75D544561E67056300526ED4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		75D5445A1E6705AC00526ED4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		75EC7C951D87062500A06B74 /* TextCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75EC7C9B1D87064D00A06B74 /* RTRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRViewController.h; sourceTree = "<group>"; };
 		75EC7C9C1D87064D00A06B74 /* RTRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRViewController.m; sourceTree = "<group>"; };
@@ -92,9 +97,7 @@
 		75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRAppDelegate.m; sourceTree = "<group>"; };
 		75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		75EC7CBA1D87069200A06B74 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		75EC7CBD1D87078700A06B74 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AbbyyRtrSDK.framework; path = TextCapture/AbbyyRtrSDK.framework; sourceTree = "<group>"; };
-		75EC7CC41D87403B00A06B74 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		CF3F513D1DD0D8E300145C0D /* license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license; path = assets/license; sourceTree = "<group>"; };
+		CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AbbyyRtrSdk.license; sourceTree = "<group>"; };
 		CFC416E71DC8E2F200D1112A /* TextCapture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextCapture.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,15 +106,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFE651B61DD0A4F4000E4B5F /* AbbyyRtrSDK.framework in Frameworks */,
-				75EC7CC51D87403B00A06B74 /* libc++.tbd in Frameworks */,
+				75D5445F1E67062200526ED4 /* CoreGraphics.framework in Frameworks */,
+				75D5445E1E67061200526ED4 /* CoreMedia.framework in Frameworks */,
+				75D5445D1E67060300526ED4 /* CoreVideo.framework in Frameworks */,
+				75D5445C1E6705ED00526ED4 /* UIKit.framework in Frameworks */,
+				75D5445B1E6705AC00526ED4 /* QuartzCore.framework in Frameworks */,
+				75D544531E67051C00526ED4 /* Security.framework in Frameworks */,
+				75D5444B1E6704CB00526ED4 /* AVFoundation.framework in Frameworks */,
+				75D544491E6704BF00526ED4 /* libc++.tbd in Frameworks */,
+				751422A01E66F86D00289DA6 /* AbbyyRtrSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		75B3AFBE1D875C2A00B2A70A /* Dictionaries */ = {
+		7514229E1E66F81200289DA6 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				75B3AFBE1D875C2A00B2A70A /* dictionaries */,
+				75B3AFD21D875C2A00B2A70A /* patterns */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = "<group>";
+		};
+		75B3AFBE1D875C2A00B2A70A /* dictionaries */ = {
 			isa = PBXGroup;
 			children = (
 				75B3AFBF1D875C2A00B2A70A /* Brazil.edc */,
@@ -122,29 +142,45 @@
 				75B3AFCF1D875C2A00B2A70A /* Polish.edc */,
 				75B3AFD11D875C2A00B2A70A /* Spanish.edc */,
 			);
-			name = Dictionaries;
-			path = assets/dictionaries;
+			path = dictionaries;
 			sourceTree = "<group>";
 		};
-		75B3AFD21D875C2A00B2A70A /* Patterns */ = {
+		75B3AFD21D875C2A00B2A70A /* patterns */ = {
 			isa = PBXGroup;
 			children = (
 				75B3AFD41D875C2A00B2A70A /* European.rom */,
 				75B3AFD51D875C2A00B2A70A /* FindText.rom */,
 			);
-			name = Patterns;
-			path = assets/patterns;
+			path = patterns;
+			sourceTree = "<group>";
+		};
+		75CA77991E6D7D6A00750492 /* License */ = {
+			isa = PBXGroup;
+			children = (
+				CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */,
+			);
+			name = License;
+			path = ../License;
+			sourceTree = "<group>";
+		};
+		75CA779A1E6D7D7A00750492 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */,
+			);
+			name = libs;
+			path = ../libs;
 			sourceTree = "<group>";
 		};
 		75EC7C721D8705C600A06B74 = {
 			isa = PBXGroup;
 			children = (
-				CF3F513D1DD0D8E300145C0D /* license */,
-				75B3AFBE1D875C2A00B2A70A /* Dictionaries */,
-				75B3AFD21D875C2A00B2A70A /* Patterns */,
+				75CA779D1E6D7EA300750492 /* Readme.html */,
+				7514229E1E66F81200289DA6 /* assets */,
+				75CA779A1E6D7D7A00750492 /* libs */,
+				75CA77991E6D7D6A00750492 /* License */,
 				75EC7C961D87064D00A06B74 /* TextCapture */,
 				75EC7C951D87062500A06B74 /* TextCapture.app */,
-				75EC7CBD1D87078700A06B74 /* AbbyyRtrSDK.framework */,
 				75EC7CC31D87403B00A06B74 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -170,7 +206,14 @@
 		75EC7CC31D87403B00A06B74 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				75EC7CC41D87403B00A06B74 /* libc++.tbd */,
+				75D5444A1E6704CB00526ED4 /* AVFoundation.framework */,
+				75D5444C1E6704D800526ED4 /* CoreGraphics.framework */,
+				75D5444E1E6704F700526ED4 /* CoreMedia.framework */,
+				75D544501E67050200526ED4 /* CoreVideo.framework */,
+				75D544481E6704BF00526ED4 /* libc++.tbd */,
+				75D5445A1E6705AC00526ED4 /* QuartzCore.framework */,
+				75D544521E67051C00526ED4 /* Security.framework */,
+				75D544561E67056300526ED4 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -187,7 +230,6 @@
 				75EC7C791D8705C600A06B74 /* Resources */,
 				75B3AFF41D875C5200B2A70A /* Copy Dictionaries */,
 				75B3B0081D875D8D00B2A70A /* Copy Patterns */,
-				CFE651B81DD0A4F4000E4B5F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -204,7 +246,6 @@
 		75EC7C731D8705C600A06B74 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = ABBYY;
 				TargetAttributes = {
 					75EC7C7A1D8705C600A06B74 = {
@@ -218,8 +259,8 @@
 					};
 				};
 			};
-			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "Samples" */;
-			compatibilityVersion = "Xcode 3.2";
+			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "TextCapture" */;
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -241,7 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF3F513E1DD0D8E300145C0D /* license in Resources */,
+				CF3F513E1DD0D8E300145C0D /* AbbyyRtrSdk.license in Resources */,
 				75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */,
 				75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */,
 			);
@@ -289,7 +330,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q58QAQTUTZ;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -307,7 +347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -340,7 +380,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = Q58QAQTUTZ;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -352,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -365,21 +404,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					../../lib,
-					"$(PROJECT_DIR)/TextCapture",
-				);
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				FRAMEWORK_SEARCH_PATHS = ../libs;
 				INFOPLIST_FILE = "$(SRCROOT)/TextCapture/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -388,28 +416,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					../../lib,
-					"$(PROJECT_DIR)/TextCapture",
-				);
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				FRAMEWORK_SEARCH_PATHS = ../libs;
 				INFOPLIST_FILE = "$(SRCROOT)/TextCapture/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "Samples" */ = {
+		75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "TextCapture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75EC7C901D8705C600A06B74 /* Debug */,

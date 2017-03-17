@@ -1,15 +1,14 @@
-// Copyright (C) ABBYY (BIT Software), 1993 - 2014. All rights reserved.
-// Author: Sasha Mertvetsov
+// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
+// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
 
 import UIKit
 import AVFoundation
 
-
 class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AVCaptureVideoDataOutputSampleBufferDelegate, RTRRecognitionServiceDelegate {
     
     /// Cell ID for languagesTableView
-    private let AFTVideoScreenCellName = "VideoScreenCell"
-    private let AFTTextRegionsLayerName = "TextRegionsLayer"
+    private let RTRVideoScreenCellName = "VideoScreenCell"
+    private let RTRTextRegionsLayerName = "TextRegionsLayer"
     
     /// View with video preview layer
     @IBOutlet weak var previewView: UIView!
@@ -56,7 +55,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let licensePath = (Bundle.main.bundlePath as NSString).appendingPathComponent("license")
+        let licensePath = (Bundle.main.bundlePath as NSString).appendingPathComponent("AbbyyRtrSdk.license")
 
         self.engine = RTREngine.sharedEngine(withLicense: NSData(contentsOfFile: licensePath) as Data!)
         assert(self.engine != nil)
@@ -64,7 +63,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.textCaptureService = self.engine?.createTextCaptureService(with: self)
         self.textCaptureService?.setRecognitionLanguages(selectedRecognitionLanguages)
         
-        self.languagesTableView.register(UITableViewCell.self, forCellReuseIdentifier: AFTVideoScreenCellName)
+        self.languagesTableView.register(UITableViewCell.self, forCellReuseIdentifier: RTRVideoScreenCellName)
         self.languagesTableView.tableFooterView = UIView(frame: CGRect.zero)
         self.languagesTableView.isHidden = true
         
@@ -110,11 +109,6 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.updatePreviewLayerFrame()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -246,9 +240,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.languagesTableView.isHidden = true
     }
     
-//# MARK: - Drawing CMocrAreas
+//# MARK: - Drawing result
     
-    private func processMocr(_ areas: [RTRTextLine], _ mergeStatus:RTRResultStabilityStatus) {
+    private func processResult(_ areas: [RTRTextLine], _ mergeStatus:RTRResultStabilityStatus) {
         DispatchQueue.main.async {
             if !self.captureButton.isSelected {
                 return
@@ -259,46 +253,40 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 self.whiteBackgroundView.isHidden = false
             }
             
-            self.drawMocr(areas, mergeStatus) 
+            self.drawTextLines(areas, mergeStatus)
         }
     }
     
-    private func drawMocr(_ areas: [RTRTextLine], _ progress:RTRResultStabilityStatus) {
+    private func drawTextLines(_ textLines: [RTRTextLine], _ progress:RTRResultStabilityStatus) {
         self.clearScreenFromRegions()
         
         let textRegionsLayer = CALayer()
         textRegionsLayer.frame = self.previewLayer!.frame
-        textRegionsLayer.name = AFTTextRegionsLayerName
+        textRegionsLayer.name = RTRTextRegionsLayerName
         
-        for textArea in areas {
-            self.drawCMocrOnPhoto(textArea, textRegionsLayer, progress)
+        for textLine in textLines {
+            self.drawTextLine(textLine, textRegionsLayer, progress)
         }
         
         self.previewView.layer.addSublayer(textRegionsLayer)
     }
-    
-    ///Drawing rectangle by CMocrTextAreaOnPhoto object and layer with recognized text.
-    func drawCMocrOnPhoto(_ textArea: RTRTextLine, _ layer: CALayer, _ progress: RTRResultStabilityStatus) {
-        let topLeft = self.scaledPoint(cMocrPoint: textArea.quadrangle[0] as! NSValue) 
-        let bottomLeft = self.scaledPoint(cMocrPoint: textArea.quadrangle[1] as! NSValue) 
-        let bottomRight = self.scaledPoint(cMocrPoint: textArea.quadrangle[2] as! NSValue) 
-        let topRight = self.scaledPoint(cMocrPoint: textArea.quadrangle[3] as! NSValue)
-    
-        //CMocrTextAreaOnPhoto.quadrangle is a projection of the rectangle in space on the screen plane
+
+    func drawTextLine(_ textLine: RTRTextLine, _ layer: CALayer, _ progress: RTRResultStabilityStatus) {
+        let topLeft = self.scaledPoint(cMocrPoint: textLine.quadrangle[0] as! NSValue)
+        let bottomLeft = self.scaledPoint(cMocrPoint: textLine.quadrangle[1] as! NSValue)
+        let bottomRight = self.scaledPoint(cMocrPoint: textLine.quadrangle[2] as! NSValue)
+        let topRight = self.scaledPoint(cMocrPoint: textLine.quadrangle[3] as! NSValue)
+
         self.drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress) 
         
-        let recognizedString = textArea.text 
-        if recognizedString == nil {
-            //If using findTextAreasOnImage - Don't draw layer with text
-            return 
-        }
+        let recognizedString = textLine.text
         
         let textLayer = CATextLayer()
         let textWidth = self.distanceBetween(topLeft, topRight) 
         let textHeight = self.distanceBetween(topLeft, bottomLeft) 
         let rectForTextLayer = CGRect(x: bottomLeft.x, y: bottomLeft.y, width: textWidth, height: textHeight) 
         
-        //Selecting the initial font size by rectangle
+        // Selecting the initial font size by rectangle
         let textFont = self.font(string: recognizedString!, rect: rectForTextLayer)
         textLayer.font = textFont
         textLayer.fontSize = textFont.pointSize
@@ -307,7 +295,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         textLayer.string = recognizedString
         textLayer.frame = rectForTextLayer
         
-        //Rotate the text layer
+        // Rotate the text layer
         let angle = asin((bottomRight.y - bottomLeft.y) / self.distanceBetween(bottomLeft, bottomRight))
         textLayer.anchorPoint = CGPoint(x: 0, y: 0)
         textLayer.position = bottomLeft
@@ -345,14 +333,14 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    ///  Remove all visible regions
+    /// Remove all visible regions
     private func clearScreenFromRegions() {
         // Get all visible regions
         let sublayers = self.previewView.layer.sublayers
         
         // Remove all layers with name - TextRegionsLayer
         for layer in sublayers! {
-            if layer.name == AFTTextRegionsLayerName {
+            if layer.name == RTRTextRegionsLayerName {
                 layer.removeFromSuperlayer()
             }
         }
@@ -410,10 +398,8 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
 //# MARK: - RTRRecognitionServiceDelegate
-    // - (void)onBufferProcessedWithTextLines:(NSArray*)textLines resultStatus:(RTRResultStabilityStatus)resultStatus;
     func onBufferProcessed(withTextLines textLines: [Any]!, resultStatus: RTRResultStabilityStatus) {
-        print("status %i areas %i", resultStatus, textLines.count)
-        self.processMocr(textLines as! [RTRTextLine], resultStatus)
+        self.processResult(textLines as! [RTRTextLine], resultStatus)
     }
     
     func recognitionProgress(_ progress: Int32, warningCode: RTRCallbackWarningCode) {

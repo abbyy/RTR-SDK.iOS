@@ -1,5 +1,5 @@
-// Copyright (C) ABBYY (BIT Software), 1993 - 2014. All rights reserved.
-// Author: Sasha Mertvetsov
+// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
+// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
 
 import UIKit
 

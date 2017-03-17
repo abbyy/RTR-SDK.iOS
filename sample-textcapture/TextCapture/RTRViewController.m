@@ -1,4 +1,4 @@
-// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC
+// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
 // ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
 
 #import "RTRViewController.h"
@@ -69,7 +69,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	// Default recognition language.
 	_selectedRecognitionLanguages = [[NSSet setWithObject:@"English"] mutableCopy];
 
-	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"license"];
+	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"AbbyyRtrSdk.license"];
 	_engine = [RTREngine sharedEngineWithLicenseData:[NSData dataWithContentsOfFile:licensePath]];
 	NSAssert(_engine != nil, nil);
 
@@ -86,8 +86,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 
 	self.languagesTableView.hidden = YES;
 	[self.recognizeLanguageButton setTitle:[self languagesButtonTitle]];
-
-	__weak typeof(self) weakSelf = self;
+	__weak RTRViewController* weakSelf = self;
 	void (^completion)(BOOL) = ^(BOOL accessGranted) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[weakSelf configureCompletionAccessGranted:accessGranted];
@@ -503,36 +502,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	}
 
 	return [UIFont boldSystemFontOfSize:fontSize];
-}
-
-/// Calculate the largest font size for the string written in the given font still to fit the rectangle.
-- (CGFloat)fontSizeForString:(NSString*)string inRect:(CGRect)rect withFont:(UIFont*)font
-{
-	CGFloat minFontSize = 0.1f; // initial font size
-	CGFloat maxFontSize = 72.f;
-	CGFloat fontSize = minFontSize;
-
-	CGSize rectSize = rect.size;
-	for(;;) {
-		CGSize labelSize = [string sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]}];
-		if(rectSize.width - labelSize.width > 0 && rectSize.height - labelSize.height > 0) {
-			minFontSize = fontSize;
-
-			if(0.9f * rectSize.width - labelSize.width < 0 && 0.9f * rectSize.height - labelSize.height < 0) {
-				break;
-			}
-		} else {
-			maxFontSize = fontSize;
-		}
-
-		if(ABS(minFontSize - maxFontSize) < 0.01) {
-			break;
-		}
-
-		fontSize = (minFontSize + maxFontSize) / 2;
-	}
-
-	return fontSize;
 }
 
 /// Calculate the distance between points.

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "75EC7C7A1D8705C600A06B74"
                BuildableName = "TextCapture.app"
                BlueprintName = "TextCapture"
-               ReferencedContainer = "container:Samples.xcodeproj">
+               ReferencedContainer = "container:TextCapture.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "75EC7C7A1D8705C600A06B74"
             BuildableName = "TextCapture.app"
             BlueprintName = "TextCapture"
-            ReferencedContainer = "container:Samples.xcodeproj">
+            ReferencedContainer = "container:TextCapture.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "75EC7C7A1D8705C600A06B74"
             BuildableName = "TextCapture.app"
             BlueprintName = "TextCapture"
-            ReferencedContainer = "container:Samples.xcodeproj">
+            ReferencedContainer = "container:TextCapture.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "75EC7C7A1D8705C600A06B74"
             BuildableName = "TextCapture.app"
             BlueprintName = "TextCapture"
-            ReferencedContainer = "container:Samples.xcodeproj">
+            ReferencedContainer = "container:TextCapture.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

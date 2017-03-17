@@ -23,8 +23,8 @@
 		43BC86351DA442D700FC04B0 /* Spanish.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 43BC85F51DA43E6B00FC04B0 /* Spanish.edc */; };
 		43BC863B1DA4436A00FC04B0 /* European.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 43BC86131DA43E9600FC04B0 /* European.rom */; };
 		43BC863C1DA4436A00FC04B0 /* FindText.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 43BC86141DA43E9600FC04B0 /* FindText.rom */; };
-		CF2C54321DD1C132006B70FB /* license in Resources */ = {isa = PBXBuildFile; fileRef = CF2C54311DD1C132006B70FB /* license */; };
-		CF2C54331DD1C18C006B70FB /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */; };
+		75CA77A71E6D808B00750492 /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA77A61E6D808B00750492 /* AbbyyRtrSDK.framework */; };
+		CF2C54321DD1C132006B70FB /* AbbyyRtrSdk.license in Resources */ = {isa = PBXBuildFile; fileRef = CF2C54311DD1C132006B70FB /* AbbyyRtrSdk.license */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,7 +67,6 @@
 		43BC85BF1DA31E2800FC04B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43BC85C41DA31E2800FC04B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43BC85CB1DA3226D00FC04B0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AbbyyRtrSDK.framework; path = TextCapture/AbbyyRtrSDK.framework; sourceTree = "<group>"; };
 		43BC85CF1DA326F200FC04B0 /* RTRSelectedAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRSelectedAreaView.swift; sourceTree = "<group>"; };
 		43BC85D91DA3509E00FC04B0 /* RtrSamples-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RtrSamples-Bridging-Header.h"; sourceTree = "<group>"; };
 		43BC85DC1DA4330200FC04B0 /* RTRHexColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRHexColor.swift; sourceTree = "<group>"; };
@@ -80,7 +79,9 @@
 		43BC85F51DA43E6B00FC04B0 /* Spanish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Spanish.edc; sourceTree = "<group>"; };
 		43BC86131DA43E9600FC04B0 /* European.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = European.rom; sourceTree = "<group>"; };
 		43BC86141DA43E9600FC04B0 /* FindText.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = FindText.rom; sourceTree = "<group>"; };
-		CF2C54311DD1C132006B70FB /* license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license; path = assets/license; sourceTree = "<group>"; };
+		75CA779F1E6D7F2200750492 /* Readme.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Readme.html; path = ../Readme.html; sourceTree = "<group>"; };
+		75CA77A61E6D808B00750492 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
+		CF2C54311DD1C132006B70FB /* AbbyyRtrSdk.license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AbbyyRtrSdk.license; sourceTree = "<group>"; };
 		CF5693381DCB53D3006059E2 /* TextCapture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextCapture.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,8 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75CA77A71E6D808B00750492 /* AbbyyRtrSDK.framework in Frameworks */,
 				43BC85CC1DA3226D00FC04B0 /* libc++.tbd in Frameworks */,
-				CF2C54331DD1C18C006B70FB /* AbbyyRtrSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,9 +101,10 @@
 		43BC85AC1DA31E2800FC04B0 = {
 			isa = PBXGroup;
 			children = (
-				CF2C54311DD1C132006B70FB /* license */,
-				43BC86111DA43E8A00FC04B0 /* Patterns */,
-				43BC85E01DA43E5600FC04B0 /* Dictionaries */,
+				75CA779F1E6D7F2200750492 /* Readme.html */,
+				75364CBE1E6707BC00B7F51E /* assets */,
+				75CA77A11E6D7F4800750492 /* libs */,
+				75CA77A21E6D7F4E00750492 /* License */,
 				43BC85B71DA31E2800FC04B0 /* TextCapture */,
 				43BC85B61DA31E2800FC04B0 /* Products */,
 				43BC85CA1DA3226D00FC04B0 /* Frameworks */,
@@ -136,13 +138,12 @@
 		43BC85CA1DA3226D00FC04B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				43BC85CD1DA3229B00FC04B0 /* AbbyyRtrSDK.framework */,
 				43BC85CB1DA3226D00FC04B0 /* libc++.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		43BC85E01DA43E5600FC04B0 /* Dictionaries */ = {
+		43BC85E01DA43E5600FC04B0 /* dictionaries */ = {
 			isa = PBXGroup;
 			children = (
 				43BC85E11DA43E6B00FC04B0 /* Brazil.edc */,
@@ -153,18 +154,44 @@
 				43BC85F21DA43E6B00FC04B0 /* Polish.edc */,
 				43BC85F51DA43E6B00FC04B0 /* Spanish.edc */,
 			);
-			name = Dictionaries;
-			path = assets/dictionaries;
+			path = dictionaries;
 			sourceTree = "<group>";
 		};
-		43BC86111DA43E8A00FC04B0 /* Patterns */ = {
+		43BC86111DA43E8A00FC04B0 /* patterns */ = {
 			isa = PBXGroup;
 			children = (
 				43BC86131DA43E9600FC04B0 /* European.rom */,
 				43BC86141DA43E9600FC04B0 /* FindText.rom */,
 			);
-			name = Patterns;
-			path = assets/patterns;
+			path = patterns;
+			sourceTree = "<group>";
+		};
+		75364CBE1E6707BC00B7F51E /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				43BC85E01DA43E5600FC04B0 /* dictionaries */,
+				43BC86111DA43E8A00FC04B0 /* patterns */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = "<group>";
+		};
+		75CA77A11E6D7F4800750492 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				75CA77A61E6D808B00750492 /* AbbyyRtrSDK.framework */,
+			);
+			name = libs;
+			path = ../libs;
+			sourceTree = "<group>";
+		};
+		75CA77A21E6D7F4E00750492 /* License */ = {
+			isa = PBXGroup;
+			children = (
+				CF2C54311DD1C132006B70FB /* AbbyyRtrSdk.license */,
+			);
+			name = License;
+			path = ../License;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,7 +237,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "Samples" */;
+			buildConfigurationList = 43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "TextCapture" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -233,7 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF2C54321DD1C132006B70FB /* license in Resources */,
+				CF2C54321DD1C132006B70FB /* AbbyyRtrSdk.license in Resources */,
 				43BC85C01DA31E2800FC04B0 /* Assets.xcassets in Resources */,
 				43BC85BE1DA31E2800FC04B0 /* Main.storyboard in Resources */,
 			);
@@ -371,22 +398,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TextCapture",
+					../libs,
 				);
 				INFOPLIST_FILE = TextCapture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -397,22 +418,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TextCapture/TextCapture.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TextCapture",
+					../libs,
 				);
 				INFOPLIST_FILE = TextCapture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -421,7 +436,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "Samples" */ = {
+		43BC85B01DA31E2800FC04B0 /* Build configuration list for PBXProject "TextCapture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43BC85C51DA31E2800FC04B0 /* Debug */,
