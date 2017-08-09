@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RTRProgressView">
+            <connections>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="24"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXI-JE-DdI">
+                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="OkQ-Jk-gIQ"/>
+                        <constraint firstAttribute="height" constant="24" id="iBh-7p-wCz"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miR-fT-y15">
+                    <rect key="frame" x="29" y="0.0" width="24" height="24"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="KlJ-61-iyN"/>
+                        <constraint firstAttribute="width" constant="24" id="laY-97-FT6"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="flD-3f-bGg">
+                    <rect key="frame" x="58" y="0.0" width="24" height="24"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="EfT-vv-Pgz"/>
+                        <constraint firstAttribute="height" constant="24" id="wks-HW-Xgw"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9C-JA-oD3">
+                    <rect key="frame" x="87" y="0.0" width="24" height="24"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="5Rk-uV-elC"/>
+                        <constraint firstAttribute="height" constant="24" id="JaT-SQ-AkG"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m4O-X9-mVS">
+                    <rect key="frame" x="116" y="0.0" width="24" height="24"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="Yhl-TI-TYi"/>
+                        <constraint firstAttribute="width" constant="24" id="rjk-wh-A1K"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="miR-fT-y15" secondAttribute="bottom" id="1pN-cg-ypl"/>
+                <constraint firstItem="y9C-JA-oD3" firstAttribute="leading" secondItem="flD-3f-bGg" secondAttribute="trailing" constant="5" id="6BF-t6-erA"/>
+                <constraint firstAttribute="bottom" secondItem="flD-3f-bGg" secondAttribute="bottom" id="8g6-e0-3Nn"/>
+                <constraint firstItem="y9C-JA-oD3" firstAttribute="top" secondItem="1" secondAttribute="top" id="An3-VW-Fbg"/>
+                <constraint firstItem="miR-fT-y15" firstAttribute="leading" secondItem="VXI-JE-DdI" secondAttribute="trailing" constant="5" id="B0f-WN-VPs"/>
+                <constraint firstItem="m4O-X9-mVS" firstAttribute="leading" secondItem="y9C-JA-oD3" secondAttribute="trailing" constant="5" id="Hew-hn-1gd"/>
+                <constraint firstAttribute="bottom" secondItem="VXI-JE-DdI" secondAttribute="bottom" id="JRv-Gb-Bwp"/>
+                <constraint firstItem="VXI-JE-DdI" firstAttribute="top" secondItem="1" secondAttribute="top" id="LiZ-1a-CFd"/>
+                <constraint firstItem="m4O-X9-mVS" firstAttribute="top" secondItem="1" secondAttribute="top" id="NJy-lw-WMW"/>
+                <constraint firstAttribute="bottom" secondItem="y9C-JA-oD3" secondAttribute="bottom" id="Uee-6i-WVV"/>
+                <constraint firstItem="flD-3f-bGg" firstAttribute="top" secondItem="1" secondAttribute="top" id="YlX-rP-klf"/>
+                <constraint firstItem="flD-3f-bGg" firstAttribute="leading" secondItem="miR-fT-y15" secondAttribute="trailing" constant="5" id="fL0-qE-f1t"/>
+                <constraint firstItem="VXI-JE-DdI" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="h7Q-DA-xxv"/>
+                <constraint firstItem="miR-fT-y15" firstAttribute="top" secondItem="1" secondAttribute="top" id="n47-dW-pOq"/>
+                <constraint firstAttribute="trailing" secondItem="m4O-X9-mVS" secondAttribute="trailing" id="qWE-L4-ZYT"/>
+                <constraint firstAttribute="bottom" secondItem="m4O-X9-mVS" secondAttribute="bottom" id="rLS-67-Qng"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="37" y="73"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

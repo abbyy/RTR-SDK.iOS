@@ -7,6 +7,7 @@
 #import <AbbyyRtrSDK/AbbyyRtrSDK.h>
 
 #import "RTRSelectedAreaView.h"
+#import "RTRProgressView.h"
 
 /// Cell ID for languagesTableView.
 static NSString* const RTRTableCellID = @"RTRTableCellID";
@@ -14,12 +15,12 @@ static NSString* const RTRTableCellID = @"RTRTableCellID";
 static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 
 @interface RTRViewController () <AVCaptureVideoDataOutputSampleBufferDelegate,
-	RTRRecognitionServiceDelegate, UITableViewDelegate, UITableViewDataSource>
+	RTRTextCaptureServiceDelegate, UITableViewDelegate, UITableViewDataSource>
 
 /// Recognition languages table.
 @property (nonatomic, weak) IBOutlet UITableView* languagesTableView;
 /// Button for show / hide table with recognition languages.
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* recognizeLanguageButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* recognitionLanguagesButton;
 
 /// View with camera preview layer.
 @property (nonatomic, weak) IBOutlet UIView* previewView;
@@ -30,6 +31,11 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 @property (nonatomic, weak) IBOutlet RTRSelectedAreaView* overlayView;
 /// White view for highlight recognition results.
 @property (nonatomic, weak) IBOutlet UIView* whiteBackgroundView;
+
+/// Label for error or warning info.
+@property (nonatomic, weak) IBOutlet UILabel* infoLabel;
+/// Progress indicator view.
+@property (nonatomic, weak) IBOutlet RTRProgressView* progressIndicatorView;
 
 @end
 
@@ -48,13 +54,19 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	/// Engine for AbbyyRtrSDK.
 	RTREngine* _engine;
 	/// Service for runtime recognition.
-	id<RTRRecognitionService> _textCaptureService;
+	id<RTRTextCaptureService> _textCaptureService;
 
 	/// Selected recognition languages.
 	NSMutableSet* _selectedRecognitionLanguages;
 
 	/// Area of interest in view coordinates.
 	CGRect _selectedArea;
+}
+
+/// Shortcut. Perform block asynchronously on main thread.
+static void performBlockOnMainThread(NSInteger delay, void(^block)())
+{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
 }
 
 #pragma mark - UIView LifeCycle
@@ -80,15 +92,17 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 
 	self.languagesTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
+	[self prepareUIForRecognition];
+
 	self.captureButton.selected = NO;
 	[self.captureButton setTitle:@"Stop" forState:UIControlStateSelected];
 	[self.captureButton setTitle:@"Start" forState:UIControlStateNormal];
 
 	self.languagesTableView.hidden = YES;
-	[self.recognizeLanguageButton setTitle:[self languagesButtonTitle]];
+	[self.recognitionLanguagesButton setTitle:[self languagesButtonTitle]];
 	__weak RTRViewController* weakSelf = self;
 	void (^completion)(BOOL) = ^(BOOL accessGranted) {
-		dispatch_async(dispatch_get_main_queue(), ^{
+		performBlockOnMainThread(0, ^{
 			[weakSelf configureCompletionAccessGranted:accessGranted];
 		});
 	};
@@ -162,6 +176,11 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	[_textCaptureService stopTasks];
 
 	[super viewWillDisappear:animated];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+	return YES;
 }
 
 - (void)viewDidLayoutSubviews
@@ -243,11 +262,17 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	self.captureButton.selected = !self.captureButton.selected;
 
 	if(self.captureButton.selected) {
-		[self clearScreenFromRegions];
-		self.whiteBackgroundView.hidden = YES;
-    } else {
-        [_textCaptureService stopTasks];
-    }
+		[self prepareUIForRecognition];
+	} else {
+		[_textCaptureService stopTasks];
+	}
+}
+
+- (void)prepareUIForRecognition
+{
+	[self clearScreenFromRegions];
+	self.whiteBackgroundView.hidden = YES;
+	[self.progressIndicatorView setProgress:0 color:[self progressColor:0]];
 }
 
 - (IBAction)onReconitionLanguages
@@ -333,12 +358,15 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 		return;
 	}
 
-	[connection setVideoOrientation:[self videoOrientationFromInterfaceOrientation:
-		[UIApplication sharedApplication].statusBarOrientation]];
+	AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
+		[UIApplication sharedApplication].statusBarOrientation];
+	if(connection.videoOrientation != videoOrientation) {
+		[connection setVideoOrientation:videoOrientation];
+		return;
+	}
 
 	[_textCaptureService addSampleBuffer:sampleBuffer];
 }
-
 
 #pragma mark -
 
@@ -356,7 +384,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	return resultTitle;
 }
 
-#pragma mark - MOCR lazy instatiations
+#pragma mark -
 
 - (NSArray*)recognitionLanguages
 {
@@ -368,19 +396,19 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 		@"Polish",
 		@"PortugueseBrazilian",
 		@"Russian",
-		@"Spanish",
 		@"ChineseSimplified",
 		@"ChineseTraditional",
 		@"Japanese",
-		@"Korean"
+		@"Korean",
+		@"Spanish"
 	];
 }
 
-- (void)updateLogMessage:(NSString*)logMessage
+- (void)updateLogMessage:(NSString*)message
 {
-	if(logMessage.length > 0) {
-		NSLog(@"%@", logMessage);
-	}
+	performBlockOnMainThread(0, ^{
+		self.infoLabel.text = message;
+	});
 }
 
 #pragma mark - Drawing results
@@ -419,11 +447,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 /// and a separate recognized text layer, if there is any recognized text.
 - (void)drawTextLine:(RTRTextLine*)textLine inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
 {
-	CGPoint topLeft = [self scaledPointFromCMocrPoint:textLine.quadrangle[0]];
-	CGPoint bottomLeft = [self scaledPointFromCMocrPoint:textLine.quadrangle[1]];
-	CGPoint bottomRight = [self scaledPointFromCMocrPoint:textLine.quadrangle[2]];
-	CGPoint topRight = [self scaledPointFromCMocrPoint:textLine.quadrangle[3]];
-	[self drawQuadrangleWithPoint0:topLeft Point1:bottomLeft Point2:bottomRight Point3:topRight inLayer:layer progress:progress];
+	[self drawQuadrangle:textLine.quadrangle inLayer:layer progress:progress];
 
 	NSString* recognizedString = textLine.text;
 	if(recognizedString == nil) {
@@ -432,6 +456,10 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	
 	CATextLayer* textLayer = [CATextLayer layer];
 	// Creating the text layer rectangle: it should be close to the quadrangle drawn previously.
+	CGPoint topLeft = [self scaledPointFromImagePoint:textLine.quadrangle[0]];
+	CGPoint bottomLeft = [self scaledPointFromImagePoint:textLine.quadrangle[1]];
+	CGPoint bottomRight = [self scaledPointFromImagePoint:textLine.quadrangle[2]];
+	CGPoint topRight = [self scaledPointFromImagePoint:textLine.quadrangle[3]];
 	CGRect rectForTextLayer = CGRectMake(bottomLeft.x, bottomLeft.y,
 		[self distanceBetweenPoint:topLeft andPoint:topRight],
 		[self distanceBetweenPoint:topLeft andPoint:bottomLeft]);
@@ -457,15 +485,23 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 }
 
 /// Drawing a UIBezierPath using the quadrangle vertices.
-- (void)drawQuadrangleWithPoint0:(CGPoint)p0 Point1:(CGPoint)p1 Point2:(CGPoint)p2 Point3:(CGPoint)p3
-	inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
+- (void)drawQuadrangle:(NSArray<NSValue*>*)quadrangle inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
 {
+	if(quadrangle.count == 0) {
+		return;
+	}
+
 	CAShapeLayer* area = [CAShapeLayer layer];
 	UIBezierPath* recognizedAreaPath = [UIBezierPath bezierPath];
-	[recognizedAreaPath moveToPoint:p0];
-	[recognizedAreaPath addLineToPoint:p1];
-	[recognizedAreaPath addLineToPoint:p2];
-	[recognizedAreaPath addLineToPoint:p3];
+	[quadrangle enumerateObjectsUsingBlock:^(NSValue* point, NSUInteger idx, BOOL* stop) {
+		CGPoint scaledPoint = [self scaledPointFromImagePoint:point];
+		if(idx == 0) {
+			[recognizedAreaPath moveToPoint:scaledPoint];
+		} else {
+			[recognizedAreaPath addLineToPoint:scaledPoint];
+		}
+	}];
+
 	[recognizedAreaPath closePath];
 	area.path = recognizedAreaPath.CGPath;
 	area.strokeColor = [[self progressColor:progress] CGColor];
@@ -512,7 +548,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 }
 
 /// Scale the point coordinates.
-- (CGPoint)scaledPointFromCMocrPoint:(NSValue*)mocrPoint
+- (CGPoint)scaledPointFromImagePoint:(NSValue*)pointValue
 {
 	CGFloat layerWidth = _previewLayer.bounds.size.width;
 	CGFloat layerHeight = _previewLayer.bounds.size.height;
@@ -520,7 +556,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	CGFloat widthScale = layerWidth / _imageBufferSize.width;
 	CGFloat heightScale = layerHeight / _imageBufferSize.height;
 	
-	CGPoint point = [mocrPoint CGPointValue];
+	CGPoint point = [pointValue CGPointValue];
 	point.x *= widthScale;
 	point.y *= heightScale;
 	
@@ -531,15 +567,17 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 
 - (void)onBufferProcessedWithTextLines:(NSArray*)textLines resultStatus:(RTRResultStabilityStatus)resultStatus
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	performBlockOnMainThread(0, ^{
 		if(!self.captureButton.selected) {
 			return;
 		}
 
+		[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
+
 		if(resultStatus == RTRResultStabilityStable) {
 			self.captureButton.selected = NO;
 			self.whiteBackgroundView.hidden = NO;
-            [_textCaptureService stopTasks];
+			[_textCaptureService stopTasks];
 		}
 
 		[self drawTextLines:textLines progress:resultStatus];
@@ -549,12 +587,43 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 - (void)onWarning:(RTRCallbackWarningCode)warningCode
 {
 	NSString* message = [self stringFromWarningCode:warningCode];
-	[self updateLogMessage:message];
+	if(message.length > 0) {
+		if(!self.captureButton.selected) {
+			return;
+		}
+
+		[self updateLogMessage:message];
+
+		// Clear message after 2 seconds.
+		performBlockOnMainThread(2, ^{
+			[self updateLogMessage:nil];
+		});
+	}
 }
 
 - (void)onError:(NSError*)error
 {
 	NSLog(@"Error: %@", error);
+
+	performBlockOnMainThread(0, ^{
+		if(!self.captureButton.selected) {
+			return;
+		}
+
+		NSString* description = error.localizedDescription;
+		if([error.localizedDescription containsString:@"ChineseJapanese.rom"]) {
+			description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
+		} else if([error.localizedDescription containsString:@"KoreanSpecific.rom"]) {
+			description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
+		} else if([error.localizedDescription containsString:@"Russian.edc"]) {
+			description = @"Cyrillic script languages are available in EXTENDED version only. Contact us for more information.";
+		} else if([error.localizedDescription containsString:@".trdic"]) {
+			description = @"Translation is available in EXTENDED version only. Contact us for more information.";
+		}
+
+		[self updateLogMessage:description];
+		self.captureButton.selected = NO;
+	});
 }
 
 /// Human-readable descriptions for the RTRCallbackWarningCode constants.
@@ -562,12 +631,12 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 {
 	NSString* warningString;
 	switch(warningCode) {
-		case RTRCallbackWarningSmallTextSizeInFindText:
+		case RTRCallbackWarningTextTooSmall:
 			warningString = @"Text is too small";
 			break;
 
 		default:
-			warningString = @"Unknown warning code";
+			break;
 	}
 
 	return warningString;
@@ -585,7 +654,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 		[_selectedRecognitionLanguages removeObject:language];
 	}
 
-	[self.recognizeLanguageButton setTitle:[self languagesButtonTitle]];
+	[self.recognitionLanguagesButton setTitle:[self languagesButtonTitle]];
 
 	[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -604,6 +673,10 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	cell.textLabel.text = language;
 	cell.accessoryType = [_selectedRecognitionLanguages containsObject:language]
 		? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+
+	cell.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4f];
+	cell.textLabel.textColor = [UIColor whiteColor];
+	cell.tintColor = [UIColor whiteColor];
 
 	return cell;
 }

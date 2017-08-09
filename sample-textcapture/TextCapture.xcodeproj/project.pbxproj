@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		751422A01E66F86D00289DA6 /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */; };
+		75258B9C1F1FABFA00A60B21 /* RTRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75258B9A1F1FABFA00A60B21 /* RTRProgressView.m */; };
+		75258B9D1F1FABFA00A60B21 /* RTRProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75258B9B1F1FABFA00A60B21 /* RTRProgressView.xib */; };
 		75D544491E6704BF00526ED4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544481E6704BF00526ED4 /* libc++.tbd */; };
 		75D5444B1E6704CB00526ED4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444A1E6704CB00526ED4 /* AVFoundation.framework */; };
 		75D544531E67051C00526ED4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544521E67051C00526ED4 /* Security.framework */; };
@@ -68,6 +70,9 @@
 
 /* Begin PBXFileReference section */
 		7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
+		75258B991F1FABFA00A60B21 /* RTRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRProgressView.h; sourceTree = "<group>"; };
+		75258B9A1F1FABFA00A60B21 /* RTRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRProgressView.m; sourceTree = "<group>"; };
+		75258B9B1F1FABFA00A60B21 /* RTRProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTRProgressView.xib; sourceTree = "<group>"; };
 		75B3AFBF1D875C2A00B2A70A /* Brazil.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brazil.edc; sourceTree = "<group>"; };
 		75B3AFC41D875C2A00B2A70A /* English.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = English.edc; sourceTree = "<group>"; };
 		75B3AFC81D875C2A00B2A70A /* French.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = French.edc; sourceTree = "<group>"; };
@@ -188,17 +193,20 @@
 		75EC7C961D87064D00A06B74 /* TextCapture */ = {
 			isa = PBXGroup;
 			children = (
-				CFC416E71DC8E2F200D1112A /* TextCapture.entitlements */,
 				75EC7CBA1D87069200A06B74 /* Icons.xcassets */,
 				75EC7CA31D87064D00A06B74 /* Info.plist */,
 				75EC7CA41D87064D00A06B74 /* main.m */,
 				75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */,
 				75EC7CAA1D87064D00A06B74 /* RTRAppDelegate.h */,
 				75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */,
+				75258B991F1FABFA00A60B21 /* RTRProgressView.h */,
+				75258B9A1F1FABFA00A60B21 /* RTRProgressView.m */,
+				75258B9B1F1FABFA00A60B21 /* RTRProgressView.xib */,
 				75EC7C9D1D87064D00A06B74 /* RTRSelectedAreaView.h */,
 				75EC7C9E1D87064D00A06B74 /* RTRSelectedAreaView.m */,
 				75EC7C9B1D87064D00A06B74 /* RTRViewController.h */,
 				75EC7C9C1D87064D00A06B74 /* RTRViewController.m */,
+				CFC416E71DC8E2F200D1112A /* TextCapture.entitlements */,
 			);
 			path = TextCapture;
 			sourceTree = "<group>";
@@ -230,6 +238,7 @@
 				75EC7C791D8705C600A06B74 /* Resources */,
 				75B3AFF41D875C5200B2A70A /* Copy Dictionaries */,
 				75B3B0081D875D8D00B2A70A /* Copy Patterns */,
+				75006B711F20BFBF00EC4F42 /* Copy Extended Version Files */,
 			);
 			buildRules = (
 			);
@@ -260,7 +269,7 @@
 				};
 			};
 			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "TextCapture" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -282,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75258B9D1F1FABFA00A60B21 /* RTRProgressView.xib in Resources */,
 				CF3F513E1DD0D8E300145C0D /* AbbyyRtrSdk.license in Resources */,
 				75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */,
 				75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */,
@@ -289,6 +299,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		75006B711F20BFBF00EC4F42 /* Copy Extended Version Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Extended Version Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ASSET_DIR=${SRCROOT}/../assets\nPATTERNS_DIR=$ASSET_DIR/patterns\nDICTIONARIES_DIR=$ASSET_DIR/dictionaries\n\nPATTERNS_FILES_TO_COPY=(\"$PATTERNS_DIR/ChineseJapanese.rom\" \"$PATTERNS_DIR/KoreanSpecific.rom\")\n\nRUSSIAN_DICTIONARY=\"$DICTIONARIES_DIR/Russian.edc\"\n\nBUILT_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\nPATTERNS_DESTINATION_DIR=\"$BUILT_APP_DIR/Patterns\"\nDICTIONARIES_DESTINATION_DIR=\"$BUILT_APP_DIR/Dictionaries\"\n\nfor f in \"${PATTERNS_FILES_TO_COPY[@]}\"; do\n\tif [ -f \"$f\" ]; then\n\t\tcp -f \"$f\" \"$PATTERNS_DESTINATION_DIR\"\n\tfi\ndone\n\nif [ -f \"$RUSSIAN_DICTIONARY\" ]; then\n\tcp -f \"$RUSSIAN_DICTIONARY\" \"$DICTIONARIES_DESTINATION_DIR\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		75EC7C771D8705C600A06B74 /* Sources */ = {
@@ -298,6 +325,7 @@
 				75EC7CB01D87064D00A06B74 /* RTRSelectedAreaView.m in Sources */,
 				75EC7CB71D87064D00A06B74 /* RTRAppDelegate.m in Sources */,
 				75EC7CB41D87064D00A06B74 /* main.m in Sources */,
+				75258B9C1F1FABFA00A60B21 /* RTRProgressView.m in Sources */,
 				75EC7CAF1D87064D00A06B74 /* RTRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,6 +352,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -347,7 +376,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -374,6 +403,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -391,7 +421,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

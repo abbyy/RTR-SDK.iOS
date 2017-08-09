@@ -6,6 +6,6 @@ import UIKit
 @UIApplicationMain
 class RTRAppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+	var window: UIWindow?
 
 }

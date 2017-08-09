@@ -3,10 +3,11 @@
 
 #import <UIKit/UIKit.h>
 
-int main(int argc, char *argv[])
-{
-	@autoreleasepool {
-		int retVal = UIApplicationMain(argc, argv, nil, @"RTRAppDelegate");
-		return retVal;
-	}
-}
+/// View for progress indication.
+IB_DESIGNABLE
+@interface RTRProgressView : UIView
+
+/// Update progress.
+- (void)setProgress:(NSInteger)progress color:(UIColor*)color;
+
+@end

@@ -15,8 +15,8 @@ static const CGFloat CropFogBlueColorComponent = 0.f;
 static const CGFloat CropFogAlphaColorComponent = 0.7f;
 
 /// The area of interest border color.
-static const CGFloat CropBorderRedColorComponent = 0.3f;
-static const CGFloat CropBorderGreenColorComponent = 0.63f;
+static const CGFloat CropBorderRedColorComponent = 1.f;
+static const CGFloat CropBorderGreenColorComponent = 1.f;
 static const CGFloat CropBorderBlueColorComponent = 1.f;
 static const CGFloat CropBorderAlphaColorComponent = 0.5f;
 
