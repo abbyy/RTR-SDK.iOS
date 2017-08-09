@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		751422A01E66F86D00289DA6 /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */; };
+		75258B971F1F9F7700A60B21 /* RTRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75258B951F1F9F7700A60B21 /* RTRProgressView.m */; };
+		75258B981F1F9F7700A60B21 /* RTRProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75258B961F1F9F7700A60B21 /* RTRProgressView.xib */; };
+		75D544491E6704BF00526ED4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544481E6704BF00526ED4 /* libc++.tbd */; };
+		75D5444B1E6704CB00526ED4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444A1E6704CB00526ED4 /* AVFoundation.framework */; };
+		75D544531E67051C00526ED4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544521E67051C00526ED4 /* Security.framework */; };
+		75D5445B1E6705AC00526ED4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5445A1E6705AC00526ED4 /* QuartzCore.framework */; };
+		75D5445C1E6705ED00526ED4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544561E67056300526ED4 /* UIKit.framework */; };
+		75D5445D1E67060300526ED4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D544501E67050200526ED4 /* CoreVideo.framework */; };
+		75D5445E1E67061200526ED4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444E1E6704F700526ED4 /* CoreMedia.framework */; };
+		75D5445F1E67062200526ED4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D5444C1E6704D800526ED4 /* CoreGraphics.framework */; };
+		75EC7CAF1D87064D00A06B74 /* RTRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7C9C1D87064D00A06B74 /* RTRViewController.m */; };
+		75EC7CB01D87064D00A06B74 /* RTRSelectedAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7C9E1D87064D00A06B74 /* RTRSelectedAreaView.m */; };
+		75EC7CB41D87064D00A06B74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CA41D87064D00A06B74 /* main.m */; };
+		75EC7CB71D87064D00A06B74 /* RTRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */; };
+		75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */; };
+		75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CBA1D87069200A06B74 /* Icons.xcassets */; };
+		CF3F513E1DD0D8E300145C0D /* AbbyyRtrSdk.license in Resources */ = {isa = PBXBuildFile; fileRef = CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */; };
+		CFE651D21DD0B256000E4B5F /* Brazil.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFBF1D875C2A00B2A70A /* Brazil.edc */; };
+		CFE651D31DD0B256000E4B5F /* English.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFC41D875C2A00B2A70A /* English.edc */; };
+		CFE651D41DD0B256000E4B5F /* French.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFC81D875C2A00B2A70A /* French.edc */; };
+		CFE651D51DD0B256000E4B5F /* German.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFC91D875C2A00B2A70A /* German.edc */; };
+		CFE651D61DD0B256000E4B5F /* Italian.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFCD1D875C2A00B2A70A /* Italian.edc */; };
+		CFE651D71DD0B256000E4B5F /* Polish.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFCF1D875C2A00B2A70A /* Polish.edc */; };
+		CFE651D81DD0B256000E4B5F /* Spanish.edc in Copy Dictionaries */ = {isa = PBXBuildFile; fileRef = 75B3AFD11D875C2A00B2A70A /* Spanish.edc */; };
+		CFE651DB1DD0B290000E4B5F /* European.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 75B3AFD41D875C2A00B2A70A /* European.rom */; };
+		CFE651DC1DD0B290000E4B5F /* FindText.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 75B3AFD51D875C2A00B2A70A /* FindText.rom */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		75B3AFF41D875C5200B2A70A /* Copy Dictionaries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = Dictionaries;
+			dstSubfolderSpec = 7;
+			files = (
+				CFE651D21DD0B256000E4B5F /* Brazil.edc in Copy Dictionaries */,
+				CFE651D31DD0B256000E4B5F /* English.edc in Copy Dictionaries */,
+				CFE651D41DD0B256000E4B5F /* French.edc in Copy Dictionaries */,
+				CFE651D51DD0B256000E4B5F /* German.edc in Copy Dictionaries */,
+				CFE651D61DD0B256000E4B5F /* Italian.edc in Copy Dictionaries */,
+				CFE651D71DD0B256000E4B5F /* Polish.edc in Copy Dictionaries */,
+				CFE651D81DD0B256000E4B5F /* Spanish.edc in Copy Dictionaries */,
+			);
+			name = "Copy Dictionaries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75B3B0081D875D8D00B2A70A /* Copy Patterns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = Patterns;
+			dstSubfolderSpec = 7;
+			files = (
+				CFE651DB1DD0B290000E4B5F /* European.rom in Copy Patterns */,
+				CFE651DC1DD0B290000E4B5F /* FindText.rom in Copy Patterns */,
+			);
+			name = "Copy Patterns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
+		75258B941F1F9F7700A60B21 /* RTRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRProgressView.h; sourceTree = "<group>"; };
+		75258B951F1F9F7700A60B21 /* RTRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRProgressView.m; sourceTree = "<group>"; };
+		75258B961F1F9F7700A60B21 /* RTRProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTRProgressView.xib; sourceTree = "<group>"; };
+		75B3AFBF1D875C2A00B2A70A /* Brazil.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brazil.edc; sourceTree = "<group>"; };
+		75B3AFC41D875C2A00B2A70A /* English.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = English.edc; sourceTree = "<group>"; };
+		75B3AFC81D875C2A00B2A70A /* French.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = French.edc; sourceTree = "<group>"; };
+		75B3AFC91D875C2A00B2A70A /* German.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = German.edc; sourceTree = "<group>"; };
+		75B3AFCD1D875C2A00B2A70A /* Italian.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Italian.edc; sourceTree = "<group>"; };
+		75B3AFCF1D875C2A00B2A70A /* Polish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Polish.edc; sourceTree = "<group>"; };
+		75B3AFD11D875C2A00B2A70A /* Spanish.edc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Spanish.edc; sourceTree = "<group>"; };
+		75B3AFD41D875C2A00B2A70A /* European.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = European.rom; sourceTree = "<group>"; };
+		75B3AFD51D875C2A00B2A70A /* FindText.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = FindText.rom; sourceTree = "<group>"; };
+		75CA779D1E6D7EA300750492 /* Readme.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Readme.html; path = ../Readme.html; sourceTree = "<group>"; };
+		75D544481E6704BF00526ED4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		75D5444A1E6704CB00526ED4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		75D5444C1E6704D800526ED4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		75D5444E1E6704F700526ED4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		75D544501E67050200526ED4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		75D544521E67051C00526ED4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		75D544561E67056300526ED4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		75D5445A1E6705AC00526ED4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		75EC7C951D87062500A06B74 /* DataCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		75EC7C9B1D87064D00A06B74 /* RTRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRViewController.h; sourceTree = "<group>"; };
+		75EC7C9C1D87064D00A06B74 /* RTRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRViewController.m; sourceTree = "<group>"; };
+		75EC7C9D1D87064D00A06B74 /* RTRSelectedAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRSelectedAreaView.h; sourceTree = "<group>"; };
+		75EC7C9E1D87064D00A06B74 /* RTRSelectedAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRSelectedAreaView.m; sourceTree = "<group>"; };
+		75EC7CA31D87064D00A06B74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75EC7CA41D87064D00A06B74 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		75EC7CAA1D87064D00A06B74 /* RTRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRAppDelegate.h; sourceTree = "<group>"; };
+		75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRAppDelegate.m; sourceTree = "<group>"; };
+		75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		75EC7CBA1D87069200A06B74 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AbbyyRtrSdk.license; sourceTree = "<group>"; };
+		CFC416E71DC8E2F200D1112A /* DataCapture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DataCapture.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		75EC7C781D8705C600A06B74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75D5445F1E67062200526ED4 /* CoreGraphics.framework in Frameworks */,
+				75D5445E1E67061200526ED4 /* CoreMedia.framework in Frameworks */,
+				75D5445D1E67060300526ED4 /* CoreVideo.framework in Frameworks */,
+				75D5445C1E6705ED00526ED4 /* UIKit.framework in Frameworks */,
+				75D5445B1E6705AC00526ED4 /* QuartzCore.framework in Frameworks */,
+				75D544531E67051C00526ED4 /* Security.framework in Frameworks */,
+				75D5444B1E6704CB00526ED4 /* AVFoundation.framework in Frameworks */,
+				75D544491E6704BF00526ED4 /* libc++.tbd in Frameworks */,
+				751422A01E66F86D00289DA6 /* AbbyyRtrSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7514229E1E66F81200289DA6 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				75B3AFBE1D875C2A00B2A70A /* dictionaries */,
+				75B3AFD21D875C2A00B2A70A /* patterns */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = "<group>";
+		};
+		75B3AFBE1D875C2A00B2A70A /* dictionaries */ = {
+			isa = PBXGroup;
+			children = (
+				75B3AFBF1D875C2A00B2A70A /* Brazil.edc */,
+				75B3AFC41D875C2A00B2A70A /* English.edc */,
+				75B3AFC81D875C2A00B2A70A /* French.edc */,
+				75B3AFC91D875C2A00B2A70A /* German.edc */,
+				75B3AFCD1D875C2A00B2A70A /* Italian.edc */,
+				75B3AFCF1D875C2A00B2A70A /* Polish.edc */,
+				75B3AFD11D875C2A00B2A70A /* Spanish.edc */,
+			);
+			path = dictionaries;
+			sourceTree = "<group>";
+		};
+		75B3AFD21D875C2A00B2A70A /* patterns */ = {
+			isa = PBXGroup;
+			children = (
+				75B3AFD41D875C2A00B2A70A /* European.rom */,
+				75B3AFD51D875C2A00B2A70A /* FindText.rom */,
+			);
+			path = patterns;
+			sourceTree = "<group>";
+		};
+		75CA77991E6D7D6A00750492 /* License */ = {
+			isa = PBXGroup;
+			children = (
+				CF3F513D1DD0D8E300145C0D /* AbbyyRtrSdk.license */,
+			);
+			name = License;
+			path = ../License;
+			sourceTree = "<group>";
+		};
+		75CA779A1E6D7D7A00750492 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				7514229F1E66F86D00289DA6 /* AbbyyRtrSDK.framework */,
+			);
+			name = libs;
+			path = ../libs;
+			sourceTree = "<group>";
+		};
+		75EC7C721D8705C600A06B74 = {
+			isa = PBXGroup;
+			children = (
+				75CA779D1E6D7EA300750492 /* Readme.html */,
+				7514229E1E66F81200289DA6 /* assets */,
+				75CA779A1E6D7D7A00750492 /* libs */,
+				75CA77991E6D7D6A00750492 /* License */,
+				75EC7C961D87064D00A06B74 /* DataCapture */,
+				75EC7C951D87062500A06B74 /* DataCapture.app */,
+				75EC7CC31D87403B00A06B74 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		75EC7C961D87064D00A06B74 /* DataCapture */ = {
+			isa = PBXGroup;
+			children = (
+				CFC416E71DC8E2F200D1112A /* DataCapture.entitlements */,
+				75EC7CBA1D87069200A06B74 /* Icons.xcassets */,
+				75EC7CA31D87064D00A06B74 /* Info.plist */,
+				75EC7CA41D87064D00A06B74 /* main.m */,
+				75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */,
+				75EC7CAA1D87064D00A06B74 /* RTRAppDelegate.h */,
+				75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */,
+				75258B941F1F9F7700A60B21 /* RTRProgressView.h */,
+				75258B951F1F9F7700A60B21 /* RTRProgressView.m */,
+				75258B961F1F9F7700A60B21 /* RTRProgressView.xib */,
+				75EC7C9D1D87064D00A06B74 /* RTRSelectedAreaView.h */,
+				75EC7C9E1D87064D00A06B74 /* RTRSelectedAreaView.m */,
+				75EC7C9B1D87064D00A06B74 /* RTRViewController.h */,
+				75EC7C9C1D87064D00A06B74 /* RTRViewController.m */,
+			);
+			path = DataCapture;
+			sourceTree = "<group>";
+		};
+		75EC7CC31D87403B00A06B74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75D5444A1E6704CB00526ED4 /* AVFoundation.framework */,
+				75D5444C1E6704D800526ED4 /* CoreGraphics.framework */,
+				75D5444E1E6704F700526ED4 /* CoreMedia.framework */,
+				75D544501E67050200526ED4 /* CoreVideo.framework */,
+				75D544481E6704BF00526ED4 /* libc++.tbd */,
+				75D5445A1E6705AC00526ED4 /* QuartzCore.framework */,
+				75D544521E67051C00526ED4 /* Security.framework */,
+				75D544561E67056300526ED4 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		75EC7C7A1D8705C600A06B74 /* DataCapture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75EC7C921D8705C600A06B74 /* Build configuration list for PBXNativeTarget "DataCapture" */;
+			buildPhases = (
+				75EC7C771D8705C600A06B74 /* Sources */,
+				75EC7C781D8705C600A06B74 /* Frameworks */,
+				75EC7C791D8705C600A06B74 /* Resources */,
+				75B3AFF41D875C5200B2A70A /* Copy Dictionaries */,
+				75B3B0081D875D8D00B2A70A /* Copy Patterns */,
+				75258B931F1F74D400A60B21 /* Copy Extended Version Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DataCapture;
+			productName = Samples;
+			productReference = 75EC7C951D87062500A06B74 /* DataCapture.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		75EC7C731D8705C600A06B74 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = ABBYY;
+				TargetAttributes = {
+					75EC7C7A1D8705C600A06B74 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "DataCapture" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 75EC7C721D8705C600A06B74;
+			productRefGroup = 75EC7C721D8705C600A06B74;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				75EC7C7A1D8705C600A06B74 /* DataCapture */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		75EC7C791D8705C600A06B74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75258B981F1F9F7700A60B21 /* RTRProgressView.xib in Resources */,
+				CF3F513E1DD0D8E300145C0D /* AbbyyRtrSdk.license in Resources */,
+				75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */,
+				75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		75258B931F1F74D400A60B21 /* Copy Extended Version Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Extended Version Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMMON_ASSET_DIR=${SRCROOT}/../assets\nDATA_CAPTURE_ASSET_DIR=${SRCROOT}/../scenarios-datacapture/assets\n\nCHINESE_PATTERN_SOURCE_FILE=$COMMON_ASSET_DIR/patterns/ChineseJapanese.rom\nMRZ_PATTERN_SOURCE_FILE=$DATA_CAPTURE_ASSET_DIR/patterns/MRZ.rom\n\nPATTERNS_FILES_TO_COPY=(\"$CHINESE_PATTERN_SOURCE_FILE\" \"$MRZ_PATTERN_SOURCE_FILE\")\n\nBUILT_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\nPATTERNS_DESTINATION_DIR=\"$BUILT_APP_DIR/Patterns\"\n\nfor f in \"${PATTERNS_FILES_TO_COPY[@]}\"; do\n\tif [ -f \"$f\" ]; then\n\t\tcp -f \"$f\" \"$PATTERNS_DESTINATION_DIR\"\n\tfi\ndone";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		75EC7C771D8705C600A06B74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75EC7CB01D87064D00A06B74 /* RTRSelectedAreaView.m in Sources */,
+				75EC7CB71D87064D00A06B74 /* RTRAppDelegate.m in Sources */,
+				75EC7CB41D87064D00A06B74 /* main.m in Sources */,
+				75258B971F1F9F7700A60B21 /* RTRProgressView.m in Sources */,
+				75EC7CAF1D87064D00A06B74 /* RTRViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		75EC7C901D8705C600A06B74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_VERSION = "1.0.0.0-dev";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		75EC7C911D8705C600A06B74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_VERSION = "1.0.0.0-dev";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		75EC7C931D8705C600A06B74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DataCapture/DataCapture.entitlements;
+				FRAMEWORK_SEARCH_PATHS = ../libs;
+				INFOPLIST_FILE = "$(SRCROOT)/DataCapture/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-datacapture";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		75EC7C941D8705C600A06B74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DataCapture/DataCapture.entitlements;
+				FRAMEWORK_SEARCH_PATHS = ../libs;
+				INFOPLIST_FILE = "$(SRCROOT)/DataCapture/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-datacapture";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "DataCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75EC7C901D8705C600A06B74 /* Debug */,
+				75EC7C911D8705C600A06B74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		75EC7C921D8705C600A06B74 /* Build configuration list for PBXNativeTarget "DataCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75EC7C931D8705C600A06B74 /* Debug */,
+				75EC7C941D8705C600A06B74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 75EC7C731D8705C600A06B74 /* Project object */;
+}
