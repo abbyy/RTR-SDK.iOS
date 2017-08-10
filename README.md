@@ -7,13 +7,17 @@ This folder contains code samples for [ABBYY Real-Time Recognition SDK](http://r
 
 ## About ABBYY RTR SDK
 
-ABBYY Real-Time Recognition SDK provides a technology for recognizing text directly on the smartphone's camera preview screen. Snapping a picture is not required.
+ABBYY Real-Time Recognition SDK provides technology for recognizing text directly on the smartphone's camera preview screen. Snapping a picture is not required.
 
 The samples cover the following scenarios:
 
 - Text capture (**sample-textcapture**, **sample-textcapture-swift**)
 
   The basic usage scenario. The user simply points their camera at the text, which is then recognized and displayed or saved in memory.
+
+- Data capture (**sample-datacapture**)
+
+  Custom data field capture: only the data that matches the specified regular expression will be extracted.
 
 
 
@@ -25,8 +29,8 @@ The library is free: a fully-functional version for up to 5000 app downloads via
 
 In the download package you will find:
 
-- the library itself (**libs/AbbyyRtrSDK.framework.zip**)
-- the resource files:
+- the library itself (**libs/AbbyyRtrSDK.framework**)
+- resource files:
   - **assets/dictionaries** — dictionary support for some of the recognition languages; using a dictionary improves the result quality
   - **assets/patterns** — recognition databases
 - **License** — your license file and licensing agreement
@@ -37,14 +41,12 @@ In the download package you will find:
 
 ## Building the samples
 
-The samples need only a little configuring:
+Please change the bundle ID before building, modifying or otherwise using any of the samples.
 
-1. Please change the bundle ID before modifying or otherwise using the sample.
-1. Unzip the framework file (**AbbyyRtrSDK.framework.zip**) to the **libs** folder.
-1. [optional] To save space, you may also want to remove any dictionaries for recognition languages not needed by your application from the **assets/dictionaries** folder.
+The samples should be open and built from the same folder where they are located in the distribution package. All samples work out of the box.
 
 
 
 ## See also
 
-You can find extensive documentation on ABBYY Real-Time Recognition SDK [here](http://rtrsdk.com/documentation).
+You can find the full ABBYY Real-Time Recognition SDK documentation [here](http://rtrsdk.com/documentation).
