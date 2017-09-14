@@ -29,7 +29,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	private var selectedRecognitionLanguages = Set(["English"])
 
 	private let SessionPreset = AVCaptureSessionPreset1280x720
-	private let ImageBufferSize = CGSize(width: 720, height: 1280)
+	private var ImageBufferSize = CGSize(width: 720, height: 1280)
+	
+	private var isRunning = true
 	
 	private let RecognitionLanguages = ["English",
 										"French",
@@ -89,9 +91,30 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 				break
 		}
 	}
+	
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		
+		let wasRunning = self.isRunning
+		self.textCaptureService?.stopTasks()
+		self.clearScreenFromRegions()
+		
+		coordinator.animate(alongsideTransition: nil) { (context) in
+			self.ImageBufferSize = CGSize(width:min(self.ImageBufferSize.width, self.ImageBufferSize.height),
+			                              height:max(self.ImageBufferSize.width, self.ImageBufferSize.height))
+			if(UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation)) {
+				self.ImageBufferSize = CGSize(width:self.ImageBufferSize.height, height:self.ImageBufferSize.width);
+			}
+			
+			self.updateAreaOfInterest()
+			self.isRunning = wasRunning;
+
+		}
+		
+	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		self.session?.stopRunning()
+		self.isRunning = false
 		self.captureButton.isSelected = false
 
 		super.viewWillDisappear(animated)
@@ -235,11 +258,12 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	private func processResult(_ areas: [RTRTextLine], _ mergeStatus:RTRResultStabilityStatus) {
 		DispatchQueue.main.async {
-			if !self.captureButton.isSelected {
+			if !self.isRunning {
 				return
 			}
 
 			if mergeStatus == RTRResultStabilityStatus.stable {
+				self.isRunning = false
 				self.captureButton.isSelected = false
 				self.whiteBackgroundView.isHidden = false
 			}
@@ -410,7 +434,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 //# MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 
 	func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-		if !self.captureButton.isSelected {
+		if !self.isRunning {
 			return
 		}
 
@@ -462,10 +486,12 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		self.whiteBackgroundView.isHidden = true
 		self.textCaptureService?.stopTasks()
 		self.captureButton.isSelected = true
+		self.isRunning = false
 	}
 
 	func applicationWillEnterForeground(_ notification: NSNotification) {
 		self.session?.startRunning()
+		self.isRunning = true
 	}
 
 
@@ -473,6 +499,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	@IBAction func onReconitionLanguages(_ sender: AnyObject) {
 		if self.languagesTableView.isHidden {
+			self.isRunning = false
 			self.captureButton.isSelected = false
 			self.languagesTableView.reloadData()
 			self.languagesTableView.isHidden = false
@@ -487,12 +514,14 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		}
 
 		self.captureButton.isSelected = !self.captureButton.isSelected
-		self.textCaptureService?.stopTasks()
+		self.isRunning = self.captureButton.isSelected
 
-		if self.captureButton.isSelected {
+		if self.isRunning {
 			self.clearScreenFromRegions()
 			self.whiteBackgroundView.isHidden = true
 			self.session?.startRunning()
+		} else {
+			self.textCaptureService?.stopTasks()
 		}
 	}
 }

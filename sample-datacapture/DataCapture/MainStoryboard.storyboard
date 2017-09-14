@@ -58,7 +58,7 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="uAR-u4-WPB"/>
                                             <barButtonItem enabled="NO" title="DataCapture" style="plain" id="PiD-XU-EdR" userLabel="DataCapture"/>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="pB4-f8-j7h"/>
-                                            <barButtonItem title="En Ru De" style="plain" id="4ah-W2-LWu">
+                                            <barButtonItem enabled="NO" title="En Ru De" style="plain" id="4ah-W2-LWu">
                                                 <connections>
                                                     <action selector="onReconitionLanguages" destination="Cye-PO-5fF" id="oCU-Dz-XWc"/>
                                                 </connections>
@@ -78,7 +78,7 @@
                                         <state key="normal" title="Capture">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="disabled" title="No camera access">
+                                        <state key="disabled" title="Disabled">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected">

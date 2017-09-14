@@ -37,6 +37,9 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 /// Progress indicator view.
 @property (nonatomic, weak) IBOutlet RTRProgressView* progressIndicatorView;
 
+/// Is recognition running.
+@property (atomic, assign, getter=isRunning) BOOL running;
+
 @end
 
 #pragma mark -
@@ -81,13 +84,6 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	// Default recognition language.
 	_selectedRecognitionLanguages = [[NSSet setWithObject:@"English"] mutableCopy];
 
-	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"AbbyyRtrSdk.license"];
-	_engine = [RTREngine sharedEngineWithLicenseData:[NSData dataWithContentsOfFile:licensePath]];
-	NSAssert(_engine != nil, nil);
-
-	_textCaptureService = [_engine createTextCaptureServiceWithDelegate:self];
-	[_textCaptureService setRecognitionLanguages:_selectedRecognitionLanguages];
-
 	[self.languagesTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:RTRTableCellID];
 
 	self.languagesTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -131,6 +127,28 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	}
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+	BOOL wasRunning = self.isRunning;
+	self.running = NO;
+	[_textCaptureService stopTasks];
+	[self clearScreenFromRegions];
+
+	[coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+	{
+		_imageBufferSize = CGSizeMake(MIN(_imageBufferSize.width, _imageBufferSize.height),
+			MAX(_imageBufferSize.width, _imageBufferSize.height));
+		if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+			_imageBufferSize = CGSizeMake(_imageBufferSize.height, _imageBufferSize.width);
+		}
+
+		[self updateAreaOfInterest];
+		self.running = wasRunning;
+	}];
+}
+
 - (void)configureCompletionAccessGranted:(BOOL)accessGranted
 {
 	if(![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
@@ -144,6 +162,19 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 		[self updateLogMessage:@"Camera access denied"];
 		return;
 	}
+
+	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"AbbyyRtrSdk.license"];
+	_engine = [RTREngine sharedEngineWithLicenseData:[NSData dataWithContentsOfFile:licensePath]];
+	NSAssert(_engine != nil, nil);
+	if(_engine == nil) {
+		self.captureButton.enabled = NO;
+		[self updateLogMessage:@"Invalid License"];
+		return;
+	}
+
+	self.recognitionLanguagesButton.enabled = YES;
+	_textCaptureService = [_engine createTextCaptureServiceWithDelegate:self];
+	[_textCaptureService setRecognitionLanguages:_selectedRecognitionLanguages];
 
 	[self configureAVCaptureSession];
 	[self configurePreviewLayer];
@@ -172,6 +203,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[_session stopRunning];
+	self.running = NO;
 	self.captureButton.selected = NO;
 	[_textCaptureService stopTasks];
 
@@ -260,8 +292,9 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	}
 
 	self.captureButton.selected = !self.captureButton.selected;
+	self.running = self.captureButton.selected;
 
-	if(self.captureButton.selected) {
+	if(self.isRunning) {
 		[self prepareUIForRecognition];
 	} else {
 		[_textCaptureService stopTasks];
@@ -283,6 +316,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (void)changeLanguagesTableVisibilty
 {
 	if(self.languagesTableView.hidden) {
+		self.running = NO;
 		self.captureButton.selected = NO;
 		[self.languagesTableView reloadData];
 		[self showSettingsTable:YES];
@@ -354,7 +388,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (void)captureOutput:(AVCaptureOutput*)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 	fromConnection:(AVCaptureConnection*)connection
 {
-	if(!self.captureButton.selected) {
+	if(!self.isRunning) {
 		return;
 	}
 
@@ -568,13 +602,14 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (void)onBufferProcessedWithTextLines:(NSArray*)textLines resultStatus:(RTRResultStabilityStatus)resultStatus
 {
 	performBlockOnMainThread(0, ^{
-		if(!self.captureButton.selected) {
+		if(!self.isRunning) {
 			return;
 		}
 
 		[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
 
 		if(resultStatus == RTRResultStabilityStable) {
+			self.running = NO;
 			self.captureButton.selected = NO;
 			self.whiteBackgroundView.hidden = NO;
 			[_textCaptureService stopTasks];
@@ -588,7 +623,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 {
 	NSString* message = [self stringFromWarningCode:warningCode];
 	if(message.length > 0) {
-		if(!self.captureButton.selected) {
+		if(!self.isRunning) {
 			return;
 		}
 
@@ -606,7 +641,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	NSLog(@"Error: %@", error);
 
 	performBlockOnMainThread(0, ^{
-		if(!self.captureButton.selected) {
+		if(!self.isRunning) {
 			return;
 		}
 
@@ -622,6 +657,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 		}
 
 		[self updateLogMessage:description];
+		self.running = NO;
 		self.captureButton.selected = NO;
 	});
 }
