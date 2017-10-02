@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,14 +23,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TiN-EW-qhw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJA-Il-gwI" userLabel="Preview View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <subviews>
                                             <view hidden="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQk-dm-kX9">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGL-fB-Vik" customClass="RTRSelectedAreaView" customModule="TextCapture">
-                                                <frame key="frameInset"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
@@ -40,6 +47,7 @@
                                         </constraints>
                                     </view>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="8LU-60-eyE">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="zYy-7c-tg9"/>
                                         </constraints>
@@ -58,6 +66,7 @@
                                         </items>
                                     </toolbar>
                                     <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lwe-7O-EgP">
+                                        <rect key="frame" x="37.5" y="608" width="300" height="44"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="BOj-jP-XRs"/>
@@ -71,12 +80,24 @@
                                             <action selector="capturePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bka-DM-piv"/>
                                         </connections>
                                     </button>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hCr-DU-Js3">
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6dr-94-V1F">
+                                        <rect key="frame" x="30" y="94" width="315" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.089263750714253298" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPC-CL-rr7" customClass="RTRProgressView" customModule="TextCapture" customModuleProvider="target">
+                                        <rect key="frame" x="117" y="564" width="140" height="24"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="vGJ-Re-Fdl"/>
+                                            <constraint firstAttribute="width" constant="140" id="WKr-pz-4AO"/>
+                                            <constraint firstAttribute="height" constant="24" id="vce-R3-a7R"/>
                                         </constraints>
-                                        <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hCr-DU-Js3">
+                                        <rect key="frame" x="37.5" y="44" width="337.5" height="623"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="dataSource" destination="BYZ-38-t0r" id="A0r-Tr-0XD"/>
@@ -87,17 +108,24 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="lwe-7O-EgP" secondAttribute="bottom" constant="15" id="3Ly-D5-Vgk"/>
+                                    <constraint firstItem="hCr-DU-Js3" firstAttribute="width" secondItem="TiN-EW-qhw" secondAttribute="width" multiplier="0.9" id="5d0-m7-1I6"/>
                                     <constraint firstAttribute="trailing" secondItem="TJA-Il-gwI" secondAttribute="trailing" id="7WB-Zj-Ycu"/>
+                                    <constraint firstItem="6dr-94-V1F" firstAttribute="leading" secondItem="TiN-EW-qhw" secondAttribute="leading" constant="30" id="9pr-GY-a9I"/>
                                     <constraint firstItem="8LU-60-eyE" firstAttribute="leading" secondItem="TiN-EW-qhw" secondAttribute="leading" id="Bu2-6J-4Xt"/>
                                     <constraint firstItem="8LU-60-eyE" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="F5Q-qa-1Z9"/>
+                                    <constraint firstItem="6dr-94-V1F" firstAttribute="top" secondItem="8LU-60-eyE" secondAttribute="bottom" constant="50" id="LEc-1I-3Rg"/>
                                     <constraint firstItem="lwe-7O-EgP" firstAttribute="centerX" secondItem="TiN-EW-qhw" secondAttribute="centerX" id="Ox6-N9-X2o"/>
+                                    <constraint firstAttribute="trailing" secondItem="6dr-94-V1F" secondAttribute="trailing" constant="30" id="QNM-d9-wHX"/>
                                     <constraint firstAttribute="bottom" secondItem="hCr-DU-Js3" secondAttribute="bottom" id="Re4-Zm-YU7"/>
                                     <constraint firstItem="TJA-Il-gwI" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="SkS-QC-aEI"/>
                                     <constraint firstAttribute="trailing" secondItem="8LU-60-eyE" secondAttribute="trailing" id="Tbi-t4-RQh"/>
+                                    <constraint firstItem="lwe-7O-EgP" firstAttribute="top" secondItem="tPC-CL-rr7" secondAttribute="bottom" constant="20" id="a7q-el-VaQ"/>
                                     <constraint firstItem="hCr-DU-Js3" firstAttribute="top" secondItem="8LU-60-eyE" secondAttribute="bottom" id="ae3-bz-22e"/>
                                     <constraint firstAttribute="trailing" secondItem="hCr-DU-Js3" secondAttribute="trailing" id="fQw-d3-Con"/>
+                                    <constraint firstItem="tPC-CL-rr7" firstAttribute="centerX" secondItem="TiN-EW-qhw" secondAttribute="centerX" id="fyt-lU-Iv9"/>
                                     <constraint firstItem="TJA-Il-gwI" firstAttribute="leading" secondItem="TiN-EW-qhw" secondAttribute="leading" id="jKv-CH-bJ8"/>
                                     <constraint firstItem="TJA-Il-gwI" firstAttribute="top" secondItem="TiN-EW-qhw" secondAttribute="top" id="kKB-Ou-9Y5"/>
+                                    <constraint firstItem="6dr-94-V1F" firstAttribute="centerX" secondItem="TiN-EW-qhw" secondAttribute="centerX" id="qaF-EU-WaR"/>
                                     <constraint firstAttribute="bottom" secondItem="TJA-Il-gwI" secondAttribute="bottom" id="r2B-P6-eCQ"/>
                                 </constraints>
                                 <variation key="default">
@@ -118,9 +146,11 @@
                     <navigationItem key="navigationItem" id="ebk-cR-0x4"/>
                     <connections>
                         <outlet property="captureButton" destination="lwe-7O-EgP" id="CDF-je-Dxh"/>
+                        <outlet property="infoLabel" destination="6dr-94-V1F" id="2Uk-RY-TAQ"/>
                         <outlet property="languagesTableView" destination="hCr-DU-Js3" id="CFP-nh-0qm"/>
                         <outlet property="overlayView" destination="fGL-fB-Vik" id="Yfc-SD-JzF"/>
                         <outlet property="previewView" destination="TJA-Il-gwI" id="6rj-C0-gFk"/>
+                        <outlet property="progressIndicatorView" destination="tPC-CL-rr7" id="DmG-Gb-DZA"/>
                         <outlet property="recognizeLanguageButton" destination="NSc-zv-gC7" id="6cQ-Ff-Psx"/>
                         <outlet property="whiteBackgroundView" destination="ZQk-dm-kX9" id="DAq-sg-Klp"/>
                     </connections>

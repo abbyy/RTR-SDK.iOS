@@ -25,6 +25,8 @@
 		43BC863C1DA4436A00FC04B0 /* FindText.rom in Copy Patterns */ = {isa = PBXBuildFile; fileRef = 43BC86141DA43E9600FC04B0 /* FindText.rom */; };
 		75CA77A71E6D808B00750492 /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA77A61E6D808B00750492 /* AbbyyRtrSDK.framework */; };
 		CF2C54321DD1C132006B70FB /* AbbyyRtrSdk.license in Resources */ = {isa = PBXBuildFile; fileRef = CF2C54311DD1C132006B70FB /* AbbyyRtrSdk.license */; };
+		CFF18E0B1F7101B9001A6DFF /* RTRProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF18E0A1F7101B9001A6DFF /* RTRProgressView.swift */; };
+		CFF18E0C1F713A37001A6DFF /* TextCapture.RTRProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFF18E081F710191001A6DFF /* TextCapture.RTRProgressView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +85,8 @@
 		75CA77A61E6D808B00750492 /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
 		CF2C54311DD1C132006B70FB /* AbbyyRtrSdk.license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AbbyyRtrSdk.license; sourceTree = "<group>"; };
 		CF5693381DCB53D3006059E2 /* TextCapture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextCapture.entitlements; sourceTree = "<group>"; };
+		CFF18E081F710191001A6DFF /* TextCapture.RTRProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextCapture.RTRProgressView.xib; sourceTree = "<group>"; };
+		CFF18E0A1F7101B9001A6DFF /* RTRProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTRProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 		43BC85B71DA31E2800FC04B0 /* TextCapture */ = {
 			isa = PBXGroup;
 			children = (
+				CFF18E081F710191001A6DFF /* TextCapture.RTRProgressView.xib */,
 				CF5693381DCB53D3006059E2 /* TextCapture.entitlements */,
 				43BC85D91DA3509E00FC04B0 /* RtrSamples-Bridging-Header.h */,
 				43BC85B81DA31E2800FC04B0 /* RTRAppDelegate.swift */,
@@ -131,6 +136,7 @@
 				43BC85BC1DA31E2800FC04B0 /* Main.storyboard */,
 				43BC85BF1DA31E2800FC04B0 /* Assets.xcassets */,
 				43BC85C41DA31E2800FC04B0 /* Info.plist */,
+				CFF18E0A1F7101B9001A6DFF /* RTRProgressView.swift */,
 			);
 			path = TextCapture;
 			sourceTree = "<group>";
@@ -206,6 +212,7 @@
 				43BC85B31DA31E2800FC04B0 /* Resources */,
 				43BC86201DA4429500FC04B0 /* Copy Dictionaries */,
 				43BC86391DA4434D00FC04B0 /* Copy Patterns */,
+				CF220F941F7D475600E24FBC /* Copy Extended Version Files */,
 			);
 			buildRules = (
 			);
@@ -260,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFF18E0C1F713A37001A6DFF /* TextCapture.RTRProgressView.xib in Resources */,
 				CF2C54321DD1C132006B70FB /* AbbyyRtrSdk.license in Resources */,
 				43BC85C01DA31E2800FC04B0 /* Assets.xcassets in Resources */,
 				43BC85BE1DA31E2800FC04B0 /* Main.storyboard in Resources */,
@@ -268,11 +276,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CF220F941F7D475600E24FBC /* Copy Extended Version Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Extended Version Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ASSET_DIR=${SRCROOT}/../assets\nPATTERNS_DIR=$ASSET_DIR/patterns\nDICTIONARIES_DIR=$ASSET_DIR/dictionaries\n\nPATTERNS_FILES_TO_COPY=(\"$PATTERNS_DIR/ChineseJapanese.rom\" \"$PATTERNS_DIR/KoreanSpecific.rom\")\n\nRUSSIAN_DICTIONARY=\"$DICTIONARIES_DIR/Russian.edc\"\n\nBUILT_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\nPATTERNS_DESTINATION_DIR=\"$BUILT_APP_DIR/Patterns\"\nDICTIONARIES_DESTINATION_DIR=\"$BUILT_APP_DIR/Dictionaries\"\n\nfor f in \"${PATTERNS_FILES_TO_COPY[@]}\"; do\nif [ -f \"$f\" ]; then\ncp -f \"$f\" \"$PATTERNS_DESTINATION_DIR\"\nfi\ndone\n\nif [ -f \"$RUSSIAN_DICTIONARY\" ]; then\ncp -f \"$RUSSIAN_DICTIONARY\" \"$DICTIONARIES_DESTINATION_DIR\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		43BC85B11DA31E2800FC04B0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFF18E0B1F7101B9001A6DFF /* RTRProgressView.swift in Sources */,
 				43BC85DD1DA4330200FC04B0 /* RTRHexColor.swift in Sources */,
 				43BC85BB1DA31E2800FC04B0 /* RTRViewController.swift in Sources */,
 				43BC85D01DA326F200FC04B0 /* RTRSelectedAreaView.swift in Sources */,
@@ -413,7 +439,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -433,7 +459,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abbyy.rtr.sample-textcapture";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TextCapture/RtrSamples-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
