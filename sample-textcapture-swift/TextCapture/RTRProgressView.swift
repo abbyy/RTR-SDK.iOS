@@ -11,22 +11,24 @@ class RTRProgressView: UIView {
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
-		self.doInitRoutine();
+		self.doInitRoutine()
 	}
 	
 	required override init(frame: CGRect)
 	{
 		super.init(frame: frame)
-		self.doInitRoutine();
+		self.doInitRoutine()
 	}
 	
-	public func setProgress(_ progress: Int, _ color:UIColor)
+	public func setProgress(_ progress: Int, _ color: UIColor)
 	{
-		if let rings = self.view?.subviews {
-			for (index, view) in rings.enumerated() {
-				view.backgroundColor = (index + 1 <= progress) ? color : UIColor.clear
-				view.layer.borderColor = color.cgColor
-			}
+		guard let rings = self.view?.subviews else {
+			return
+		}
+		
+		rings.enumerated().forEach { (index, view) in
+			view.backgroundColor = (index + 1 <= progress) ? color : .clear
+			view.layer.borderColor = color.cgColor
 		}
 	}
 	
@@ -40,24 +42,22 @@ class RTRProgressView: UIView {
 	
 	public func doInitRoutine()
 	{
-		
 		let className = NSStringFromClass(type(of: self))
-		let views = self.currentBundle.loadNibNamed(className, owner: self, options: nil)
-		self.view = views!.first as? UIView
-		
-		assert(self.view != nil, "Check is view loaded")
-		
-		if let view = self.view {
-			self.addSubview(view)
-			let views: [String : Any] = ["view": view]
-			
-			let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", metrics: nil, views: views)
-			let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", metrics: nil, views: views)
-			view.translatesAutoresizingMaskIntoConstraints = false
-			NSLayoutConstraint.activate(horizontalConstraints)
-			NSLayoutConstraint.activate(verticalConstraints)
+		guard let views = self.currentBundle.loadNibNamed(className, owner: self, options: nil)
+			, let view = views.first as? UIView else {
+				print("View not loaded")
+				return
 		}
-
+		
+		self.addSubview(view)
+		let viewsDic = ["view": view]
+		
+		let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", metrics: nil, views: viewsDic)
+		let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", metrics: nil, views: viewsDic)
+		view.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(horizontalConstraints + verticalConstraints)
+		
+		self.view = view
 	}
 
 }
