@@ -6,7 +6,7 @@ import AVFoundation
 
 class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-	/// Cell ID for languagesTableView.
+	/// Cell ID for tableView.
 	private let RTRTableCellID = "RTRTableCellID"
 	/// Name for text region layers.
 	private let RTRTextRegionsLayerName = "RTRTextRegionLayerName"
@@ -17,16 +17,16 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	@IBOutlet weak var captureButton: UIButton!
 
 	/// Recognition languages table
-	@IBOutlet weak var languagesTableView: UITableView!
+	@IBOutlet weak var tableView: UITableView!
 	/// Button for show / hide table with recognition languages.
-	@IBOutlet weak var recognizeLanguageButton: UIBarButtonItem!
+	@IBOutlet weak var settingsButton: UIBarButtonItem!
 	/// White view for highlight recognition results.
 	@IBOutlet weak var whiteBackgroundView: UIView!
 	/// View for displaying current area of interest.
 	@IBOutlet weak var overlayView: RTRSelectedAreaView!
-	
+
 	/// Progress indicator view.
-	@IBOutlet weak var progressIndicatorView: RTRProgressView?
+	@IBOutlet weak var progressIndicatorView: RTRProgressView!
 	/// Label for error or warning info.
 	@IBOutlet weak var infoLabel: UILabel!
 
@@ -44,39 +44,33 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	// Recommended session preset.
 	private let SessionPreset = AVCaptureSession.Preset.hd1280x720
 	private var ImageBufferSize = CGSize(width: 720, height: 1280)
-	
+
 	/// Is recognition running.
 	private var isRunning = true
-	
-	private let RecognitionLanguages = ["English",
-										"French",
-										"German",
-										"Italian",
-										"Polish",
-										"PortugueseBrazilian",
-										"Russian",
-										"ChineseSimplified",
-										"ChineseTraditional",
-										"Japanese",
-										"Korean",
-										"Spanish"]
+
+	private let RecognitionLanguages = [
+		"English",
+		"French",
+		"German",
+		"Italian",
+		"Polish",
+		"PortugueseBrazilian",
+		"Russian",
+		"ChineseSimplified",
+		"ChineseTraditional",
+		"Japanese",
+		"Korean",
+		"Spanish"
+	]
 	/// Area of interest in view coordinates.
 	private var selectedArea: CGRect = CGRect.zero {
 		didSet {
-			self.overlayView.selectedArea = selectedArea
-		}
-	}
-	
-	/// Shortcut. Perform block asynchronously on main thread.
-	private func performBlockOnMainThread(_ delay: Double, closure: @escaping ()->())
-	{
-		DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-			closure()
+			overlayView.selectedArea = selectedArea
 		}
 	}
 
 //# MARK: - LifeCycle
-	
+
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
@@ -85,78 +79,87 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	{
 		super.viewDidLoad()
 
-		self.languagesTableView.register(UITableViewCell.self, forCellReuseIdentifier: RTRTableCellID)
-		self.languagesTableView.tableFooterView = UIView(frame: CGRect.zero)
-		self.languagesTableView.isHidden = true
-		
-		self.prepareUIForRecognition()
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: RTRTableCellID)
+		tableView.tableFooterView = UIView(frame: CGRect.zero)
+		tableView.isHidden = true
 
-		self.captureButton.isSelected = false
-		self.captureButton.setTitle("Stop", for: UIControlState.selected)
-		self.captureButton.setTitle("Start", for: UIControlState.normal)
+		prepareUIForRecognition()
 
-		self.languagesTableView.isHidden = true
-		let recognizeLanguageButtonTitle = self.languagesButtonTitle()
-		self.recognizeLanguageButton.title = recognizeLanguageButtonTitle
+		captureButton.isSelected = false
+		captureButton.setTitle("Stop", for: UIControl.State.selected)
+		captureButton.setTitle("Start", for: UIControl.State.normal)
+
+		tableView.isHidden = true
+		let recognizeLanguageButtonTitle = languagesButtonTitle()
+		settingsButton.title = recognizeLanguageButtonTitle
 
 		weak var weakSelf = self
 		let completion:(Bool) -> Void = { granted in
-			weakSelf?.performBlockOnMainThread(0) { 
-				weakSelf?.configureCompletionAccess(granted)
+			DispatchQueue.main.async {
+				if let strongSelf = weakSelf {
+					strongSelf.configureCompletionAccess(granted)
+				}
 			}
 		}
-		
+
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 		switch status {
 			case AVAuthorizationStatus.authorized:
 				completion(true)
-				
+
 			case AVAuthorizationStatus.notDetermined:
 				AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
-					DispatchQueue.main.async {
-						completion(granted)
-					}
+					completion(granted)
 				})
-				
+
 			case AVAuthorizationStatus.restricted, AVAuthorizationStatus.denied:
 				completion(false)
 		}
 	}
-	
+
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
 	{
-		let wasRunning = self.isRunning
-		self.isRunning = false
-		self.textCaptureService?.stopTasks()
-		self.clearScreenFromRegions()
-		
+		let wasRunning = isRunning
+		isRunning = false
+		if let service = textCaptureService {
+			service.stopTasks()
+		}
+		clearScreenFromRegions()
+
+		weak var weakSelf = self
 		coordinator.animate(alongsideTransition: nil) { (context) in
-			self.ImageBufferSize = CGSize(width:min(self.ImageBufferSize.width, self.ImageBufferSize.height),
-			                              height:max(self.ImageBufferSize.width, self.ImageBufferSize.height))
-			if(UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation)) {
-				self.ImageBufferSize = CGSize(width:self.ImageBufferSize.height, height:self.ImageBufferSize.width);
+			if let strongSelf = weakSelf {
+				let oldSize = strongSelf.ImageBufferSize
+				let newSize = CGSize(width:min(oldSize.width, oldSize.height), height:max(oldSize.width, oldSize.height))
+				if(UIApplication.shared.statusBarOrientation.isLandscape) {
+					strongSelf.ImageBufferSize = CGSize(width:newSize.height, height:newSize.width);
+				} else {
+					strongSelf.ImageBufferSize = newSize
+				}
+
+				strongSelf.updateAreaOfInterest()
+				strongSelf.isRunning = wasRunning;
 			}
-			
-			self.updateAreaOfInterest()
-			self.isRunning = wasRunning;
 		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool)
 	{
-		self.session?.stopRunning()
-		self.isRunning = false
-		self.captureButton.isSelected = false
-		self.textCaptureService?.stopTasks()
-
+		isRunning = false
+		captureButton.isSelected = false
+		if let service = textCaptureService {
+			service.stopTasks()
+		}
+		if let session = self.session {
+			session.stopRunning()
+		}
 		super.viewWillDisappear(animated)
 	}
 
 	override func viewDidLayoutSubviews()
 	{
 		super.viewDidLayoutSubviews()
-
-		self.updatePreviewLayerFrame()
+		updatePreviewLayerFrame()
 	}
 
 	override var prefersStatusBarHidden: Bool {
@@ -167,84 +170,88 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	func configureCompletionAccess(_ accessGranted: Bool)
 	{
-		if !UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.rear) {
-			self.captureButton.isEnabled = false
-			self.updateLogMessage("Device has no camera")
+		if !UIImagePickerController.isCameraDeviceAvailable(UIImagePickerController.CameraDevice.rear) {
+			captureButton.isEnabled = false
+			updateLogMessage("Device has no camera")
 			return
 		}
 
 		if !accessGranted {
-			self.captureButton.isEnabled = false
-			self.updateLogMessage("Camera access denied")
+			captureButton.isEnabled = false
+			updateLogMessage("Camera access denied")
 			return
 		}
-		
+
 		let licensePath = (Bundle.main.bundlePath as NSString).appendingPathComponent("AbbyyRtrSdk.license")
-		self.engine = RTREngine.sharedEngine(withLicense: NSData(contentsOfFile: licensePath) as Data!)
-		assert(self.engine != nil)
-		guard self.engine != nil else {
-			self.captureButton.isEnabled = false;
-			self.updateLogMessage("Invalid License")
+		engine = RTREngine.sharedEngine(withLicense: NSData(contentsOfFile: licensePath) as Data?)
+		guard let rtrEngine = engine else {
+			captureButton.isEnabled = false;
+			updateLogMessage("Invalid License")
 			return
 		}
-		
-		self.recognizeLanguageButton.isEnabled = true
-		self.textCaptureService = self.engine?.createTextCaptureService(with: self)
-		self.textCaptureService?.setRecognitionLanguages(selectedRecognitionLanguages)
-		
-		self.configureAVCaptureSession()
-		self.configurePreviewLayer()
-		self.session?.startRunning()
-		
+
+		settingsButton.isEnabled = true
+
+		if let service = rtrEngine.createTextCaptureService(with: self) {
+			service.setRecognitionLanguages(selectedRecognitionLanguages)
+			textCaptureService = service
+		}
+
+		configureAVCaptureSession()
+		configurePreviewLayer()
+		session?.startRunning()
+
 		NotificationCenter.default.addObserver(self, selector:#selector(RTRViewController.avSessionFailed(_:)), name: NSNotification.Name.AVCaptureSessionRuntimeError, object: nil)
-		NotificationCenter.default.addObserver(self, selector:#selector(RTRViewController.applicationDidEnterBackground(_:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-		NotificationCenter.default.addObserver(self, selector:#selector(RTRViewController.applicationWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-		
-		self.capturePressed("" as AnyObject)
+		NotificationCenter.default.addObserver(self, selector:#selector(RTRViewController.applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector:#selector(RTRViewController.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+		capturePressed()
 	}
 
 	private func configureAVCaptureSession()
 	{
-		self.session = AVCaptureSession()
-		
+		session = AVCaptureSession()
+
 		if let session = self.session {
 			session.sessionPreset = SessionPreset
-			
+
 			if let device = AVCaptureDevice.default(for: AVMediaType.video) {
 				do {
 					let input = try AVCaptureDeviceInput(device: device)
-					assert((self.session?.canAddInput(input))!, "impossible to add AVCaptureDeviceInput")
-					self.session?.addInput(input)
+					assert(session.canAddInput(input), "impossible to add AVCaptureDeviceInput")
+					session.addInput(input)
 				} catch let error as NSError {
 					print(error.localizedDescription)
 				}
 			} else {
-				self.updateLogMessage("Can't access device for capture video")
+				updateLogMessage("Can't access device for capture video")
 				return
 			}
-			
+
 			let videoDataOutput = AVCaptureVideoDataOutput()
 			let videoDataOutputQueue = DispatchQueue(label: "videodataqueue", attributes: .concurrent)
 			videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
 			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
 			assert((session.canAddOutput(videoDataOutput)), "impossible to add AVCaptureVideoDataOutput")
 			session.addOutput(videoDataOutput)
-			
-			let connection = videoDataOutput.connection(with: AVMediaType.video)
-			connection!.isEnabled = true
+
+			if let connection = videoDataOutput.connection(with: AVMediaType.video) {
+				connection.isEnabled = true
+			}
 		}
 	}
 
 	private func configurePreviewLayer()
 	{
 		if let session = self.session {
-			self.previewLayer = AVCaptureVideoPreviewLayer(session: session)
-			self.previewLayer?.backgroundColor = UIColor.black.cgColor
-			self.previewLayer?.videoGravity = AVLayerVideoGravity.resize
-			let rootLayer = self.previewView.layer
-			rootLayer .insertSublayer(self.previewLayer!, at: 0)
-			
-			self.updatePreviewLayerFrame()
+			let layer = AVCaptureVideoPreviewLayer(session: session)
+			layer.backgroundColor = UIColor.black.cgColor
+			layer.videoGravity = AVLayerVideoGravity.resize
+			let rootLayer = previewView.layer
+			rootLayer.insertSublayer(layer, at: 0)
+
+			previewLayer = layer
+			updatePreviewLayerFrame()
 		}
 	}
 
@@ -252,48 +259,51 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	{
 		let orientation = UIApplication.shared.statusBarOrientation
 		if let previewLayer = self.previewLayer, let connection = previewLayer.connection {
-			connection.videoOrientation = self.videoOrientation(orientation)
-			let viewBounds = self.view.bounds
-			self.previewLayer?.frame = viewBounds
-			self.selectedArea = viewBounds.insetBy(dx: viewBounds.width/8.0, dy: viewBounds.height/3.0)
-			
-			self.updateAreaOfInterest()
+			connection.videoOrientation = videoOrientation(orientation)
+			let viewBounds = view.bounds
+			previewLayer.frame = viewBounds
+			selectedArea = viewBounds.insetBy(dx: viewBounds.width / 8.0, dy: viewBounds.height / 3.0)
+
+			updateAreaOfInterest()
 		}
 	}
 
 	private func updateAreaOfInterest()
 	{
 		// Scale area of interest from view coordinate system to image coordinates.
-		let affineTransform = CGAffineTransform(scaleX: self.ImageBufferSize.width * 1.0 / self.overlayView.frame.width, y: self.ImageBufferSize.height * 1.0 / self.overlayView.frame.height)
-		let selectedRect = self.selectedArea.applying(affineTransform)
-		self.textCaptureService?.setAreaOfInterest(selectedRect)
+		let affineTransform = CGAffineTransform(scaleX: ImageBufferSize.width * 1.0 / overlayView.frame.width,
+			y: ImageBufferSize.height * 1.0 / overlayView.frame.height)
+		let selectedRect = selectedArea.applying(affineTransform)
+		if let service = textCaptureService {
+			service.setAreaOfInterest(selectedRect)
+		}
 	}
 
 	private func videoOrientation(_ orientation: UIInterfaceOrientation) -> AVCaptureVideoOrientation
 	{
 		switch orientation {
-			case UIInterfaceOrientation.portrait:
-				return AVCaptureVideoOrientation.portrait
-			case UIInterfaceOrientation.portraitUpsideDown:
-				return AVCaptureVideoOrientation.portraitUpsideDown
-			case UIInterfaceOrientation.landscapeLeft:
-				return AVCaptureVideoOrientation.landscapeLeft
-			case UIInterfaceOrientation.landscapeRight:
-				return AVCaptureVideoOrientation.landscapeRight
+			case .portrait:
+				return .portrait
+			case .portraitUpsideDown:
+				return .portraitUpsideDown
+			case .landscapeLeft:
+				return .landscapeLeft
+			case .landscapeRight:
+				return .landscapeRight
 			default:
-				return AVCaptureVideoOrientation.portrait
+				return .portrait
 		}
 	}
 
 	private func languagesButtonTitle() -> String
 	{
-		if self.selectedRecognitionLanguages.count == 1 {
-			return self.selectedRecognitionLanguages.first!
+		if selectedRecognitionLanguages.count == 1 {
+			return selectedRecognitionLanguages.first!
 		}
 
 		var languageCodes = [String]()
 
-		for language in self.selectedRecognitionLanguages {
+		for language in selectedRecognitionLanguages {
 			let index = language.index(language.startIndex, offsetBy: 2)
 			languageCodes.append(String(language[..<index]))
 		}
@@ -303,79 +313,89 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	private func tryToCloseLanguagesTable()
 	{
-		if self.selectedRecognitionLanguages.isEmpty {
+		if selectedRecognitionLanguages.isEmpty {
 			return
 		}
 
-		self.updateLogMessage("")
-		self.textCaptureService?.setRecognitionLanguages(self.selectedRecognitionLanguages)
-		self.capturePressed("" as AnyObject)
-		self.languagesTableView.isHidden = true
-	}
-	
-	private func updateLogMessage(_ message: String?)
-	{
-		performBlockOnMainThread(0){
-			if let _message = message {
-				self.infoLabel.text = _message
-			} else {
-				self.infoLabel.text = ""
-			}
-			
+		updateLogMessage("")
+		tableView.isHidden = true
+
+		if let service = textCaptureService {
+			service.setRecognitionLanguages(selectedRecognitionLanguages)
+			capturePressed()
 		}
 	}
-	
+
+	private func updateLogMessage(_ message: String?)
+	{
+		weak var weakSelf = self
+
+		DispatchQueue.main.async {
+			if let strongSelf = weakSelf {
+				if let _message = message {
+					strongSelf.infoLabel.text = _message
+				} else {
+					strongSelf.infoLabel.text = ""
+				}
+			}
+		}
+	}
+
 	func prepareUIForRecognition()
 	{
-		self.clearScreenFromRegions()
-		self.whiteBackgroundView.isHidden = true
-		self.progressIndicatorView?.setProgress(0, self.progressColor(RTRResultStabilityStatus.notReady))
+		clearScreenFromRegions()
+		whiteBackgroundView.isHidden = true
+		progressIndicatorView.setProgress(0, progressColor(.notReady))
 	}
 
 //# MARK: - Drawing result
 
-	private func drawTextLines(_ textLines: [RTRTextLine], _ progress:RTRResultStabilityStatus)
+	private func drawTextLines(_ lines: [RTRTextLine]?, _ progress:RTRResultStabilityStatus)
 	{
-		self.clearScreenFromRegions()
+		if let textLines = lines {
+			if let previewLayer = self.previewLayer {
+				clearScreenFromRegions()
 
-		let textRegionsLayer = CALayer()
-		textRegionsLayer.frame = self.previewLayer!.frame
-		textRegionsLayer.name = RTRTextRegionsLayerName
+				let textRegionsLayer = CALayer()
+				textRegionsLayer.frame = previewLayer.frame
+				textRegionsLayer.name = RTRTextRegionsLayerName
 
-		for textLine in textLines {
-			self.drawTextLine(textLine, textRegionsLayer, progress)
+				for textLine in textLines {
+					drawTextLine(textLine, textRegionsLayer, progress)
+				}
+
+				previewView.layer.addSublayer(textRegionsLayer)
+			}
 		}
-
-		self.previewView.layer.addSublayer(textRegionsLayer)
 	}
 
 	func drawTextLine(_ textLine: RTRTextLine, _ layer: CALayer, _ progress: RTRResultStabilityStatus)
 	{
-		let topLeft = self.scaledPoint(cMocrPoint: textLine.quadrangle[0] as! NSValue)
-		let bottomLeft = self.scaledPoint(cMocrPoint: textLine.quadrangle[1] as! NSValue)
-		let bottomRight = self.scaledPoint(cMocrPoint: textLine.quadrangle[2] as! NSValue)
-		let topRight = self.scaledPoint(cMocrPoint: textLine.quadrangle[3] as! NSValue)
+		let topLeft = scaledPoint(imagePoint: textLine.quadrangle[0] as! NSValue)
+		let bottomLeft = scaledPoint(imagePoint: textLine.quadrangle[1] as! NSValue)
+		let bottomRight = scaledPoint(imagePoint: textLine.quadrangle[2] as! NSValue)
+		let topRight = scaledPoint(imagePoint: textLine.quadrangle[3] as! NSValue)
 
-		self.drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress) 
+		drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress)
 
 		let recognizedString = textLine.text
 
 		let textLayer = CATextLayer()
-		let textWidth = self.distanceBetween(topLeft, topRight) 
-		let textHeight = self.distanceBetween(topLeft, bottomLeft) 
+		let textWidth = distanceBetween(topLeft, topRight)
+		let textHeight = distanceBetween(topLeft, bottomLeft)
 		let rectForTextLayer = CGRect(x: bottomLeft.x, y: bottomLeft.y, width: textWidth, height: textHeight) 
 
 		// Selecting the initial font size by rectangle
-		let textFont = self.font(string: recognizedString!, rect: rectForTextLayer)
+		let textFont = font(string: recognizedString!, rect: rectForTextLayer)
 		textLayer.font = textFont
 		textLayer.fontSize = textFont.pointSize
-		textLayer.foregroundColor = self.progressColor(progress).cgColor
-		textLayer.alignmentMode = kCAAlignmentCenter
+		textLayer.foregroundColor = progressColor(progress).cgColor
+		textLayer.alignmentMode = CATextLayerAlignmentMode.center
 		textLayer.string = recognizedString
 		textLayer.frame = rectForTextLayer
 
 		// Rotate the text layer
-		let angle = asin((bottomRight.y - bottomLeft.y) / self.distanceBetween(bottomLeft, bottomRight))
+		let angle = asin((bottomRight.y - bottomLeft.y) / distanceBetween(bottomLeft, bottomRight))
 		textLayer.anchorPoint = CGPoint(x: 0, y: 0)
 		textLayer.position = bottomLeft
 		textLayer.transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
@@ -393,7 +413,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		recognizedAreaPath.addLine(to: p3) 
 		recognizedAreaPath.close() 
 		area.path = recognizedAreaPath.cgPath 
-		area.strokeColor = self.progressColor(progress).cgColor 
+		area.strokeColor = progressColor(progress).cgColor
 		area.fillColor = UIColor.clear.cgColor 
 		layer.addSublayer(area) 
 	}
@@ -401,15 +421,15 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	func progressColor(_ progress:RTRResultStabilityStatus) -> UIColor
 	{
 		switch progress {
-			case RTRResultStabilityStatus.notReady, RTRResultStabilityStatus.tentative:
+			case .notReady, .tentative:
 				return UIColor(hex: 0xFF6500)
-			case RTRResultStabilityStatus.verified:
+			case .verified:
 				return UIColor(hex: 0xC96500)
-			case RTRResultStabilityStatus.available:
+			case .available:
 				return UIColor(hex: 0x886500)
-			case RTRResultStabilityStatus.tentativelyStable:
+			case .tentativelyStable:
 				return UIColor(hex: 0x4B6500)
-			case RTRResultStabilityStatus.stable:
+			case .stable:
 				return UIColor(hex: 0x006500)
 		}
 	}
@@ -418,30 +438,34 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	private func clearScreenFromRegions()
 	{
 		// Get all visible regions
-		let sublayers = self.previewView.layer.sublayers
+		if let sublayers = previewView.layer.sublayers {
 
-		// Remove all layers with name - TextRegionsLayer
-		for layer in sublayers! {
-			if layer.name == RTRTextRegionsLayerName {
-				layer.removeFromSuperlayer()
+			// Remove all layers with name - TextRegionsLayer
+			for layer in sublayers {
+				if layer.name == RTRTextRegionsLayerName {
+					layer.removeFromSuperlayer()
+				}
 			}
 		}
 	}
 
-	private func scaledPoint(cMocrPoint mocrPoint: NSValue) -> CGPoint
+	private func scaledPoint(imagePoint: NSValue) -> CGPoint
 	{
-		let layerWidth = self.previewLayer?.bounds.width
-		let layerHeight = self.previewLayer?.bounds.height
+		if let previewLayer = self.previewLayer {
+			let layerWidth = previewLayer.bounds.width
+			let layerHeight = previewLayer.bounds.height
 
-		let widthScale = layerWidth! / ImageBufferSize.width
-		let heightScale = layerHeight! / ImageBufferSize.height
+			let widthScale = layerWidth / ImageBufferSize.width
+			let heightScale = layerHeight / ImageBufferSize.height
 
 
-		var point = mocrPoint.cgPointValue
-		point.x *= widthScale
-		point.y *= heightScale
+			var point = imagePoint.cgPointValue
+			point.x *= widthScale
+			point.y *= heightScale
 
-		return point
+			return point
+		}
+		return CGPoint.zero;
 	}
 
 	private func distanceBetween(_ p1: CGPoint, _ p2: CGPoint) -> CGFloat
@@ -459,7 +483,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		let rectSize = rect.size
 
 		while true {
-			let attributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: fontSize)]
+			let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: fontSize)]
 			let labelSize = (string as NSString).size(withAttributes: attributes)
 
 			if rectSize.height - labelSize.height > 0 {
@@ -487,14 +511,14 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
 		let language = RecognitionLanguages[indexPath.row]
-		if !self.selectedRecognitionLanguages.contains(language) {
-			self.selectedRecognitionLanguages.insert(language)
+		if !selectedRecognitionLanguages.contains(language) {
+			selectedRecognitionLanguages.insert(language)
 		} else {
-			self.selectedRecognitionLanguages.remove(language)
+			selectedRecognitionLanguages.remove(language)
 		}
 
-		self.recognizeLanguageButton.title = self.languagesButtonTitle()
-		tableView .reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+		settingsButton.title = languagesButtonTitle()
+		tableView .reloadRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
 	}
 
 //# MARK: - UITableViewDatasource
@@ -506,13 +530,15 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-		let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: nil)
+		let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
 		let language = RecognitionLanguages[indexPath.row]
-		cell.textLabel?.text = language
-		cell.accessoryType = self.selectedRecognitionLanguages.contains(language) ? UITableViewCellAccessoryType.checkmark : UITableViewCellAccessoryType.none
+		if let label = cell.textLabel {
+			label.text = language
+			label.textColor = .white
+		}
+		cell.accessoryType = selectedRecognitionLanguages.contains(language) ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none
 		cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-		cell.textLabel?.textColor = UIColor.white
-		cell.tintColor = UIColor.white
+		cell.tintColor = .white
 		return cell
 	}
 
@@ -521,59 +547,79 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	@objc
 	func avSessionFailed(_ notification: NSNotification)
 	{
-		let alertView = UIAlertView(title: "AVSession Failed!", message: nil, delegate: nil, cancelButtonTitle:"OK")
-		alertView.show()
+		weak var weakSelf = self
+		DispatchQueue.main.async {
+			var message = "AVSession Failed! "
+			if let userInfo = notification.userInfo {
+				if let error = userInfo[AVCaptureSessionErrorKey] {
+					message = message + (error as! String)
+				}
+			}
+			if let strongSelf = weakSelf {
+				strongSelf.infoLabel.text = message
+			}
+		}
 	}
 
 	@objc
 	func applicationDidEnterBackground(_ notification: NSNotification)
 	{
-		self.session?.stopRunning()
-		self.clearScreenFromRegions()
-		self.whiteBackgroundView.isHidden = true
-		self.textCaptureService?.stopTasks()
-		self.captureButton.isSelected = true
-		self.isRunning = false
+		clearScreenFromRegions()
+		whiteBackgroundView.isHidden = true
+		captureButton.isSelected = true
+		isRunning = false
+
+		if let service = textCaptureService {
+			service.stopTasks()
+		}
+		if let session = self.session {
+			session.stopRunning()
+		}
 	}
 
 	@objc
 	func applicationWillEnterForeground(_ notification: NSNotification)
 	{
-		self.session?.startRunning()
+		if let session = self.session {
+			session.startRunning()
+		}
 	}
-
 
 //# MARK: - Actions
 
-	@IBAction func onReconitionLanguages(_ sender: AnyObject)
+	@IBAction func onReconitionLanguages()
 	{
-		if self.languagesTableView.isHidden {
-			self.isRunning = false
-			self.captureButton.isSelected = false
-			self.languagesTableView.reloadData()
-			self.languagesTableView.isHidden = false
+		if tableView.isHidden {
+			isRunning = false
+			captureButton.isSelected = false
+			tableView.reloadData()
+			tableView.isHidden = false
 		} else {
-			self.tryToCloseLanguagesTable()
+			tryToCloseLanguagesTable()
 		}
 	}
 
-	@IBAction func capturePressed(_ sender: AnyObject)
+	@IBAction func capturePressed()
 	{
-		if !self.captureButton.isEnabled {
+		if !captureButton.isEnabled {
 			return
 		}
 
-		self.captureButton.isSelected = !self.captureButton.isSelected
-		self.isRunning = self.captureButton.isSelected
+		captureButton.isSelected = !captureButton.isSelected
+		isRunning = captureButton.isSelected
 
-		if self.isRunning {
-			self.prepareUIForRecognition()
-			self.session?.startRunning()
+		if isRunning {
+			prepareUIForRecognition()
+			if let session = self.session {
+				session.startRunning()
+			}
 		} else {
-			self.textCaptureService?.stopTasks()
+			if let service = textCaptureService {
+				service.stopTasks()
+			}
 		}
 	}
-	
+
 	/// Human-readable descriptions for the RTRCallbackWarningCode constants.
 	private func stringFromWarningCode(_ warningCode: RTRCallbackWarningCode) -> String
 	{
@@ -592,84 +638,89 @@ extension RTRViewController: AVCaptureVideoDataOutputSampleBufferDelegate
 {
 	func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
 	{
-		if !self.isRunning {
+		if !isRunning {
 			return
 		}
-		
-		// Image is prepared
-		let orientation = UIApplication.shared.statusBarOrientation
-		connection.videoOrientation = self.videoOrientation(orientation)
-		
-		self.textCaptureService?.add(sampleBuffer)
+
+		var orientation: UIInterfaceOrientation = .portrait
+		DispatchQueue.main.sync {
+			orientation = UIApplication.shared.statusBarOrientation
+		}
+
+		let frameOrientation = videoOrientation(orientation)
+		if connection.videoOrientation != frameOrientation {
+			connection.videoOrientation = frameOrientation
+			return
+		}
+
+		if let service = textCaptureService {
+			service.add(sampleBuffer)
+		}
 	}
 }
 
 extension RTRViewController: RTRTextCaptureServiceDelegate
 {
-	func onBufferProcessed(with textLines: [RTRTextLine]!, resultStatus: RTRResultStabilityStatus)
+	func onBufferProcessed(with textLines: [RTRTextLine]?, resultStatus: RTRResultStabilityStatus)
 	{
-		self.performBlockOnMainThread(0) { 
-			if !self.isRunning {
-				return
-			}
-			
-			self.progressIndicatorView!.setProgress(resultStatus.rawValue, self.progressColor(resultStatus))
-			
-			if resultStatus == RTRResultStabilityStatus.stable {
-				self.isRunning = false
-				self.captureButton.isSelected = false
-				self.whiteBackgroundView.isHidden = false
-				self.textCaptureService?.stopTasks()
-			}
-			
-			self.drawTextLines(textLines, resultStatus)
+		if !isRunning {
+			return
 		}
+
+		progressIndicatorView.setProgress(resultStatus.rawValue, progressColor(resultStatus))
+
+		if resultStatus == .stable {
+			isRunning = false
+			captureButton.isSelected = false
+			whiteBackgroundView.isHidden = false
+			if let service = textCaptureService {
+				service.stopTasks()
+			}
+		}
+
+		drawTextLines(textLines, resultStatus)
 	}
-	
+
 	func onWarning(_ warningCode: RTRCallbackWarningCode)
 	{
-		let message = self.stringFromWarningCode(warningCode);
+		let message = stringFromWarningCode(warningCode);
 		if message.count > 0 {
-			if(!self.isRunning) {
+			if(!isRunning) {
 				return;
 			}
-			
-			self.updateLogMessage(message);
-			
+
+			updateLogMessage(message);
+
+			weak var weakSelf = self
 			// Clear message after 2 seconds.
-			performBlockOnMainThread(2){
-				self.updateLogMessage(nil)
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				if let strongSelf = weakSelf {
+					strongSelf.updateLogMessage("")
+				}
 			}
 		}
 	}
-	
+
 	func onError(_ error: Error!)
 	{
 		print(error.localizedDescription)
-		performBlockOnMainThread(0) {
-			
-			if self.isRunning {
-				
-				var description = error.localizedDescription
-				if description.contains("ChineseJapanese.rom") {
-					description = "Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information."
-				} else if description.contains("KoreanSpecific.rom") {
-					description = "Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information."
-				} else if description.contains("Russian.edc") {
-					description = "Cyrillic script languages are available in EXTENDED version only. Contact us for more information."
-				} else if description.contains(".trdic") {
-					description = "Translation is available in EXTENDED version only. Contact us for more information."
-				} else if description.contains("region is invalid") {
-					return
-				}
-				
-				self.updateLogMessage(description)
-				self.isRunning = false
-				self.captureButton.isSelected = false
-				
+		if isRunning {
+			var description = error.localizedDescription
+			if description.contains("ChineseJapanese.rom") {
+				description = "Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information."
+			} else if description.contains("KoreanSpecific.rom") {
+				description = "Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information."
+			} else if description.contains("Russian.edc") {
+				description = "Cyrillic script languages are available in EXTENDED version only. Contact us for more information."
+			} else if description.contains(".trdic") {
+				description = "Translation is available in EXTENDED version only. Contact us for more information."
+			} else if description.contains("region is invalid") {
+				return
 			}
 
+			isRunning = false
+			captureButton.isSelected = false
+			updateLogMessage(description)
 		}
-		
 	}
 }
