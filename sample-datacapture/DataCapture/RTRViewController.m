@@ -27,6 +27,8 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 /// Stop / Start capture button
 @property (nonatomic, weak) IBOutlet UIButton* captureButton;
 
+@property (nonatomic, weak) IBOutlet UIButton* switchCamera;
+
 /// View for displaying current area of interest.
 @property (nonatomic, weak) IBOutlet RTRSelectedAreaView* overlayView;
 /// White view to highlight recognition results.
@@ -414,6 +416,49 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		[self capturePressed];
 		[self showSettingsTable:NO];
 	}
+}
+
+- (AVCaptureDevice*)nextCamera
+{
+	AVCaptureDeviceInput* input = _session.inputs.firstObject;
+	AVCaptureDevice* currentDevice = input.device;
+
+	NSArray<AVCaptureDevice*>* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+	NSUInteger index = [devices indexOfObject:currentDevice];
+	if(index == NSNotFound) {
+		return devices.firstObject;
+	}
+
+	return devices[((index + 1) % devices.count)];
+}
+
+- (void)switchSessionInput
+{
+	if(_session == nil) {
+		return;
+	}
+
+	[_session beginConfiguration];
+
+	AVCaptureDevice* newCamera = [self nextCamera];
+	AVCaptureInput* currentCameraInput = _session.inputs.firstObject;
+	[_session removeInput:currentCameraInput];
+
+	NSError* error = nil;
+	AVCaptureDeviceInput* newCameraInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&error];
+	if(newCameraInput == nil) {
+		[self onError:error];
+		return;
+	}
+
+	[_session addInput:newCameraInput];
+	[_session commitConfiguration];
+}
+
+- (IBAction)swithCamera:(UIButton*)sender
+{
+	[self switchSessionInput];
 }
 
 #pragma mark - AVCapture configuration

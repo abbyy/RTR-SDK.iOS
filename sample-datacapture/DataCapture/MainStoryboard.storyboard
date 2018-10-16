@@ -89,6 +89,15 @@
                                             <action selector="capturePressed" destination="Cye-PO-5fF" eventType="touchUpInside" id="BEH-bw-4Mz"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rau-IS-Vze" userLabel="Switch Camera">
+                                        <rect key="frame" x="267.5" y="561" width="104" height="30"/>
+                                        <state key="normal" title="Switch Camera">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="swithCamera:" destination="Cye-PO-5fF" eventType="touchUpInside" id="DJp-hm-Uev"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yXl-R1-mfV" userLabel="Description">
                                         <rect key="frame" x="365" y="44" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -131,6 +140,7 @@
                                     <constraint firstItem="m4U-7J-qHP" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="J7J-kA-nmY"/>
                                     <constraint firstAttribute="trailing" secondItem="yXl-R1-mfV" secondAttribute="trailing" constant="10" id="Uab-SH-6pB"/>
                                     <constraint firstItem="yXl-R1-mfV" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" id="WYa-Jl-FSQ"/>
+                                    <constraint firstItem="rau-IS-Vze" firstAttribute="leading" secondItem="fA2-vu-qQ4" secondAttribute="trailing" constant="10" id="Xr9-Zy-BeY"/>
                                     <constraint firstItem="yXl-R1-mfV" firstAttribute="width" relation="lessThanOrEqual" secondItem="W6T-Jh-8EW" secondAttribute="width" constant="-20" id="ZYD-v0-7ed"/>
                                     <constraint firstAttribute="trailing" secondItem="lF2-bz-Y5V" secondAttribute="trailing" id="aX1-Zw-NDT"/>
                                     <constraint firstItem="fA2-vu-qQ4" firstAttribute="centerX" secondItem="W6T-Jh-8EW" secondAttribute="centerX" id="aud-fr-3kC"/>
@@ -140,6 +150,7 @@
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="top" secondItem="fA2-vu-qQ4" secondAttribute="bottom" constant="20" id="hHg-tD-nlu"/>
                                     <constraint firstItem="aAn-Yn-G8p" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" constant="50" id="jv4-ez-Hig"/>
                                     <constraint firstAttribute="bottom" secondItem="U56-5U-Gci" secondAttribute="bottom" constant="15" id="kMa-kz-gaI"/>
+                                    <constraint firstItem="rau-IS-Vze" firstAttribute="centerY" secondItem="fA2-vu-qQ4" secondAttribute="centerY" id="mng-vG-Opw"/>
                                     <constraint firstItem="lF2-bz-Y5V" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="rbo-RV-9Y2"/>
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="centerX" secondItem="W6T-Jh-8EW" secondAttribute="centerX" id="uDY-JM-SI5"/>
                                     <constraint firstItem="m4U-7J-qHP" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" id="xqi-FL-Pno"/>
