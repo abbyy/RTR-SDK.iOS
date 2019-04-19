@@ -1,5 +1,5 @@
-// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
-// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
+// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
 
 #import "RTRProgressView.h"
 

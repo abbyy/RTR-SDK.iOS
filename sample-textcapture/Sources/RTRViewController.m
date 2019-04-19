@@ -1,5 +1,5 @@
-// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
-// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
+// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
 
 #import "RTRViewController.h"
 
@@ -40,6 +40,9 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 /// Is recognition running.
 @property (atomic, assign, getter=isRunning) BOOL running;
 
+/// Image size.
+@property (atomic, assign) CGSize imageBufferSize;
+
 @end
 
 #pragma mark -
@@ -51,8 +54,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	AVCaptureVideoPreviewLayer* _previewLayer;
 	/// Session Preset.
 	NSString* _sessionPreset;
-	/// Image size.
-	CGSize _imageBufferSize;
 
 	/// Engine for AbbyyRtrSDK.
 	RTREngine* _engine;
@@ -66,12 +67,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	CGRect _selectedArea;
 }
 
-/// Shortcut. Perform block asynchronously on main thread.
-static void performBlockOnMainThread(NSInteger delay, void(^block)())
-{
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
-}
-
 #pragma mark - UIView LifeCycle
 
 - (void)viewDidLoad
@@ -80,9 +75,12 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	// Recommended session preset.
 	_sessionPreset = AVCaptureSessionPreset1280x720;
 	_imageBufferSize = CGSizeMake(720.f, 1280.f);
+	if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+		_imageBufferSize = CGSizeMake(_imageBufferSize.height, _imageBufferSize.width);
+	}
 
 	// Default recognition language.
-	_selectedRecognitionLanguages = [[NSSet setWithObject:@"English"] mutableCopy];
+	_selectedRecognitionLanguages = [[NSSet setWithObject:RTRLanguageNameEnglish] mutableCopy];
 
 	[self.languagesTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:RTRTableCellID];
 
@@ -98,7 +96,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	[self.recognitionLanguagesButton setTitle:[self languagesButtonTitle]];
 	__weak RTRViewController* weakSelf = self;
 	void (^completion)(BOOL) = ^(BOOL accessGranted) {
-		performBlockOnMainThread(0, ^{
+		dispatch_async(dispatch_get_main_queue(), ^{
 			[weakSelf configureCompletionAccessGranted:accessGranted];
 		});
 	};
@@ -136,17 +134,18 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	[_textCaptureService stopTasks];
 	[self clearScreenFromRegions];
 
+	__weak typeof(self) weakSelf = self;
 	[coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-	{
-		_imageBufferSize = CGSizeMake(MIN(_imageBufferSize.width, _imageBufferSize.height),
-			MAX(_imageBufferSize.width, _imageBufferSize.height));
-		if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-			_imageBufferSize = CGSizeMake(_imageBufferSize.height, _imageBufferSize.width);
-		}
-
-		[self updateAreaOfInterest];
-		self.running = wasRunning;
-	}];
+		{
+			CGSize oldSize = weakSelf.imageBufferSize;
+			CGSize newSize = CGSizeMake(MIN(oldSize.width, oldSize.height), MAX(oldSize.width, oldSize.height));
+			if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+				newSize = CGSizeMake(newSize.height, newSize.width);
+			}
+			weakSelf.imageBufferSize = newSize;
+			[weakSelf updateAreaOfInterest];
+			weakSelf.running = wasRunning;
+		}];
 }
 
 - (void)configureCompletionAccessGranted:(BOOL)accessGranted
@@ -163,9 +162,8 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 		return;
 	}
 
-	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"AbbyyRtrSdk.license"];
+	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"license"];
 	_engine = [RTREngine sharedEngineWithLicenseData:[NSData dataWithContentsOfFile:licensePath]];
-	NSAssert(_engine != nil, nil);
 	if(_engine == nil) {
 		self.captureButton.enabled = NO;
 		[self updateLogMessage:@"Invalid License"];
@@ -306,6 +304,7 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	[self clearScreenFromRegions];
 	self.whiteBackgroundView.hidden = YES;
 	[self.progressIndicatorView setProgress:0 color:[self progressColor:0]];
+	self.infoLabel.text = @"";
 }
 
 - (IBAction)onReconitionLanguages
@@ -355,13 +354,29 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 	dispatch_queue_t videoDataOutputQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	[videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
 	[videoDataOutput alwaysDiscardsLateVideoFrames];
-	videoDataOutput.videoSettings = [NSDictionary dictionaryWithObject:
-		[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
-		forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+	videoDataOutput.videoSettings = @{
+		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA),
+	};
 	NSAssert([_session canAddOutput:videoDataOutput], @"impossible to add AVCaptureVideoDataOutput");
 	[_session addOutput:videoDataOutput];
 
 	[[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:YES];
+	AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
+		[UIApplication sharedApplication].statusBarOrientation];
+	[[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:videoOrientation];
+
+	BOOL locked = [device lockForConfiguration:nil];
+	if(locked) {
+		if([device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			[device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+		}
+
+		if([device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			[device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+		}
+
+		[device unlockForConfiguration];
+	}
 }
 
 - (void)configurePreviewLayer
@@ -377,10 +392,9 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 
 - (void)avSessionFailed:(NSNotification*)notification
 {
-	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"AVSession Failed!"
-		message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-
-	[alertView show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		self.infoLabel.text = [NSString stringWithFormat:@"AVSession Failed. %@", notification.userInfo[AVCaptureSessionErrorKey]];
+	});
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
@@ -392,10 +406,17 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 		return;
 	}
 
-	AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
-		[UIApplication sharedApplication].statusBarOrientation];
-	if(connection.videoOrientation != videoOrientation) {
-		[connection setVideoOrientation:videoOrientation];
+	__block BOOL invalidFrameOrientation = NO;
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
+			[UIApplication sharedApplication].statusBarOrientation];
+		if(connection.videoOrientation != videoOrientation) {
+			[connection setVideoOrientation:videoOrientation];
+			invalidFrameOrientation = YES;
+		}
+	});
+
+	if(invalidFrameOrientation) {
 		return;
 	}
 
@@ -423,26 +444,24 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (NSArray*)recognitionLanguages
 {
 	return @[
-		@"English",
-		@"French",
-		@"German",
-		@"Italian",
-		@"Polish",
-		@"PortugueseBrazilian",
-		@"Russian",
-		@"ChineseSimplified",
-		@"ChineseTraditional",
-		@"Japanese",
-		@"Korean",
-		@"Spanish"
+		RTRLanguageNameChineseSimplified,
+		RTRLanguageNameChineseTraditional,
+		RTRLanguageNameEnglish,
+		RTRLanguageNameFrench,
+		RTRLanguageNameGerman,
+		RTRLanguageNameItalian,
+		RTRLanguageNameJapanese,
+		RTRLanguageNameKorean,
+		RTRLanguageNamePolish,
+		RTRLanguageNamePortugueseBrazilian,
+		RTRLanguageNameRussian,
+		RTRLanguageNameSpanish,
 	];
 }
 
 - (void)updateLogMessage:(NSString*)message
 {
-	performBlockOnMainThread(0, ^{
-		self.infoLabel.text = message;
-	});
+	self.infoLabel.text = message;
 }
 
 #pragma mark - Drawing results
@@ -601,22 +620,20 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 
 - (void)onBufferProcessedWithTextLines:(NSArray*)textLines resultStatus:(RTRResultStabilityStatus)resultStatus
 {
-	performBlockOnMainThread(0, ^{
-		if(!self.isRunning) {
-			return;
-		}
+	if(!self.isRunning) {
+		return;
+	}
 
-		[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
+	[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
 
-		if(resultStatus == RTRResultStabilityStable) {
-			self.running = NO;
-			self.captureButton.selected = NO;
-			self.whiteBackgroundView.hidden = NO;
-			[_textCaptureService stopTasks];
-		}
+	if(resultStatus == RTRResultStabilityStable) {
+		self.running = NO;
+		self.captureButton.selected = NO;
+		self.whiteBackgroundView.hidden = NO;
+		[_textCaptureService stopTasks];
+	}
 
-		[self drawTextLines:textLines progress:resultStatus];
-	});
+	[self drawTextLines:textLines progress:resultStatus];
 }
 
 - (void)onWarning:(RTRCallbackWarningCode)warningCode
@@ -627,11 +644,14 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 			return;
 		}
 
-		[self updateLogMessage:message];
+		__weak typeof(self) weakSelf = self;
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[weakSelf updateLogMessage:message];
+		});
 
 		// Clear message after 2 seconds.
-		performBlockOnMainThread(2, ^{
-			[self updateLogMessage:nil];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[weakSelf updateLogMessage:nil];
 		});
 	}
 }
@@ -640,26 +660,13 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 {
 	NSLog(@"Error: %@", error);
 
-	performBlockOnMainThread(0, ^{
-		if(!self.isRunning) {
-			return;
-		}
+	if(!self.isRunning) {
+		return;
+	}
 
-		NSString* description = error.localizedDescription;
-		if([error.localizedDescription containsString:@"ChineseJapanese.rom"]) {
-			description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
-		} else if([error.localizedDescription containsString:@"KoreanSpecific.rom"]) {
-			description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
-		} else if([error.localizedDescription containsString:@"Russian.edc"]) {
-			description = @"Cyrillic script languages are available in EXTENDED version only. Contact us for more information.";
-		} else if([error.localizedDescription containsString:@".trdic"]) {
-			description = @"Translation is available in EXTENDED version only. Contact us for more information.";
-		}
-
-		[self updateLogMessage:description];
-		self.running = NO;
-		self.captureButton.selected = NO;
-	});
+	[self updateLogMessage:error.localizedDescription];
+	self.running = NO;
+	self.captureButton.selected = NO;
 }
 
 /// Human-readable descriptions for the RTRCallbackWarningCode constants.
@@ -732,13 +739,13 @@ static void performBlockOnMainThread(NSInteger delay, void(^block)())
 - (void)showSettingsTable:(BOOL)show
 {
 	self.languagesTableView.hidden = !show;
+	[self updateLogMessage:nil];
 }
 
 #define RTRUIColorFromRGB(rgbValue) [UIColor \
 	colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 	green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 	blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
 
 - (UIColor*)progressColor:(RTRResultStabilityStatus)progress
 {
