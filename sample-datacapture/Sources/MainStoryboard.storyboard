@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Cye-PO-5fF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Cye-PO-5fF">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -52,15 +51,11 @@
                                             <constraint firstAttribute="height" constant="44" id="nie-XQ-D1G"/>
                                         </constraints>
                                         <items>
-                                            <barButtonItem enabled="NO" title="1280x720" style="plain" id="Oet-2H-mpj"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujc-v0-Qha"/>
-                                            <barButtonItem enabled="NO" title="1x" style="plain" id="Zjz-Kh-c8X"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="uAR-u4-WPB"/>
                                             <barButtonItem enabled="NO" title="DataCapture" style="plain" id="PiD-XU-EdR" userLabel="DataCapture"/>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="pB4-f8-j7h"/>
                                             <barButtonItem enabled="NO" title="En Ru De" style="plain" id="4ah-W2-LWu">
                                                 <connections>
-                                                    <action selector="onReconitionLanguages" destination="Cye-PO-5fF" id="oCU-Dz-XWc"/>
+                                                    <action selector="onSettingsButtonPressed" destination="Cye-PO-5fF" id="oCU-Dz-XWc"/>
                                                 </connections>
                                             </barButtonItem>
                                         </items>
@@ -89,13 +84,13 @@
                                             <action selector="capturePressed" destination="Cye-PO-5fF" eventType="touchUpInside" id="BEH-bw-4Mz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rau-IS-Vze" userLabel="Switch Camera">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="529-A1-Rub" userLabel="Switch Camera">
                                         <rect key="frame" x="267.5" y="561" width="104" height="30"/>
                                         <state key="normal" title="Switch Camera">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="swithCamera:" destination="Cye-PO-5fF" eventType="touchUpInside" id="DJp-hm-Uev"/>
+                                            <action selector="swithCamera:" destination="Cye-PO-5fF" eventType="touchUpInside" id="6zP-sE-h8b"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yXl-R1-mfV" userLabel="Description">
@@ -119,7 +114,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mbK-Nu-RVY">
-                                        <rect key="frame" x="38" y="44" width="337.5" height="623"/>
+                                        <rect key="frame" x="38.5" y="44" width="337.5" height="623"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -135,13 +130,14 @@
                                     <constraint firstItem="lF2-bz-Y5V" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" id="6Wz-g8-qcJ"/>
                                     <constraint firstItem="aAn-Yn-G8p" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" constant="30" id="6Z2-D1-dE7"/>
                                     <constraint firstItem="lF2-bz-Y5V" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="7vC-8p-Xpm"/>
+                                    <constraint firstItem="529-A1-Rub" firstAttribute="centerY" secondItem="fA2-vu-qQ4" secondAttribute="centerY" id="9Tr-AF-4UW"/>
                                     <constraint firstItem="mbK-Nu-RVY" firstAttribute="width" secondItem="W6T-Jh-8EW" secondAttribute="width" multiplier="0.9" id="EBb-fW-itK"/>
                                     <constraint firstItem="mbK-Nu-RVY" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" id="FX9-aR-xy6"/>
                                     <constraint firstItem="m4U-7J-qHP" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="J7J-kA-nmY"/>
                                     <constraint firstAttribute="trailing" secondItem="yXl-R1-mfV" secondAttribute="trailing" constant="10" id="Uab-SH-6pB"/>
                                     <constraint firstItem="yXl-R1-mfV" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" id="WYa-Jl-FSQ"/>
-                                    <constraint firstItem="rau-IS-Vze" firstAttribute="leading" secondItem="fA2-vu-qQ4" secondAttribute="trailing" constant="10" id="Xr9-Zy-BeY"/>
                                     <constraint firstItem="yXl-R1-mfV" firstAttribute="width" relation="lessThanOrEqual" secondItem="W6T-Jh-8EW" secondAttribute="width" constant="-20" id="ZYD-v0-7ed"/>
+                                    <constraint firstItem="529-A1-Rub" firstAttribute="leading" secondItem="fA2-vu-qQ4" secondAttribute="trailing" constant="10" id="ZmK-JG-NiJ"/>
                                     <constraint firstAttribute="trailing" secondItem="lF2-bz-Y5V" secondAttribute="trailing" id="aX1-Zw-NDT"/>
                                     <constraint firstItem="fA2-vu-qQ4" firstAttribute="centerX" secondItem="W6T-Jh-8EW" secondAttribute="centerX" id="aud-fr-3kC"/>
                                     <constraint firstAttribute="trailing" secondItem="m4U-7J-qHP" secondAttribute="trailing" id="by0-sp-8tI"/>
@@ -150,7 +146,6 @@
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="top" secondItem="fA2-vu-qQ4" secondAttribute="bottom" constant="20" id="hHg-tD-nlu"/>
                                     <constraint firstItem="aAn-Yn-G8p" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" constant="50" id="jv4-ez-Hig"/>
                                     <constraint firstAttribute="bottom" secondItem="U56-5U-Gci" secondAttribute="bottom" constant="15" id="kMa-kz-gaI"/>
-                                    <constraint firstItem="rau-IS-Vze" firstAttribute="centerY" secondItem="fA2-vu-qQ4" secondAttribute="centerY" id="mng-vG-Opw"/>
                                     <constraint firstItem="lF2-bz-Y5V" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="rbo-RV-9Y2"/>
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="centerX" secondItem="W6T-Jh-8EW" secondAttribute="centerX" id="uDY-JM-SI5"/>
                                     <constraint firstItem="m4U-7J-qHP" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" id="xqi-FL-Pno"/>

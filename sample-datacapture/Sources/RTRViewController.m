@@ -1,5 +1,5 @@
-// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
-// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
+// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
 
 #import "RTRViewController.h"
 
@@ -27,8 +27,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 /// Stop / Start capture button
 @property (nonatomic, weak) IBOutlet UIButton* captureButton;
 
-@property (nonatomic, weak) IBOutlet UIButton* switchCamera;
-
 /// View for displaying current area of interest.
 @property (nonatomic, weak) IBOutlet RTRSelectedAreaView* overlayView;
 /// White view to highlight recognition results.
@@ -41,6 +39,8 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 @property (nonatomic, weak) IBOutlet RTRProgressView* progressIndicatorView;
 /// Is recognition running.
 @property (atomic, assign, getter=isRunning) BOOL running;
+/// Image size.
+@property (atomic, assign) CGSize imageBufferSize;
 
 @end
 
@@ -53,8 +53,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	AVCaptureVideoPreviewLayer* _previewLayer;
 	/// Session Preset.
 	NSString* _sessionPreset;
-	/// Image size.
-	CGSize _imageBufferSize;
 
 	/// Engine for AbbyyRtrSDK.
 	RTREngine* _engine;
@@ -68,12 +66,6 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 
 	/// Area of interest in view coordinates.
 	CGRect _selectedArea;
-}
-
-/// Shortcut. Perform block asynchronously on main thread.
-static void performBlockOnMainThread(NSInteger delay, void(^block)())
-{
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
 }
 
 #pragma mark - Keys for scenario settings
@@ -90,16 +82,22 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	[super viewDidLoad];
 
 	// Recommended session preset.
-	_sessionPreset = AVCaptureSessionPreset1280x720;
-	_imageBufferSize = CGSizeMake(720.f, 1280.f);
+	_sessionPreset = AVCaptureSessionPreset1920x1080;
+	_imageBufferSize = CGSizeMake(1080.f, 1920.f);
 
 	_dataCaptureScenarioSamples = @[
+		// BusinessCards.
+		@{
+			RTRScenarioKey : @"BusinessCards",
+			RTRDescriptionKey : @"BusinessCards (EN)",
+			RTRLanguageKey : RTRLanguageNameEnglish
+		},
 		// Number. A group of at least 2 digits (12, 345, 6789, 071570184356).
 		@{
 			RTRScenarioKey : @"Number",
 			RTRDescriptionKey : @"Integer number:  12  345  6789",
 			RTRRegExKey : @"[0-9]{2,}",
-			RTRLanguageKey : @"English"
+			RTRLanguageKey : RTRLanguageNameEnglish
 		},
 
 		// Code. A group of digits mixed with letters of mixed capitalization.
@@ -108,7 +106,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 			RTRScenarioKey : @"Code",
 			RTRDescriptionKey : @"Mix of digits with letters:  X6YZ64  32VPA  zyy777",
 			RTRRegExKey : @"([a-zA-Z]+[0-9]+|[0-9]+[a-zA-Z]+)[0-9a-zA-Z]*",
-			RTRLanguageKey : @"English"
+			RTRLanguageKey : RTRLanguageNameEnglish
 		},
 
 		// PartID. Groups of digits and capital letters separated by dots or hyphens
@@ -117,7 +115,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 			RTRScenarioKey : @"PartID",
 			RTRDescriptionKey : @"Part or product id:  002A-X345-D3-BBCD  AZ-5-A34.B  001.123.AX",
 			RTRRegExKey : @"[0-9a-zA-Z]+((\\.|-)[0-9a-zA-Z]+)+",
-			RTRLanguageKey : @"English"
+			RTRLanguageKey : RTRLanguageNameEnglish
 		},
 
 		// Area Code. A group of digits in round brackets (01), (23), (4567), (1349857157).
@@ -125,7 +123,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 			RTRScenarioKey : @"AreaCode",
 			RTRDescriptionKey : @"Digits in round brackets as found in phone numbers:  (01)  (23)  (4567)",
 			RTRRegExKey : @"\\([0-9]+\\)",
-			RTRLanguageKey : @"English"
+			RTRLanguageKey : RTRLanguageNameEnglish
 		},
 
 		// Date. Chinese or Japanese date in traditional form (2017年1月19日, 925年12月31日, 1900年07月29日, 2008年8月8日).
@@ -133,7 +131,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 			RTRScenarioKey : @"ChineseJapaneseDate",
 			RTRDescriptionKey : @"2008年8月8日",
 			RTRRegExKey : @"[12][0-9]{3}年\\w*((0?[1-9])|(1[0-2]))月\\w*(([01]?[0-9])|(3[01]))日",
-			RTRLanguageKey : @"ChineseSimplified"
+			RTRLanguageKey : RTRLanguageNameChineseSimplified
 		},
 
 #pragma mark - Some built-in data capture scenarios (the list is incomplete).
@@ -168,7 +166,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 
 	__weak RTRViewController* weakSelf = self;
 	void (^completion)(BOOL) = ^(BOOL accessGranted) {
-		performBlockOnMainThread(0, ^{
+		dispatch_async(dispatch_get_main_queue(), ^{
 			[weakSelf configureCompletionAccessGranted:accessGranted];
 		});
 	};
@@ -200,34 +198,44 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-	
+
 	BOOL wasRunning = self.isRunning;
 	self.running = NO;
 	[_dataCaptureService stopTasks];
 	[self clearScreenFromRegions];
-	
-	[coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		_imageBufferSize = CGSizeMake(MIN(_imageBufferSize.width, _imageBufferSize.height),
-									  MAX(_imageBufferSize.width, _imageBufferSize.height));
-		if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-			_imageBufferSize = CGSizeMake(_imageBufferSize.height, _imageBufferSize.width);
-		}
-		
-		[self updateAreaOfInterest];
-		self.running = wasRunning;
-	}];
+
+	__weak typeof(self) weakSelf = self;
+	[coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+		{
+			CGSize oldSize = weakSelf.imageBufferSize;
+			CGSize newSize = CGSizeMake(MIN(oldSize.width, oldSize.height), MAX(oldSize.width, oldSize.height));
+			if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+				newSize = CGSizeMake(newSize.height, newSize.width);
+			}
+			weakSelf.imageBufferSize = newSize;
+			[weakSelf updateAreaOfInterest];
+			weakSelf.running = wasRunning;
+		}];
 }
-
-
 
 /// Create and configure data capture service.
 - (id<RTRDataCaptureService>)createConfigureDataCaptureService:(NSDictionary*)scenario
 {
 	id<RTRDataCaptureService> result;
 	if([scenario[RTRRegExKey] length] == 0) {
-		// No additional configuration required.
 		result = [_engine createDataCaptureServiceWithDelegate:self profile:scenario[RTRScenarioKey]];
-
+		NSString* languageName = scenario[RTRLanguageKey];
+		if(languageName.length == 0) {
+			// No additional configuration required.
+		} else {
+			id<RTRDataCaptureProfileBuilder> builder = [result configureDataCaptureProfile];
+			[builder setRecognitionLanguages:[NSSet setWithObject:languageName]];
+			NSError* error = [builder checkAndApply];
+			if(error != nil) {
+				[self onError:error];
+				result = nil;
+			}
+		}
 	} else {
 		result = [_engine createDataCaptureServiceWithDelegate:self profile:nil];
 		id<RTRDataCaptureProfileBuilder> builder = [result configureDataCaptureProfile];
@@ -253,9 +261,8 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		return;
 	}
 
-	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"AbbyyRtrSdk.license"];
+	NSString* licensePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"license"];
 	_engine = [RTREngine sharedEngineWithLicenseData:[NSData dataWithContentsOfFile:licensePath]];
-	NSAssert(_engine != nil, nil);
 	if(_engine == nil) {
 		self.captureButton.enabled = NO;
 		[self updateLogMessage:@"Invalid License"];
@@ -320,7 +327,11 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 
 	_previewLayer.frame = viewBounds;
 
-	self.selectedArea = CGRectInset(viewBounds, CGRectGetWidth(viewBounds) / 8, CGRectGetHeight(viewBounds) / 3);
+	if(UIInterfaceOrientationIsPortrait(orientation)) {
+		self.selectedArea = CGRectInset(viewBounds, CGRectGetWidth(viewBounds) / 15, 	CGRectGetHeight(viewBounds) / 3);
+	} else {
+		self.selectedArea = CGRectInset(viewBounds, CGRectGetWidth(viewBounds) / 8, CGRectGetHeight(viewBounds) / 8);
+	}
 
 	[self updateAreaOfInterest];
 }
@@ -398,7 +409,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	[self.progressIndicatorView setProgress:0 color:[self progressColor:0]];
 }
 
-- (IBAction)onReconitionLanguages
+- (IBAction)onSettingsButtonPressed
 {
 	[self changeSettingsTableVisibilty];
 }
@@ -439,11 +450,8 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		return;
 	}
 
-	[_session beginConfiguration];
-
 	AVCaptureDevice* newCamera = [self nextCamera];
 	AVCaptureInput* currentCameraInput = _session.inputs.firstObject;
-	[_session removeInput:currentCameraInput];
 
 	NSError* error = nil;
 	AVCaptureDeviceInput* newCameraInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&error];
@@ -452,7 +460,18 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		return;
 	}
 
-	[_session addInput:newCameraInput];
+	[_session beginConfiguration];
+	[_session removeInput:currentCameraInput];
+	if([_session canAddInput:newCameraInput]) {
+		[_session addInput:newCameraInput];
+	} else {
+		[_session addInput:currentCameraInput];
+		error = [NSError errorWithDomain:@"RTR Sample Error Domain" code:1 userInfo:@{
+			NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Impossible to add AVCaptureDeviceInput: %@.", newCameraInput]
+		}];
+		[self onError:error];
+	}
+
 	[_session commitConfiguration];
 }
 
@@ -472,7 +491,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	AVCaptureDevice* device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 	AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
 	if(error != nil) {
-		[self updateLogMessage:[error localizedDescription]];
+		NSLog(@"%@",[error localizedDescription]);
 	}
 	NSAssert([_session canAddInput:input], @"impossible to add AVCaptureDeviceInput");
 	[_session addInput:input];
@@ -481,13 +500,29 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	dispatch_queue_t videoDataOutputQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	[videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
 	[videoDataOutput alwaysDiscardsLateVideoFrames];
-	videoDataOutput.videoSettings = [NSDictionary dictionaryWithObject:
-		[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
-		forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+	videoDataOutput.videoSettings = @{
+		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA),
+	};
 	NSAssert([_session canAddOutput:videoDataOutput], @"impossible to add AVCaptureVideoDataOutput");
 	[_session addOutput:videoDataOutput];
 
 	[[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:YES];
+	AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
+		[UIApplication sharedApplication].statusBarOrientation];
+	[[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:videoOrientation];
+
+	BOOL locked = [device lockForConfiguration:nil];
+	if(locked) {
+		if([device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+			[device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+		}
+
+		if([device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+			[device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+		}
+
+		[device unlockForConfiguration];
+	}
 }
 
 - (void)configurePreviewLayer
@@ -518,10 +553,17 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		return;
 	}
 
-	AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
-		[UIApplication sharedApplication].statusBarOrientation];
-	if(connection.videoOrientation != videoOrientation) {
-		[connection setVideoOrientation:videoOrientation];
+	__block BOOL invalidFrameOrientation = NO;
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		AVCaptureVideoOrientation videoOrientation = [self videoOrientationFromInterfaceOrientation:
+			[UIApplication sharedApplication].statusBarOrientation];
+		if(connection.videoOrientation != videoOrientation) {
+			[connection setVideoOrientation:videoOrientation];
+			invalidFrameOrientation = YES;
+		}
+	});
+
+	if(invalidFrameOrientation) {
 		return;
 	}
 
@@ -539,8 +581,9 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 
 - (void)updateLogMessage:(NSString*)message
 {
-	performBlockOnMainThread(0, ^{
-		self.infoLabel.text = message;
+	__weak typeof(self) weakSelf = self;
+	dispatch_async(dispatch_get_main_queue(), ^{
+		weakSelf.infoLabel.text = message;
 	});
 }
 
@@ -556,8 +599,8 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	textRegionsLayer.name = RTRTextRegionLayerName;
 
 	for(RTRDataField* dataField in dataFields) {
-		for(RTRTextLine* textLine in dataField.components) {
-			[self drawTextLine:textLine inLayer:textRegionsLayer progress:progress];
+		for(RTRDataField* textLine in dataField.components) {
+			[self drawLine:textLine inLayer:textRegionsLayer progress:progress];
 		}
 	}
 
@@ -578,9 +621,9 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	}
 }
 
-/// Drawing the quadrangle specified by the RTRTextLine object 
+/// Drawing the quadrangle specified by the RTRDataField object
 /// and a separate recognized text layer, if there is any recognized text.
-- (void)drawTextLine:(RTRTextLine*)textLine inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
+- (void)drawLine:(RTRDataField*)textLine inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
 {
 	[self drawQuadrangle:textLine.quadrangle inLayer:layer progress:progress];
 
@@ -704,22 +747,20 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 - (void)onBufferProcessedWithDataScheme:(RTRDataScheme*)dataScheme dataFields:(NSArray<RTRDataField*>*)dataFields
 	resultStatus:(RTRResultStabilityStatus)resultStatus
 {
-	performBlockOnMainThread(0, ^{
-		if(!self.isRunning) {
-			return;
-		}
+	if(!self.isRunning) {
+		return;
+	}
 
-		[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
+	[self.progressIndicatorView setProgress:resultStatus color:[self progressColor:resultStatus]];
 
-		if(dataScheme != nil && resultStatus == RTRResultStabilityStable) {
-			self.running = NO;
-			self.captureButton.selected = NO;
-			self.whiteBackgroundView.hidden = NO;
-			[_dataCaptureService stopTasks];
-		}
+	if(dataScheme != nil && resultStatus == RTRResultStabilityStable) {
+		self.running = NO;
+		self.captureButton.selected = NO;
+		self.whiteBackgroundView.hidden = NO;
+		[_dataCaptureService stopTasks];
+	}
 
-		[self drawTextRegionsFromDataFields:dataFields progress:resultStatus];
-	});
+	[self drawTextRegionsFromDataFields:dataFields progress:resultStatus];
 }
 
 - (void)onWarning:(RTRCallbackWarningCode)warningCode
@@ -733,8 +774,9 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 		[self updateLogMessage:message];
 
 		// Clear message after 2 seconds.
-		performBlockOnMainThread(2, ^{
-			[self updateLogMessage:nil];
+		__weak typeof(self) weakSelf = self;
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[weakSelf updateLogMessage:nil];
 		});
 	}
 }
@@ -743,21 +785,19 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 {
 	NSLog(@"Error: %@", error);
 
-	performBlockOnMainThread(0, ^{
-		if(!self.isRunning) {
-			return;
-		}
+	if(!self.isRunning) {
+		return;
+	}
 
-		NSString* description = error.localizedDescription;
-		if([error.localizedDescription containsString:@"MRZ.rom"]) {
-			description = @"MRZ is available in EXTENDED version only. Contact us for more information.";
-		} else if([error.localizedDescription containsString:@"ChineseJapanese.rom"]) {
-			description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
-		}
-		[self updateLogMessage:description];
-		self.running = NO;
-		self.captureButton.selected = NO;
-	});
+	NSString* description = error.localizedDescription;
+	if([error.localizedDescription containsString:@"MRZ.rom"]) {
+		description = @"MRZ is available in EXTENDED version only. Contact us for more information.";
+	} else if([error.localizedDescription containsString:@"ChineseJapanese.rom"]) {
+		description = @"Chineze, Japanese and Korean are available in EXTENDED version only. Contact us for more information.";
+	}
+	[self updateLogMessage:description];
+	self.running = NO;
+	self.captureButton.selected = NO;
 }
 
 /// Human-readable descriptions for the RTRCallbackWarningCode constants.
@@ -787,8 +827,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	[self.showSettingsButton setTitle:[self buttonTitle]];
 	self.descriptionLabel.text = _selectedScenario[RTRDescriptionKey];
 	[self showSettingsTable:NO];
-	[self prepareUIForRecognition];
-	self.captureButton.selected = YES;
+	[self capturePressed];
 }
 
 #pragma mark - UITableViewDatasource
