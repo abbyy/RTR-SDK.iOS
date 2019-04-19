@@ -1,8 +1,8 @@
-// ABBYY® Real-Time Recognition SDK 1 © 2016 ABBYY Production LLC.
-// ABBYY is either a registered trademark or a trademark of ABBYY Software Ltd.
+// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
 
-import UIKit
 import AVFoundation
+import AbbyyRtrSDK
 
 class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -40,7 +40,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	private var textCaptureService: RTRTextCaptureService?
 	/// Selected recognition languages.
 	/// Default recognition language.
-	private var selectedRecognitionLanguages = Set(["English"])
+	private var selectedRecognitionLanguages = Set([RTRLanguageName.english])
 	// Recommended session preset.
 	private let SessionPreset = AVCaptureSession.Preset.hd1280x720
 	private var ImageBufferSize = CGSize(width: 720, height: 1280)
@@ -48,19 +48,19 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	/// Is recognition running.
 	private var isRunning = true
 
-	private let RecognitionLanguages = [
-		"English",
-		"French",
-		"German",
-		"Italian",
-		"Polish",
-		"PortugueseBrazilian",
-		"Russian",
-		"ChineseSimplified",
-		"ChineseTraditional",
-		"Japanese",
-		"Korean",
-		"Spanish"
+	private let RecognitionLanguages: [RTRLanguageName] = [
+		.english,
+		.french,
+		.german,
+		.italian,
+		.polish,
+		.portugueseBrazilian,
+		.russian,
+		.chineseSimplified,
+		.chineseTraditional,
+		.japanese,
+		.korean,
+		.spanish
 	]
 	/// Area of interest in view coordinates.
 	private var selectedArea: CGRect = CGRect.zero {
@@ -182,8 +182,11 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 			return
 		}
 
-		let licensePath = (Bundle.main.bundlePath as NSString).appendingPathComponent("AbbyyRtrSdk.license")
-		engine = RTREngine.sharedEngine(withLicense: NSData(contentsOfFile: licensePath) as Data?)
+		let licensePath = (Bundle.main.bundlePath as NSString).appendingPathComponent("license")
+		let licenseUrl = URL.init(fileURLWithPath: licensePath)
+		if let data = try? Data(contentsOf: licenseUrl) {
+			engine = RTREngine.sharedEngine(withLicense: data)
+		}
 		guard let rtrEngine = engine else {
 			captureButton.isEnabled = false;
 			updateLogMessage("Invalid License")
@@ -192,10 +195,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 		settingsButton.isEnabled = true
 
-		if let service = rtrEngine.createTextCaptureService(with: self) {
-			service.setRecognitionLanguages(selectedRecognitionLanguages)
-			textCaptureService = service
-		}
+		let service = rtrEngine.createTextCaptureService(with: self)
+		service.setRecognitionLanguages(Set(selectedRecognitionLanguages.map{ $0.rawValue }))
+		textCaptureService = service
 
 		configureAVCaptureSession()
 		configurePreviewLayer()
@@ -298,14 +300,14 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	private func languagesButtonTitle() -> String
 	{
 		if selectedRecognitionLanguages.count == 1 {
-			return selectedRecognitionLanguages.first!
+			return selectedRecognitionLanguages.first!.rawValue
 		}
 
 		var languageCodes = [String]()
 
 		for language in selectedRecognitionLanguages {
-			let index = language.index(language.startIndex, offsetBy: 2)
-			languageCodes.append(String(language[..<index]))
+			let index = language.rawValue.index(language.rawValue.startIndex, offsetBy: 2)
+			languageCodes.append(String(language.rawValue[..<index]))
 		}
 
 		return languageCodes.joined(separator: " ")
@@ -321,7 +323,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		tableView.isHidden = true
 
 		if let service = textCaptureService {
-			service.setRecognitionLanguages(selectedRecognitionLanguages)
+			service.setRecognitionLanguages(Set(selectedRecognitionLanguages.map{ $0.rawValue }))
 			capturePressed()
 		}
 	}
@@ -371,10 +373,10 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	func drawTextLine(_ textLine: RTRTextLine, _ layer: CALayer, _ progress: RTRResultStabilityStatus)
 	{
-		let topLeft = scaledPoint(imagePoint: textLine.quadrangle[0] as! NSValue)
-		let bottomLeft = scaledPoint(imagePoint: textLine.quadrangle[1] as! NSValue)
-		let bottomRight = scaledPoint(imagePoint: textLine.quadrangle[2] as! NSValue)
-		let topRight = scaledPoint(imagePoint: textLine.quadrangle[3] as! NSValue)
+		let topLeft = scaledPoint(imagePoint: textLine.quadrangle[0])
+		let bottomLeft = scaledPoint(imagePoint: textLine.quadrangle[1])
+		let bottomRight = scaledPoint(imagePoint: textLine.quadrangle[2])
+		let topRight = scaledPoint(imagePoint: textLine.quadrangle[3])
 
 		drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress)
 
@@ -386,7 +388,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		let rectForTextLayer = CGRect(x: bottomLeft.x, y: bottomLeft.y, width: textWidth, height: textHeight) 
 
 		// Selecting the initial font size by rectangle
-		let textFont = font(string: recognizedString!, rect: rectForTextLayer)
+		let textFont = font(string: recognizedString, rect: rectForTextLayer)
 		textLayer.font = textFont
 		textLayer.fontSize = textFont.pointSize
 		textLayer.foregroundColor = progressColor(progress).cgColor
@@ -533,7 +535,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
 		let language = RecognitionLanguages[indexPath.row]
 		if let label = cell.textLabel {
-			label.text = language
+			label.text = language.rawValue
 			label.textColor = .white
 		}
 		cell.accessoryType = selectedRecognitionLanguages.contains(language) ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none
@@ -661,7 +663,7 @@ extension RTRViewController: AVCaptureVideoDataOutputSampleBufferDelegate
 
 extension RTRViewController: RTRTextCaptureServiceDelegate
 {
-	func onBufferProcessed(with textLines: [RTRTextLine]?, resultStatus: RTRResultStabilityStatus)
+	func onBufferProcessed(with textLines: [RTRTextLine], resultStatus: RTRResultStabilityStatus)
 	{
 		if !isRunning {
 			return
@@ -701,7 +703,7 @@ extension RTRViewController: RTRTextCaptureServiceDelegate
 		}
 	}
 
-	func onError(_ error: Error!)
+	func onError(_ error: Error)
 	{
 		print(error.localizedDescription)
 		if isRunning {
