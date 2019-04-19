@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5CB0FEB420DD52F6006A4CEF /* RTRAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0FEB320DD52F6006A4CEF /* RTRAppDelegate.swift */; };
+		5CB0FEB620DD52F6006A4CEF /* RTRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0FEB520DD52F6006A4CEF /* RTRViewController.swift */; };
+		5CB0FEB920DD52F6006A4CEF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CB0FEB720DD52F6006A4CEF /* MainStoryboard.storyboard */; };
+		5CB0FEBB20DD52F7006A4CEF /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CB0FEBA20DD52F7006A4CEF /* Icons.xcassets */; };
+		5CB0FEBE20DD52F7006A4CEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CB0FEBC20DD52F7006A4CEF /* LaunchScreen.storyboard */; };
+		5CB0FEE920DD5951006A4CEF /* AbbyyRtrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB0FEC920DD590C006A4CEF /* AbbyyRtrSDK.framework */; };
+		92B9DEBD21490A6E0060B72E /* RTRSelectedAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9DEBA21490A6D0060B72E /* RTRSelectedAreaView.swift */; };
+		92B9DEBE21490A6E0060B72E /* RTRHexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9DEBB21490A6D0060B72E /* RTRHexColor.swift */; };
+		92B9DEBF21490A6E0060B72E /* RTRProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9DEBC21490A6E0060B72E /* RTRProgressView.swift */; };
+		92B9DEC221492BB70060B72E /* DataCapture.RTRProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B9DEC021492BB70060B72E /* DataCapture.RTRProgressView.xib */; };
+		92DBA5FE20DF929300D499CA /* license in Resources */ = {isa = PBXBuildFile; fileRef = 92DBA5FB20DF929300D499CA /* license */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5C52F5DD214FE59A00D6AD10 /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Entitlements.entitlements; sourceTree = "<group>"; };
+		5C52F5DE214FE59A00D6AD10 /* config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
+		5CB0FEB020DD52F6006A4CEF /* DataCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CB0FEB320DD52F6006A4CEF /* RTRAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTRAppDelegate.swift; sourceTree = "<group>"; };
+		5CB0FEB520DD52F6006A4CEF /* RTRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTRViewController.swift; sourceTree = "<group>"; };
+		5CB0FEB820DD52F6006A4CEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		5CB0FEBA20DD52F7006A4CEF /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		5CB0FEBD20DD52F7006A4CEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5CB0FEBF20DD52F7006A4CEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CB0FEC920DD590C006A4CEF /* AbbyyRtrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AbbyyRtrSDK.framework; sourceTree = "<group>"; };
+		9273F558214EF303007C10E8 /* copy_assets.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = copy_assets.py; sourceTree = "<group>"; };
+		9273F559214EF30F007C10E8 /* copy_frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_frameworks.sh; sourceTree = "<group>"; };
+		92B9DEBA21490A6D0060B72E /* RTRSelectedAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRSelectedAreaView.swift; sourceTree = "<group>"; };
+		92B9DEBB21490A6D0060B72E /* RTRHexColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRHexColor.swift; sourceTree = "<group>"; };
+		92B9DEBC21490A6E0060B72E /* RTRProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTRProgressView.swift; sourceTree = "<group>"; };
+		92B9DEC121492BB70060B72E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DataCapture.RTRProgressView.xib; sourceTree = "<group>"; };
+		92DBA5FB20DF929300D499CA /* license */ = {isa = PBXFileReference; lastKnownFileType = file; path = license; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5CB0FEAD20DD52F6006A4CEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CB0FEE920DD5951006A4CEF /* AbbyyRtrSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5CB0FEA720DD52F6006A4CEF = {
+			isa = PBXGroup;
+			children = (
+				92DBA5F720DF929300D499CA /* assets */,
+				5CB0FEC820DD590C006A4CEF /* libs */,
+				5CB0FEB220DD52F6006A4CEF /* Sources */,
+				5CB0FEB120DD52F6006A4CEF /* Products */,
+				5CB0FEE820DD5951006A4CEF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5CB0FEB120DD52F6006A4CEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5CB0FEB020DD52F6006A4CEF /* DataCapture.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5CB0FEB220DD52F6006A4CEF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5C52F5DE214FE59A00D6AD10 /* config.xcconfig */,
+				5C52F5DD214FE59A00D6AD10 /* Entitlements.entitlements */,
+				5CB0FEBA20DD52F7006A4CEF /* Icons.xcassets */,
+				5CB0FEBF20DD52F7006A4CEF /* Info.plist */,
+				5CB0FEBC20DD52F7006A4CEF /* LaunchScreen.storyboard */,
+				5CB0FEB720DD52F6006A4CEF /* MainStoryboard.storyboard */,
+				5CB0FEB320DD52F6006A4CEF /* RTRAppDelegate.swift */,
+				92B9DEBB21490A6D0060B72E /* RTRHexColor.swift */,
+				92B9DEBC21490A6E0060B72E /* RTRProgressView.swift */,
+				92B9DEBA21490A6D0060B72E /* RTRSelectedAreaView.swift */,
+				5CB0FEB520DD52F6006A4CEF /* RTRViewController.swift */,
+				92B9DEC021492BB70060B72E /* DataCapture.RTRProgressView.xib */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		5CB0FEC820DD590C006A4CEF /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				5CB0FEC920DD590C006A4CEF /* AbbyyRtrSDK.framework */,
+				9273F559214EF30F007C10E8 /* copy_frameworks.sh */,
+			);
+			name = libs;
+			path = ../libs;
+			sourceTree = "<group>";
+		};
+		5CB0FEE820DD5951006A4CEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		92DBA5F720DF929300D499CA /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				9273F558214EF303007C10E8 /* copy_assets.py */,
+				92DBA5FB20DF929300D499CA /* license */,
+			);
+			name = assets;
+			path = ../assets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5CB0FEAF20DD52F6006A4CEF /* DataCapture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CB0FEC220DD52F7006A4CEF /* Build configuration list for PBXNativeTarget "DataCapture" */;
+			buildPhases = (
+				5CB0FEAC20DD52F6006A4CEF /* Sources */,
+				5CB0FEAD20DD52F6006A4CEF /* Frameworks */,
+				5CB0FEAE20DD52F6006A4CEF /* Resources */,
+				9273F55A214EF33A007C10E8 /* Copy Assets */,
+				92DBA60320DFB4F400D499CA /* Prepare Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DataCapture;
+			productName = ImageCapture;
+			productReference = 5CB0FEB020DD52F6006A4CEF /* DataCapture.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5CB0FEA820DD52F6006A4CEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = ABBYY;
+				TargetAttributes = {
+					5CB0FEAF20DD52F6006A4CEF = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 5CB0FEAB20DD52F6006A4CEF /* Build configuration list for PBXProject "DataCapture" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5CB0FEA720DD52F6006A4CEF;
+			productRefGroup = 5CB0FEB120DD52F6006A4CEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5CB0FEAF20DD52F6006A4CEF /* DataCapture */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5CB0FEAE20DD52F6006A4CEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92DBA5FE20DF929300D499CA /* license in Resources */,
+				5CB0FEBE20DD52F7006A4CEF /* LaunchScreen.storyboard in Resources */,
+				92B9DEC221492BB70060B72E /* DataCapture.RTRProgressView.xib in Resources */,
+				5CB0FEBB20DD52F7006A4CEF /* Icons.xcassets in Resources */,
+				5CB0FEB920DD52F6006A4CEF /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9273F55A214EF33A007C10E8 /* Copy Assets */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Assets";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "python \"${ABBYY_RTR_SDK_DISTRIBUTION_ROOT}/assets/copy_assets.py\" datacapture_mrz\n";
+		};
+		92DBA60320DFB4F400D499CA /* Prepare Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"${ABBYY_RTR_SDK_DISTRIBUTION_ROOT}/libs/copy_frameworks.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5CB0FEAC20DD52F6006A4CEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92B9DEBF21490A6E0060B72E /* RTRProgressView.swift in Sources */,
+				92B9DEBE21490A6E0060B72E /* RTRHexColor.swift in Sources */,
+				5CB0FEB620DD52F6006A4CEF /* RTRViewController.swift in Sources */,
+				92B9DEBD21490A6E0060B72E /* RTRSelectedAreaView.swift in Sources */,
+				5CB0FEB420DD52F6006A4CEF /* RTRAppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5CB0FEB720DD52F6006A4CEF /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CB0FEB820DD52F6006A4CEF /* Base */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		5CB0FEBC20DD52F7006A4CEF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CB0FEBD20DD52F7006A4CEF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		92B9DEC021492BB70060B72E /* DataCapture.RTRProgressView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92B9DEC121492BB70060B72E /* Base */,
+			);
+			name = DataCapture.RTRProgressView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5CB0FEC020DD52F7006A4CEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5CB0FEC120DD52F7006A4CEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5CB0FEC320DD52F7006A4CEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C52F5DE214FE59A00D6AD10 /* config.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		5CB0FEC420DD52F7006A4CEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C52F5DE214FE59A00D6AD10 /* config.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5CB0FEAB20DD52F6006A4CEF /* Build configuration list for PBXProject "DataCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CB0FEC020DD52F7006A4CEF /* Debug */,
+				5CB0FEC120DD52F7006A4CEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5CB0FEC220DD52F7006A4CEF /* Build configuration list for PBXNativeTarget "DataCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CB0FEC320DD52F7006A4CEF /* Debug */,
+				5CB0FEC420DD52F7006A4CEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5CB0FEA820DD52F6006A4CEF /* Project object */;
+}
