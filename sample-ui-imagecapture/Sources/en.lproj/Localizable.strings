@@ -1,0 +1,12 @@
+/// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+/// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
+
+"ExportInProgress" = "Exporting...";
+"ShareButtonTitle" = "Share Image";
+"DoneButtonTitle" = "Done";
+"ScanNewDocButtonTitle" = "Scan New Doc";
+"Delete" = "Delete";
+"SinglePagePreviewTitle" = "Preview";
+"SomethingWentWrong" = "Oops!";
+"InvalidLicenseMessage" = "The license is invalid. Please check the license file and the license file path.";
+"OK" = "OK";
