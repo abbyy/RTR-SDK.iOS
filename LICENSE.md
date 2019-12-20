@@ -17,3 +17,5 @@
 7.	You must retain, in the source code form of Your Application, all copyright, trademark, and attribution notices present in the ABBYY Mobile Capture Samples.
 
 8.	THE ABBYY MOBILE CAPTURE SAMPLES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL ABBYY BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE PLUGIN OR THE USE OR OTHER DEALINGS IN THE PLUGIN. In particular, ABBYY cannot warrant the performance of any Application created by or for You by means of the ABBYY Mobile Capture Samples, nor does ABBYY make any representations or warranties with respect to the performance of the ABBYY Mobile Capture Samples integrated into the Application. ABBYY will not be liable for any direct or indirect damages resulting from errors or misprints in the ABBYY Mobile Capture Samples.
+
+9.zxvfasfasfd
