@@ -17,8 +17,9 @@
 		75EC7CAF1D87064D00A06B74 /* RTRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7C9C1D87064D00A06B74 /* RTRViewController.m */; };
 		75EC7CB41D87064D00A06B74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CA41D87064D00A06B74 /* main.m */; };
 		75EC7CB71D87064D00A06B74 /* RTRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */; };
-		75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */; };
 		75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75EC7CBA1D87069200A06B74 /* Icons.xcassets */; };
+		7C36F48E22AE9E6F0049E7C3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C36F48D22AE9E6F0049E7C3 /* MainStoryboard.storyboard */; };
+		7C36F49322AE9EA80049E7C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C36F49222AE9EA80049E7C3 /* LaunchScreen.storyboard */; };
 		92153A1D2130239C00D71EAC /* license in Resources */ = {isa = PBXBuildFile; fileRef = 92153A1C2130239C00D71EAC /* license */; };
 /* End PBXBuildFile section */
 
@@ -38,8 +39,9 @@
 		75EC7CA41D87064D00A06B74 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75EC7CAA1D87064D00A06B74 /* RTRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRAppDelegate.h; sourceTree = "<group>"; };
 		75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRAppDelegate.m; sourceTree = "<group>"; };
-		75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		75EC7CBA1D87069200A06B74 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		7C36F48D22AE9E6F0049E7C3 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		7C36F49222AE9EA80049E7C3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9201092A200FA397005A1806 /* copy_frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_frameworks.sh; sourceTree = "<group>"; };
 		92153A1C2130239C00D71EAC /* license */ = {isa = PBXFileReference; lastKnownFileType = file; path = license; sourceTree = "<group>"; };
 		92643C47214BD00900433B90 /* copy_assets.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = copy_assets.py; sourceTree = "<group>"; };
@@ -100,12 +102,13 @@
 		75EC7C961D87064D00A06B74 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7C36F49222AE9EA80049E7C3 /* LaunchScreen.storyboard */,
+				7C36F48D22AE9E6F0049E7C3 /* MainStoryboard.storyboard */,
 				9273F54E214EE41A007C10E8 /* config.xcconfig */,
 				CFC416E71DC8E2F200D1112A /* Entitlements.entitlements */,
 				75EC7CBA1D87069200A06B74 /* Icons.xcassets */,
 				75EC7CA31D87064D00A06B74 /* Info.plist */,
 				75EC7CA41D87064D00A06B74 /* main.m */,
-				75EC7CAC1D87064D00A06B74 /* MainStoryboard.storyboard */,
 				75EC7CAA1D87064D00A06B74 /* RTRAppDelegate.h */,
 				75EC7CAB1D87064D00A06B74 /* RTRAppDelegate.m */,
 				75EC7C9B1D87064D00A06B74 /* RTRViewController.h */,
@@ -162,7 +165,6 @@
 				TargetAttributes = {
 					75EC7C7A1D8705C600A06B74 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = Q58QAQTUTZ;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -174,11 +176,11 @@
 			};
 			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "CoreAPI" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = 75EC7C721D8705C600A06B74;
 			productRefGroup = 75EC7C721D8705C600A06B74;
@@ -195,8 +197,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C36F48E22AE9E6F0049E7C3 /* MainStoryboard.storyboard in Resources */,
+				7C36F49322AE9EA80049E7C3 /* LaunchScreen.storyboard in Resources */,
 				92153A1D2130239C00D71EAC /* license in Resources */,
-				75EC7CB81D87064D00A06B74 /* MainStoryboard.storyboard in Resources */,
 				75EC7CBC1D87069200A06B74 /* Icons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

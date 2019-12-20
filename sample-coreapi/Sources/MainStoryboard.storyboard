@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Cye-PO-5fF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Cye-PO-5fF">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,7 +58,7 @@
                                         </constraints>
                                     </progressView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xJU-uY-Mq6" userLabel="Info Label">
-                                        <rect key="frame" x="30" y="94" width="315" height="0.0"/>
+                                        <rect key="frame" x="30" y="589" width="315" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -102,6 +102,7 @@
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="top" secondItem="KkT-be-Gdn" secondAttribute="bottom" id="3NU-jg-eXV"/>
                                     <constraint firstItem="U56-5U-Gci" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" id="4W7-ua-aZu"/>
                                     <constraint firstAttribute="trailing" secondItem="mbK-Nu-RVY" secondAttribute="trailing" id="5ey-is-ui3"/>
+                                    <constraint firstItem="U56-5U-Gci" firstAttribute="top" secondItem="xJU-uY-Mq6" secondAttribute="bottom" constant="8" id="7Wg-ph-oPD"/>
                                     <constraint firstItem="mbK-Nu-RVY" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" id="FX9-aR-xy6"/>
                                     <constraint firstAttribute="trailing" secondItem="xJU-uY-Mq6" secondAttribute="trailing" constant="30" id="I5A-S0-ZcG"/>
                                     <constraint firstItem="m4U-7J-qHP" firstAttribute="top" secondItem="W6T-Jh-8EW" secondAttribute="top" id="J7J-kA-nmY"/>
@@ -112,7 +113,6 @@
                                     <constraint firstAttribute="trailing" secondItem="gTk-RZ-saF" secondAttribute="trailing" id="dvg-Pq-40p"/>
                                     <constraint firstAttribute="bottom" secondItem="mbK-Nu-RVY" secondAttribute="bottom" id="fJm-KW-X72"/>
                                     <constraint firstItem="xJU-uY-Mq6" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" constant="30" id="guu-Q8-uME"/>
-                                    <constraint firstItem="xJU-uY-Mq6" firstAttribute="top" secondItem="m4U-7J-qHP" secondAttribute="bottom" constant="50" id="j6X-oZ-bXf"/>
                                     <constraint firstItem="gTk-RZ-saF" firstAttribute="leading" secondItem="W6T-Jh-8EW" secondAttribute="leading" id="jF0-gn-H03"/>
                                     <constraint firstAttribute="bottom" secondItem="U56-5U-Gci" secondAttribute="bottom" id="kMa-kz-gaI"/>
                                     <constraint firstAttribute="trailing" secondItem="U56-5U-Gci" secondAttribute="trailing" id="pzr-Vv-cMC"/>
