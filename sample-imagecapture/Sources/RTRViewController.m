@@ -15,6 +15,8 @@
 @property (nonatomic, copy) NSString* name;
 /// Physical size, mm.
 @property (nonatomic, assign) CGSize size;
+/// Minimum aspect ratio of a capturing document.
+@property (nonatomic, assign) CGFloat minAspectRatio;
 /// Description.
 @property (nonatomic, copy) NSString* documentDescription;
 /// Are boundaries required, wait while a boundaries will be found.
@@ -28,12 +30,12 @@
 
 - (BOOL)areBoundariesRequired
 {
-	return !CGSizeEqualToSize(self.size, CGSizeZero);
+	return self.minAspectRatio != 0.f || !CGSizeEqualToSize(self.size, CGSizeZero);
 }
 
 - (BOOL)isDocumentSizeKnown
 {
-	return !CGSizeEqualToSize(self.size, CGSizeZero) && !CGSizeEqualToSize(self.size, CGSizeMake(INT_MAX, INT_MAX));
+	return !CGSizeEqualToSize(self.size, CGSizeZero);
 }
 
 @end
@@ -200,6 +202,7 @@
 	self.showSettingsButton.enabled = YES;
 	_imageCaptureService = [_engine createImageCaptureServiceWithDelegate:self];
 	[_imageCaptureService setDocumentSize:self.selectedDocument.size];
+	[_imageCaptureService setAspectRatioMin:self.selectedDocument.minAspectRatio];
 
 	[self configureAVCaptureSession];
 	[self configurePreviewLayer];
@@ -307,6 +310,7 @@
 
 	if(self.isRunning) {
 		[_imageCaptureService setDocumentSize:self.selectedDocument.size];
+		[_imageCaptureService setAspectRatioMin:self.selectedDocument.minAspectRatio];
 		[self prepareUIForStart];
 	} else {
 		[_imageCaptureService stopTasks];
@@ -373,7 +377,7 @@
 	[videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
 	[videoDataOutput alwaysDiscardsLateVideoFrames];
 	videoDataOutput.videoSettings = @{
-		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
+		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
 	};
 	NSAssert([_session canAddOutput:videoDataOutput], @"impossible to add AVCaptureVideoDataOutput");
 	[_session addOutput:videoDataOutput];
@@ -584,7 +588,8 @@
 		// Unknown size but require boundaries
 		RTRCapturedDocument* documentWithBoundaries = [[RTRCapturedDocument alloc] init];
 		documentWithBoundaries.name = @"DocumentWithBoundaries";
-		documentWithBoundaries.size = CGSizeMake(INT_MAX, INT_MAX);
+		documentWithBoundaries.size = CGSizeZero;
+		documentWithBoundaries.minAspectRatio = 1.f;
 		documentWithBoundaries.documentDescription = @"Unknown size / Require boundaries";
 
 		// A4 paper size for office documents (ISO)
