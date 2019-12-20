@@ -95,6 +95,8 @@ class RTRDrawResultsView: UIView {
 							fillRect = true
 						case .unknownBlock:
 							color = UIColor.lightGray.withAlphaComponent(0.2)
+						@unknown default:
+							assert(false)
 					}
 					if let blockColor = color {
 						drawBlock(rect: block.rect, color: blockColor, fill: fillRect, context: currentContext)

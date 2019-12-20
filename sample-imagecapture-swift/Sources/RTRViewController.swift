@@ -14,6 +14,8 @@ class RTRDocument : Equatable {
 	let name : String
 	/// Physical size, mm.
 	let size : CGSize
+	/// Minimum aspect ratio of a capturing document.
+	let minAspectRatio : CGFloat
 	/// Description.
 	let description : String
 
@@ -21,20 +23,28 @@ class RTRDocument : Equatable {
 	{
 		self.name = name
 		self.size = size
+		self.minAspectRatio = 0
+		self.description = description
+	}
+
+	init(name: String, minAspectRatio: CGFloat, description: String)
+	{
+		self.name = name
+		self.size = .zero
+		self.minAspectRatio = minAspectRatio
 		self.description = description
 	}
 
 	/// Are boundaries required, wait while a boundaries will be found.
 	func areBoundariesRequired() -> Bool
 	{
-		return !size.equalTo(CGSize.zero)
+		return minAspectRatio != 0 || !size.equalTo(CGSize.zero)
 	}
 
 	/// If size is known we can specify it in crop operation.
 	func isSizeKnown() -> Bool
 	{
 		return !size.equalTo(CGSize.zero)
-			&& !size.equalTo(CGSize(width: Int.max, height: Int.max))
 	}
 }
 
@@ -92,7 +102,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		get {
 			if _documentPresets == nil {
 				/// Unknown size but require boundaries
-				let documentWithBoundaries = RTRDocument(name: "DocumentWithBoundaries", size: CGSize(width: Int.max, height: Int.max), description: "Unknown size / Require boundaries" )
+				let documentWithBoundaries = RTRDocument(name: "DocumentWithBoundaries", minAspectRatio: 1, description: "Unknown size / Require boundaries" )
 				/// A4 paper size for office documents (ISO)
 				let a4 = RTRDocument(name: "A4", size: CGSize(width: 210, height: 297), description: "210×297 mm (ISO A4)" )
 				/// Letter paper size for office documents (US Letter)
@@ -164,6 +174,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 			case .restricted, .denied:
 				completion(false)
+
+			@unknown default:
+				assert(false)
 		}
 	}
 	
@@ -246,6 +259,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		showSettingsButton.isEnabled = true
 		imageCaptureService = rtrEngine.createImageCaptureService(with: self)
 		imageCaptureService?.setDocumentSize(selectedDocument.size)
+		imageCaptureService?.aspectRatioMin = selectedDocument.minAspectRatio
 		configureAVCaptureSession()
 		configurePreviewLayer()
 		session?.startRunning()
@@ -300,7 +314,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 			let videoDataOutput = AVCaptureVideoDataOutput()
 			let videoDataOutputQueue = DispatchQueue(label: "videodataqueue", attributes: .concurrent)
 			videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
-			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA)]
+			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 			assert((_session.canAddOutput(videoDataOutput)), "impossible to add AVCaptureVideoDataOutput")
 			_session.addOutput(videoDataOutput)
 			
@@ -479,6 +493,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 		if isRunning {
 			imageCaptureService?.setDocumentSize(selectedDocument.size)
+			imageCaptureService?.aspectRatioMin = selectedDocument.minAspectRatio
 			prepareUIForStart()
 			session?.startRunning()
 		} else {
