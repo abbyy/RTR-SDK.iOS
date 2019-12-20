@@ -267,7 +267,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		}
 
 		let imagePicker: UIImagePickerController = UIImagePickerController.init()
-		imagePicker.sourceType = .savedPhotosAlbum
+		imagePicker.sourceType = .photoLibrary
 		imagePicker.delegate = self
 		imagePicker.modalPresentationStyle = .fullScreen
 
@@ -394,7 +394,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	
 	func showDataFields(dataFields: [RTRDataField])
 	{
-		textView.text = dataFields.map { "\($0.name ?? ""): \($0.text)" }.joined(separator: "\n")
+		textView.text = dataFields.map { "\($0.name ?? ""): \($0.text ?? "")" }.joined(separator: "\n")
 	}
 
 	/// Human-readable descriptions for the RTRCallbackWarningCode constants.
@@ -419,6 +419,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 		case .noWarning:
 			break
+
+		@unknown default:
+			assert(false)
 		}
 		return warningString
 	}
