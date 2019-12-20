@@ -114,6 +114,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 			case AVAuthorizationStatus.restricted, AVAuthorizationStatus.denied:
 				completion(false)
+
+			@unknown default:
+				assert(false)
 		}
 	}
 
@@ -233,7 +236,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 			let videoDataOutput = AVCaptureVideoDataOutput()
 			let videoDataOutputQueue = DispatchQueue(label: "videodataqueue", attributes: .concurrent)
 			videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
-			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
+			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 			assert((session.canAddOutput(videoDataOutput)), "impossible to add AVCaptureVideoDataOutput")
 			session.addOutput(videoDataOutput)
 
@@ -433,6 +436,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 				return UIColor(hex: 0x4B6500)
 			case .stable:
 				return UIColor(hex: 0x006500)
+			@unknown default:
+				assert(false)
+				return .black
 		}
 	}
 
