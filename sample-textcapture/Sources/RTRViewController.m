@@ -355,7 +355,7 @@ static NSString* const RTRTextRegionLayerName = @"RTRTextRegionLayerName";
 	[videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
 	[videoDataOutput alwaysDiscardsLateVideoFrames];
 	videoDataOutput.videoSettings = @{
-		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA),
+		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange),
 	};
 	NSAssert([_session canAddOutput:videoDataOutput], @"impossible to add AVCaptureVideoDataOutput");
 	[_session addOutput:videoDataOutput];
