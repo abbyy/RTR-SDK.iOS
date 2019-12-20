@@ -167,6 +167,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 				
 			case AVAuthorizationStatus.restricted, AVAuthorizationStatus.denied:
 				completion(false)
+
+			@unknown default:
+				assert(false)
 		}
 	}
 	
@@ -319,7 +322,7 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 			let videoDataOutput = AVCaptureVideoDataOutput()
 			let videoDataOutputQueue = DispatchQueue(label: "videodataqueue", attributes: .concurrent)
 			videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
-			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
+			videoDataOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 			assert((session.canAddOutput(videoDataOutput)), "impossible to add AVCaptureVideoDataOutput")
 			session.addOutput(videoDataOutput)
 			
@@ -431,20 +434,19 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 	private func drawDataFields(_ dataFields: [RTRDataField], _ progress:RTRResultStabilityStatus)
 	{
 		clearScreenFromRegions()
-		for dataField in dataFields {
-			drawLines(dataField.components ?? [], progress)
-		}
-	}
-
-	private func drawLines(_ textLines: [RTRDataField], _ progress:RTRResultStabilityStatus)
-	{
 		if let previewLayer = self.previewLayer {
 			let textRegionsLayer = CALayer()
 			textRegionsLayer.frame = previewLayer.frame
 			textRegionsLayer.name = RTRTextRegionsLayerName
 
-			for textLine in textLines {
-				drawLine(textLine, textRegionsLayer, progress)
+			for dataField in dataFields {
+				if let components = dataField.components {
+					for component in components {
+						drawLine(component, textRegionsLayer, progress)
+					}
+				} else {
+					drawLine(dataField, textRegionsLayer, progress)
+				}
 			}
 
 			previewView.layer.addSublayer(textRegionsLayer)
@@ -453,34 +455,36 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
 	func drawLine(_ textLine: RTRDataField, _ layer: CALayer, _ progress: RTRResultStabilityStatus)
 	{
-		let topLeft = scaledPoint(imagePoint: textLine.quadrangle[0] )
-		let bottomLeft = scaledPoint(imagePoint: textLine.quadrangle[1])
-		let bottomRight = scaledPoint(imagePoint: textLine.quadrangle[2])
-		let topRight = scaledPoint(imagePoint: textLine.quadrangle[3])
+		if let quadrangle = textLine.quadrangle {
+			let bottomLeft = scaledPoint(imagePoint: quadrangle[0])
+			let topLeft = scaledPoint(imagePoint: quadrangle[1])
+			let topRight = scaledPoint(imagePoint: quadrangle[2])
+			let bottomRight = scaledPoint(imagePoint: quadrangle[3])
 
-		drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress)
+			drawQuadrangle(topLeft, bottomLeft, bottomRight, topRight, layer, progress)
 
-		let textLayer = CATextLayer()
-		let textWidth = distanceBetween(topLeft, topRight)
-		let textHeight = distanceBetween(topLeft, bottomLeft)
-		let rectForTextLayer = CGRect(x: bottomLeft.x, y: bottomLeft.y, width: textWidth, height: textHeight) 
+			if let text = textLine.text {
+				let textLayer = CATextLayer()
+				let rectForTextLayer = CGRect(origin: topLeft,
+					size: CGSize(width: min(topRight.x - topLeft.x, bottomRight.x - bottomLeft.x),
+						height: min(bottomRight.y - topRight.y, bottomLeft.y - topLeft.y)))
 
-		// Selecting the initial font size by rectangle
-		let textFont = font(string: textLine.text, rect: rectForTextLayer)
-		textLayer.font = textFont
-		textLayer.fontSize = textFont.pointSize
-		textLayer.foregroundColor = progressColor(progress).cgColor
-		textLayer.alignmentMode = CATextLayerAlignmentMode.center
-		textLayer.string = textLine.text
-		textLayer.frame = rectForTextLayer
+				// Selecting the initial font size by rectangle
+				let textFont = font(string: text, rect: rectForTextLayer)
+				textLayer.font = textFont
+				textLayer.fontSize = textFont.pointSize
+				textLayer.foregroundColor = progressColor(progress).cgColor
+				textLayer.alignmentMode = CATextLayerAlignmentMode.center
+				textLayer.string = textLine.text
+				textLayer.frame = rectForTextLayer
 
-		// Rotate the text layer
-		let angle = asin((bottomRight.y - bottomLeft.y) / distanceBetween(bottomLeft, bottomRight))
-		textLayer.anchorPoint = CGPoint(x: 0, y: 0)
-		textLayer.position = bottomLeft
-		textLayer.transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
+				// Rotate the text layer
+				let angle = asin((topRight.y - topLeft.y) / distanceBetween(topRight, topLeft))
+				textLayer.transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
 
-		layer.addSublayer(textLayer)
+				layer.addSublayer(textLayer)
+			}
+		}
 	}
 
 	func drawQuadrangle(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint, _ p3: CGPoint, _ layer: CALayer, _ progress: RTRResultStabilityStatus)
@@ -511,6 +515,9 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 				return UIColor(hex: 0x4B6500)
 			case .stable:
 				return UIColor(hex: 0x006500)
+			@unknown default:
+				assert(false)
+				return .black
 		}
 	}
 
@@ -717,8 +724,8 @@ class RTRViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 		if let session = self.session {
 			if let input = session.inputs.first as? AVCaptureDeviceInput {
 				let currentDevice = input.device
-				let devices = AVCaptureDevice.devices(for: .video)
-				if let index = devices.index(where: { $0 === currentDevice }) {
+				let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified).devices
+				if let index = devices.firstIndex(where: { $0 === currentDevice }) {
 					return devices[((index + 1) % devices.count)];
 				} else {
 					return devices.first
