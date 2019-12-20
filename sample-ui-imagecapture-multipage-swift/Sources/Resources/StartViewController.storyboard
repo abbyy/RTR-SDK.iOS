@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Start View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="StartViewController" customModule="ImageCapture" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build 1.0.3.39167" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyV-BG-hvb">
+                                <rect key="frame" x="131" y="38" width="113" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="kU2-oy-eKy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-GR-q8n">
+                                <rect key="frame" x="22" y="66" width="331" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1bT-eu-Avb"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Business Card"/>
+                                    <segment title="A4 Document"/>
+                                    <segment title="Unknown Set"/>
+                                </segments>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="selectedSegmentTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </segmentedControl>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sR5-FH-FBJ">
+                                <rect key="frame" x="0.0" y="111" width="375" height="383"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1gq-LA-2D5">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PageCell" id="74q-xE-lpn" customClass="ImageCollectionViewCell" customModule="ImageCapture" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyCollection" translatesAutoresizingMaskIntoConstraints="NO" id="ZkP-jK-EYU">
+                                <rect key="frame" x="75" y="187.5" width="225" height="230"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="hPc-t6-ehj">
+                                <rect key="frame" x="0.0" y="14" width="375" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="unI-PC-2E6"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="G0d-hk-RGq">
+                                <rect key="frame" x="22" y="580" width="331" height="56"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAk-GJ-TAa">
+                                        <rect key="frame" x="0.0" y="0.0" width="154.5" height="56"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <state key="normal">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="referenceText" value="AddPagesButtonTitle"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onAddPagesTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sAy-6N-taX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RE7-SH-X2a">
+                                        <rect key="frame" x="176.5" y="0.0" width="154.5" height="56"/>
+                                        <color key="backgroundColor" red="0.80612581969999997" green="0.1325103641" blue="0.20948007699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <state key="normal">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="referenceText" value="ScanNewDocButtonTitle"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onScanNewDocumentTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sSC-NF-EP3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="RE7-SH-X2a" firstAttribute="width" secondItem="vAk-GJ-TAa" secondAttribute="width" id="3Kq-NN-lSz"/>
+                                    <constraint firstAttribute="height" constant="56" id="glr-Ic-DBe"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="279-CS-REQ">
+                                <rect key="frame" x="22" y="516" width="331" height="56"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="referenceText" value="SharePDFButtonTitle"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onSharePdfTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uGg-zj-suM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hPc-t6-ehj" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="0ou-af-oPq"/>
+                            <constraint firstItem="sR5-FH-FBJ" firstAttribute="top" secondItem="GtZ-GR-q8n" secondAttribute="bottom" constant="15" id="1gh-8J-0UP"/>
+                            <constraint firstItem="gyV-BG-hvb" firstAttribute="top" secondItem="hPc-t6-ehj" secondAttribute="bottom" id="2wG-j6-EPF"/>
+                            <constraint firstItem="ZkP-jK-EYU" firstAttribute="height" secondItem="sR5-FH-FBJ" secondAttribute="height" multiplier="0.6" id="4JC-1M-7aw"/>
+                            <constraint firstItem="gyV-BG-hvb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="7sy-Nx-661"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="G0d-hk-RGq" secondAttribute="trailing" constant="22" id="7x2-eX-N5q"/>
+                            <constraint firstItem="279-CS-REQ" firstAttribute="width" secondItem="G0d-hk-RGq" secondAttribute="width" id="8i4-mQ-2zd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="G0d-hk-RGq" secondAttribute="bottom" constant="31" id="Btz-05-LEt"/>
+                            <constraint firstItem="ZkP-jK-EYU" firstAttribute="width" secondItem="sR5-FH-FBJ" secondAttribute="width" multiplier="0.6" id="G7l-BP-VtN"/>
+                            <constraint firstItem="hPc-t6-ehj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="14" id="Jif-ZD-Iep"/>
+                            <constraint firstItem="G0d-hk-RGq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="22" id="Mwc-Yh-Avw"/>
+                            <constraint firstItem="ZkP-jK-EYU" firstAttribute="centerY" secondItem="sR5-FH-FBJ" secondAttribute="centerY" id="Qtn-tk-bRX"/>
+                            <constraint firstItem="GtZ-GR-q8n" firstAttribute="top" secondItem="gyV-BG-hvb" secondAttribute="bottom" constant="8" id="V0k-Eb-yyX"/>
+                            <constraint firstItem="279-CS-REQ" firstAttribute="height" secondItem="G0d-hk-RGq" secondAttribute="height" id="V6p-Oy-1hB"/>
+                            <constraint firstItem="279-CS-REQ" firstAttribute="centerX" secondItem="G0d-hk-RGq" secondAttribute="centerX" id="YMZ-Xl-ggN"/>
+                            <constraint firstItem="G0d-hk-RGq" firstAttribute="top" secondItem="279-CS-REQ" secondAttribute="bottom" constant="8" id="bCS-Ez-sdU"/>
+                            <constraint firstItem="sR5-FH-FBJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bel-Gw-NFv"/>
+                            <constraint firstItem="279-CS-REQ" firstAttribute="top" secondItem="sR5-FH-FBJ" secondAttribute="bottom" constant="22" id="bhg-Ld-dFG"/>
+                            <constraint firstItem="GtZ-GR-q8n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="22" id="ceq-XY-Z3h"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GtZ-GR-q8n" secondAttribute="trailing" constant="22" id="gJ3-1R-Qcc"/>
+                            <constraint firstItem="sR5-FH-FBJ" firstAttribute="top" secondItem="GtZ-GR-q8n" secondAttribute="bottom" constant="15" id="llB-JC-5Qb"/>
+                            <constraint firstItem="ZkP-jK-EYU" firstAttribute="centerX" secondItem="sR5-FH-FBJ" secondAttribute="centerX" id="llI-2Y-9f6"/>
+                            <constraint firstItem="hPc-t6-ehj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lo5-8O-WUr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sR5-FH-FBJ" secondAttribute="trailing" id="vva-X9-est"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="addPagesButton" destination="vAk-GJ-TAa" id="kyA-GA-vg3"/>
+                        <outlet property="pagesCollection" destination="sR5-FH-FBJ" id="Zsr-VJ-gVN"/>
+                        <outlet property="placeholderImageView" destination="ZkP-jK-EYU" id="aLS-ww-Lhz"/>
+                        <outlet property="profilesControl" destination="GtZ-GR-q8n" id="vkI-jd-Q3G"/>
+                        <outlet property="sharePdfButton" destination="279-CS-REQ" id="8Ri-qd-XJN"/>
+                        <outlet property="versionLabel" destination="gyV-BG-hvb" id="Gkt-NE-2vI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-839.20000000000005" y="-60.719640179910051"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="emptyCollection" width="220" height="284"/>
+        <image name="logo" width="56" height="24"/>
+    </resources>
+</document>

@@ -1,0 +1,18 @@
+/// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+/// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
+
+"DectructiveActionWarning" = "Are you sure?";
+"AllPagesOnCurrentSessionWillBeDeletedWarning" = "All the pages captured in the current session will be deleted.";
+"Confirm" = "Confirm";
+"Cancel" = "Cancel";
+"ExportInProgress" = "Exporting...";
+"SharePDFButtonTitle" = "Share PDF";
+"AddPagesButtonTitle" = "Add Pages";
+"ScanNewDocButtonTitle" = "Scan New Doc";
+"SomethingWentWrong" = "Oops!";
+"InvalidLicenseMessage" = "The license is invalid. Please check the license file and the license file path.";
+"Ok" = "OK";
+"PdfExportWithError" = "Failed to export to PDF. Error: %@.";
+"Open Page" = "Open Page";
+"Share Page" = "Share Page Image";
+"Delete Page" = "Delete Page";
