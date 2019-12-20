@@ -434,7 +434,8 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	AVCaptureDeviceInput* input = _session.inputs.firstObject;
 	AVCaptureDevice* currentDevice = input.device;
 
-	NSArray<AVCaptureDevice*>* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+	AVCaptureDeviceDiscoverySession* captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera] mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionUnspecified];
+	NSArray<AVCaptureDevice*>* devices = [captureDeviceDiscoverySession devices];
 
 	NSUInteger index = [devices indexOfObject:currentDevice];
 	if(index == NSNotFound) {
@@ -501,7 +502,7 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	[videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
 	[videoDataOutput alwaysDiscardsLateVideoFrames];
 	videoDataOutput.videoSettings = @{
-		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA),
+		(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange),
 	};
 	NSAssert([_session canAddOutput:videoDataOutput], @"impossible to add AVCaptureVideoDataOutput");
 	[_session addOutput:videoDataOutput];
@@ -538,10 +539,12 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 
 - (void)avSessionFailed:(NSNotification*)notification
 {
-	UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"AVSession Failed!"
-		message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"AVSession Failed!" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
-	[alertView show];
+	UIAlertAction* alertControllerOkAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+	[alertController addAction:alertControllerOkAction];
+
+	[self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
@@ -599,8 +602,12 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	textRegionsLayer.name = RTRTextRegionLayerName;
 
 	for(RTRDataField* dataField in dataFields) {
-		for(RTRDataField* textLine in dataField.components) {
-			[self drawLine:textLine inLayer:textRegionsLayer progress:progress];
+		if(dataField.components.count == 0) {
+			[self drawLine:dataField inLayer:textRegionsLayer progress:progress];
+		} else {
+			for(RTRDataField* textLine in dataField.components) {
+				[self drawLine:textLine inLayer:textRegionsLayer progress:progress];
+			}
 		}
 	}
 
@@ -625,6 +632,10 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 /// and a separate recognized text layer, if there is any recognized text.
 - (void)drawLine:(RTRDataField*)textLine inLayer:(CALayer*)layer progress:(RTRResultStabilityStatus)progress
 {
+	if(textLine.quadrangle == nil) {
+		return;
+	}
+
 	[self drawQuadrangle:textLine.quadrangle inLayer:layer progress:progress];
 
 	NSString* recognizedString = textLine.text;
@@ -635,13 +646,14 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	CATextLayer* textLayer = [CATextLayer layer];
 
 	// Creating the text layer rectangle: it should be close to the quadrangle drawn before.
-	CGPoint topLeft = [self scaledPointFromImagePoint:textLine.quadrangle[0]];
-	CGPoint bottomLeft = [self scaledPointFromImagePoint:textLine.quadrangle[1]];
-	CGPoint bottomRight = [self scaledPointFromImagePoint:textLine.quadrangle[2]];
-	CGPoint topRight = [self scaledPointFromImagePoint:textLine.quadrangle[3]];
-	CGRect rectForTextLayer = CGRectMake(bottomLeft.x, bottomLeft.y,
-		[self distanceBetweenPoint:topLeft andPoint:topRight],
-		[self distanceBetweenPoint:topLeft andPoint:bottomLeft]);
+	CGPoint bottomLeft = [self scaledPointFromImagePoint:textLine.quadrangle[0]];
+	CGPoint topLeft = [self scaledPointFromImagePoint:textLine.quadrangle[1]];
+	CGPoint topRight = [self scaledPointFromImagePoint:textLine.quadrangle[2]];
+	CGPoint bottomRight = [self scaledPointFromImagePoint:textLine.quadrangle[3]];
+
+	CGRect rectForTextLayer = CGRectMake(topLeft.x, topLeft.y,
+		MIN(topRight.x - topLeft.x, bottomRight.x - bottomLeft.x),
+		MIN(bottomRight.y - topRight.y, bottomLeft.y - topLeft.y));
 
 	// Selecting the initial font size to suit the rectangle size.
 	UIFont* textFont = [self fontForString:recognizedString inRect:rectForTextLayer];
@@ -653,12 +665,8 @@ static NSString* const RTRLanguageKey = @"RTRLanguageKey";
 	textLayer.frame = rectForTextLayer;
 	
 	// Rotating the text layer.
-	CGFloat angle = asin((bottomRight.y - bottomLeft.y) / [self distanceBetweenPoint:bottomLeft andPoint:bottomRight]);
-	textLayer.anchorPoint = CGPointMake(0.f, 0.f);
-	textLayer.position = bottomLeft;
-	CATransform3D t = CATransform3DIdentity;
-	t = CATransform3DRotate(t, angle, 0.f, 0.f, 1.f);
-	textLayer.transform = t;
+	CGFloat angle = asin((topRight.y - topLeft.y) / [self distanceBetweenPoint:topRight andPoint:topLeft]);
+	textLayer.transform = CATransform3DMakeRotation(angle, 0.f, 0.f, 1.f);
 	
 	[layer addSublayer:textLayer];
 }

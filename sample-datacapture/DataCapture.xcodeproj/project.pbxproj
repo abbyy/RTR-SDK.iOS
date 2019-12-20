@@ -188,7 +188,7 @@
 			};
 			buildConfigurationList = 75EC7C761D8705C600A06B74 /* Build configuration list for PBXProject "DataCapture" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
