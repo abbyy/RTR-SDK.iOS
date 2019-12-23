@@ -23,11 +23,17 @@ The samples cover the following scenarios:
 
   The sample demonstrates the core API usage in a simple scenario of capturing data from an image.
 
-- Image Capture (**sample-imagecapture**, **sample-imagecapture-swift**)
+- Image capture (**sample-imagecapture**, **sample-imagecapture-swift**)
 
   This simple image capture scenarios demonstrate how to automatically capture an image from the smartphone video preview frames.
 
+- Single-page image capture with UI (**sample-ui-imagecapture**, **sample-ui-imagecapture-swift**)
 
+  This sample illustrates the steps you need to perform to create a simple mobile application for image capture.
+  
+- Multipage image capture with UI **sample-ui-imagecapture-multipage**, **sample-ui-imagecapture-multipage-swift**)
+
+  The sample code implementing a multipage image capture scenario with tuned user interface.
 
 ## Prerequisites
 
