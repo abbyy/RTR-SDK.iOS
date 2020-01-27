@@ -1,0 +1,21 @@
+/// ABBYY® Mobile Capture © 2019 ABBYY Production LLC.
+/// ABBYY is a registered trademark or a trademark of ABBYY Software Ltd.
+
+"NoConnection" = "No connection to FC server";
+"SuccessfulConnection" = "Connection to FC server";
+"UnexpectedErrorOccurred" = "Unexpected error occurred. Please report to ABBYY Mobile SDK team";
+"SomethingWentWrong" = "Oops!";
+"Ok" = "OK";
+"DeleteAll" = "Delete all";
+"AreYouSure" = "Are you sure?";
+"Cancel" = "Cancel";
+"Done" = "Done";
+"LogIn" = "Log in";
+"EnterPasswordToExportPages" = "Enter password to export pages";
+"EnterPasswordToChangeProject" = "Enter password to change project";
+"NoProjectsFound" = "No projects found. Log in to another profile.";
+"WrongUsernameOrPassword" = "Wrong username, password or tenant";
+"UnknownError" = "Unknown error";
+"Error" = "Error";
+"LogOut" = "Log out";
+"Export" = "Export";
